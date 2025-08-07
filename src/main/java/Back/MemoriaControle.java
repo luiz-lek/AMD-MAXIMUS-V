@@ -1,89 +1,87 @@
 package Back;
 
 public class MemoriaControle {
-    private final Microinstrucao[] memoria;
+    private final Microinstrucao[] memoria = {
+            new Microinstrucao("00010000110100010000000000000001"),
+            new Microinstrucao("00000000010100001111000000000010"),
+            new Microinstrucao("10110000000010000000000000000011"),
+            new Microinstrucao("00110000000011000000000000000100"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00100000000010000000000000000110"),
+            new Microinstrucao("00010000110100010000000000000111"),
+            new Microinstrucao("00000000000000000000000000001000"),
+            new Microinstrucao("00000001000000000000000000000001"),
+            new Microinstrucao("00010000101000000000000000000100"),
+            new Microinstrucao("00000001000000000000000000000010"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00110000000011000000000000000011"),
+            new Microinstrucao("00010000000011000000000000000011"),
+            new Microinstrucao("00010000110100010000000000000100"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00000001000000000000000000000001"),
+            new Microinstrucao("00010000000000000000000000000000"),
+            new Microinstrucao("00010000000000000000000000000000"),
+            new Microinstrucao("00110000000011000000000000000000"),
+            new Microinstrucao("00110000000011000000000000000010"),
+            new Microinstrucao("00010000000010000000000000000010"),
+            new Microinstrucao("00110000000011000000000000000010"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00110000000011000000000000000010"),
+            new Microinstrucao("00010000000010000000000000000010"),
+            new Microinstrucao("00110000000011000000000000000010"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00010000110100010000000000000100"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00010000100100000000000000000100"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00010000100100000000000000000100"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00010000000000000000000000000000"),
+            new Microinstrucao("00000001000000000000000000000001"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00010000000011000000000000000011"),
+            new Microinstrucao("00010000000000000000000000000000"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00000001000000000000000000000001"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00000001000000000000000000000010"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00000001000000000000000000000010"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00010000000000000000000000000000"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00000000000000000000000000000000"),
+            new Microinstrucao("00010000000000010000000000000001"),
+            new Microinstrucao("00010000000000000000000000000000"),
+            new Microinstrucao("00010000000000010000000000000001"),
+            new Microinstrucao("00110000000011000000000000000101"),
+            new Microinstrucao("00010000000010000000000000000010"),
+            new Microinstrucao("00010000000010000000000000000100"),
+            new Microinstrucao("00010000000010000000000000000010"),
+            new Microinstrucao("00010000000000000000000000000000"),
+            new Microinstrucao("00010000000000010000000000000001")
+    };
 
-    public MemoriaControle() {
-        this.memoria = new Microinstrucao[MAX.TAMMEMC];
-
-        memoria[0]  = new Microinstrucao("00010000110100010000000000000001");
-        memoria[1]  = new Microinstrucao("00000000010100001111000000000010");
-        memoria[2]  = new Microinstrucao("10110000000010000000000000000011");
-        memoria[3]  = new Microinstrucao("00110000000011000000000000000100");
-        memoria[4]  = new Microinstrucao("00110000000011000000000000000101");
-        memoria[5]  = new Microinstrucao("00100000000010000000000000000110");
-        memoria[6]  = new Microinstrucao("00010000110100010000000000000111");
-        memoria[7]  = new Microinstrucao("00000000000000000000000000001000");
-        memoria[8]  = new Microinstrucao("00000001000000000000000000000001");
-        memoria[9]  = new Microinstrucao("00010000101000000000000000000100");
-        memoria[10] = new Microinstrucao("00000001000000000000000000000010");
-        memoria[11] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[12] = new Microinstrucao("00110000000011000000000000000011");
-        memoria[13] = new Microinstrucao("00010000000011000000000000000011");
-        memoria[14] = new Microinstrucao("00010000110100010000000000000100");
-        memoria[15] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[16] = new Microinstrucao("00000001000000000000000000000001");
-        memoria[17] = new Microinstrucao("00010000000000000000000000000000");
-        memoria[18] = new Microinstrucao("00010000000000000000000000000000");
-        memoria[19] = new Microinstrucao("00110000000011000000000000000000");
-        memoria[20] = new Microinstrucao("00110000000011000000000000000010");
-        memoria[21] = new Microinstrucao("00010000000010000000000000000010");
-        memoria[22] = new Microinstrucao("00110000000011000000000000000010");
-        memoria[23] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[24] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[25] = new Microinstrucao("00110000000011000000000000000010");
-        memoria[26] = new Microinstrucao("00010000000010000000000000000010");
-        memoria[27] = new Microinstrucao("00110000000011000000000000000010");
-        memoria[28] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[29] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[30] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[31] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[32] = new Microinstrucao("00010000110100010000000000000100");
-        memoria[33] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[34] = new Microinstrucao("00010000100100000000000000000100");
-        memoria[35] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[36] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[37] = new Microinstrucao("00010000100100000000000000000100");
-        memoria[38] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[39] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[40] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[41] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[42] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[43] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[44] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[45] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[46] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[47] = new Microinstrucao("00010000000000000000000000000000");
-        memoria[48] = new Microinstrucao("00000001000000000000000000000001");
-        memoria[49] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[50] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[51] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[52] = new Microinstrucao("00010000000011000000000000000011");
-        memoria[53] = new Microinstrucao("00010000000000000000000000000000");
-        memoria[54] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[55] = new Microinstrucao("00000001000000000000000000000001");
-        memoria[56] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[57] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[58] = new Microinstrucao("00000001000000000000000000000010");
-        memoria[59] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[60] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[61] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[62] = new Microinstrucao("00000001000000000000000000000010");
-        memoria[63] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[64] = new Microinstrucao("00010000000000000000000000000000");
-        memoria[65] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[66] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[67] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[68] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[69] = new Microinstrucao("00000000000000000000000000000000");
-        memoria[70] = new Microinstrucao("00010000000000010000000000000001");
-        memoria[71] = new Microinstrucao("00010000000000000000000000000000");
-        memoria[72] = new Microinstrucao("00010000000000010000000000000001");
-        memoria[73] = new Microinstrucao("00110000000011000000000000000101");
-        memoria[74] = new Microinstrucao("00010000000010000000000000000010");
-        memoria[75] = new Microinstrucao("00010000000010000000000000000100");
-        memoria[76] = new Microinstrucao("00010000000010000000000000000010");
-        memoria[77] = new Microinstrucao("00010000000000000000000000000000");
-        memoria[78] = new Microinstrucao("00010000000000010000000000000001");
-    }
+    public Microinstrucao getPos(short MPC){ return this.memoria[MPC]; }
 }

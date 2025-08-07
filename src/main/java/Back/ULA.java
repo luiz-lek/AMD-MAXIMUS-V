@@ -1,44 +1,41 @@
 package Back;
 
 public class ULA {
-    private short saida;
-    private boolean nBit, zBit;
+    private String saida = "0000000000000000";
+    private boolean nBit = false, zBit = false;
 
-    public ULA(){
-        saida = 0;
-        this.nBit = this.zBit = false;
-    }
+    public String ativar(String A, String B, String controle){
+        short a = Short.parseShort(A);
+        short b = Short.parseShort(B);
+        short c;
 
-    public short ativar(short a, short b, String controle){
         switch (controle){
-            case "00" -> this.soma(a, b);
-            case "01" -> this.andBitABit(a, b);
-            case "10" -> this.ident(a);
-            case "11" -> this.Inv(a);
+            case "00" -> c = this.soma(a, b);
+            case "01" -> c = this.andBitABit(a, b);
+            case "10" -> c = this.ident(a);
+            default -> c = this.Inv(a);
         }
 
-        this.nBit = (this.saida < 0);
-        this.zBit = (this.saida == 0);
-        return this.saida;
+        this.nBit = (c < 0);
+        this.zBit = (c == 0);
+        return this.saida = String.format("%16s", Integer.toBinaryString(c & 0xFFFF)).replace(' ', '0');
     }
 
-    private void soma(short a, short b){
-        this.saida = (short)(a+b);
+    private short soma(short a, short b){
+        return (short)(a+b);
     }
 
-    private void andBitABit(short a, short b){
-        this.saida = (short) (a & b);
+    private short andBitABit(short a, short b){
+        return (short) (a & b);
     }
 
-    private void ident(short a){
-        this.saida = a;
+    private short ident(short a){
+        return a;
     }
 
-    private void Inv(short a){
-        this.saida = (short) ~a;
-    }
+    private short Inv(short a){ return (short) ~a; }
 
-    public short getSaida() {
+    public String getSaida() {
         return this.saida;
     }
 

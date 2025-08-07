@@ -1,20 +1,16 @@
 package Back;
 
 public class Registrador {
-    private short valor;
+    private String valor = "0000000000000000";
     private String nome;
 
-    public Registrador(String nome, short valor){
+    public Registrador(String nome){
         this.nome = nome;
     }
 
-    public short getValor() {
-        return valor;
-    }
+    public String getValor() { return this.valor; }
 
-    public void setValor(short valor) {
-        this.valor = valor;
-    }
+    public void setValor(String valor) { this.valor = valor; }
 
     public String getNome() {
         return nome;

@@ -1,11 +1,18 @@
 package Back;
 
 public class Deslocador {
-    private short saida = 0;
+    private String saida = "0000000000000000";
 
-    public short ativar(short saidaULA, String controle){
+    public String ativar(String saidaULA, String controle){
+        short c = Short.parseShort(saidaULA);
         if("00".equals(controle)) return this.saida = saidaULA;
-        if("01".equals(controle)) return this.saida = (short)(saidaULA << 1);
-        return this.saida = (short)(saidaULA >> 1);
+        if("01".equals(controle)){
+            c = (short)(c << 1);
+        } else {
+            c = (short) (c >> 1);
+        }
+        return this.saida = String.format("%16s", Integer.toBinaryString(c & 0xFFFF)).replace(' ', '0');
     }
+
+    public String getSaida() { return saida; }
 }
