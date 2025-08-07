@@ -3,13 +3,26 @@ package Back;
 public class ULA {
     private String saida = "0000000000000000";
     private boolean nBit = false, zBit = false;
+    private String a = "0000000000000000", b = "0000000000000000", controle = "00";
+
+    public void setA(String a) {
+        this.a = a;
+    }
+
+    public void setB(String b) {
+        this.b = b;
+    }
+
+    public void setControle(String controle) {
+        this.controle = controle;
+    }
 
     public String ativar(String A, String B, String controle){
-        short a = Short.parseShort(A);
-        short b = Short.parseShort(B);
+        short a = Short.parseShort(this.a);
+        short b = Short.parseShort(this.b);
         short c;
 
-        switch (controle){
+        switch (this.controle){
             case "00" -> c = this.soma(a, b);
             case "01" -> c = this.andBitABit(a, b);
             case "10" -> c = this.ident(a);

@@ -19,16 +19,11 @@ public class Registradores {
             new Registrador("E"),
             new Registrador("F")
     };
-    private Registrador MAR = new Registrador("MAR");
-    private Registrador MBR = new Registrador("MBR");
-    private Registrador MPC = new Registrador("MPC");
-    private Registrador MIR = new Registrador("MIR");
 
-    public Registradores(){
-        this.MIR.setValor("00000000000000000000000000000000");
-    }
+    public Registrador MPC = new Registrador("MPC");
+    public Microinstrucao MIR = new Microinstrucao("00000000000000000000000000000000");
 
-    public String getValorSTR(String sinais){
+    public String getValor(String sinais){
         int i = 0;
         for(;i < 16 && sinais.charAt(i) != '1'; i++);
         if(i == 16) return this.registradores[0].getValor();

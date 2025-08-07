@@ -1,7 +1,15 @@
 package Back;
 
 public class Deslocador {
-    private String saida = "0000000000000000";
+    private String saida = "0000000000000000", saidaULA = "0000000000000000", controle = "11";
+
+    public void setSaidaULA(String saidaULA) {
+        this.saidaULA = saidaULA;
+    }
+
+    public void setControle(String controle) {
+        this.controle = controle;
+    }
 
     public String ativar(String saidaULA, String controle){
         short c = Short.parseShort(saidaULA);

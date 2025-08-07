@@ -2,12 +2,12 @@ package Back;
 
 public class Latch {
     String nome;
-    short saida = 0;
+    private String valor = "0000000000000000";
 
     public Latch(String nome) {
         this.nome = nome;
     }
 
-    public void setValor(short valor) { this.saida = valor; }
-    public short getValor() { return this.saida; }
+    public void setValor(String valor) { this.valor = valor; }
+    public String getValor() { return this.valor; }
 }

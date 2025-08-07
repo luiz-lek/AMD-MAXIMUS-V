@@ -83,5 +83,8 @@ public class MemoriaControle {
             new Microinstrucao("00010000000000010000000000000001")
     };
 
-    public Microinstrucao getPos(short MPC){ return this.memoria[MPC]; }
+    public Microinstrucao getPos(String MPC) {
+        short mpcShort = Short.parseShort(MPC);
+        return this.memoria[mpcShort];
+    }
 }
