@@ -9,19 +9,12 @@ public class ULA {
         this.nBit = this.zBit = false;
     }
 
-    public enum CONTROLE{
-        Soma,
-        And,
-        Ident,
-        Inv
-    }
-
-    public short ativar(short a, short b, CONTROLE controle){
+    public short ativar(short a, short b, String controle){
         switch (controle){
-            case Soma -> this.soma(a, b);
-            case And -> this.andBitABit(a, b);
-            case Ident -> this.ident(a);
-            case Inv -> this.Inv(a);
+            case "00" -> this.soma(a, b);
+            case "01" -> this.andBitABit(a, b);
+            case "10" -> this.ident(a);
+            case "11" -> this.Inv(a);
         }
 
         this.nBit = (this.saida < 0);

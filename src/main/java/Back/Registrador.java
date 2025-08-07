@@ -4,7 +4,7 @@ public class Registrador {
     private short valor;
     private String nome;
 
-    public Registrador(String nome){
+    public Registrador(String nome, short valor){
         this.nome = nome;
     }
 
