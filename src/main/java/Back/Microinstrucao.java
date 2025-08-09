@@ -39,5 +39,5 @@ public class Microinstrucao {
 
     public String getA() { return this.mic.substring(FormatoMic.A[0], FormatoMic.A[1]); }
 
-    public String getADDR() { return this.mic.substring(FormatoMic.ADDR[0], FormatoMic.ADDR[1]); }
+    public String getADDR() { return this.mic.substring(FormatoMic.ADDR); }
 }

@@ -1,7 +1,8 @@
 package Back;
 
 public class Decodificador {
-    public String entrada = "0000", saida = "0000000000000000", ativado = "0";
+    public String entrada = "0000", saida = "0000000000000000";
+    private boolean ENC = false;
 
     public Decodificador() {
         saida = "0000000000000000";
@@ -11,8 +12,8 @@ public class Decodificador {
         this.entrada = entrada;
     }
 
-    public void setAtivado(String ativado) {
-        this.ativado = ativado;
+    public void setENC(String ativado) {
+        this.ENC = !"0".equals(ativado);
     }
 
     public String decodificar() throws IllegalArgumentException {
@@ -31,5 +32,9 @@ public class Decodificador {
 
         this.saida = decodificado.toString();
         return this.saida;
+    }
+
+    public boolean isENC() {
+        return ENC;
     }
 }

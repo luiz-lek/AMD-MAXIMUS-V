@@ -1,26 +1,29 @@
 package Back;
 
 public class Deslocador {
-    private String saida = "0000000000000000", saidaULA = "0000000000000000", controle = "11";
-
-    public void setSaidaULA(String saidaULA) {
-        this.saidaULA = saidaULA;
-    }
+    private String saida = "0000000000000000";
+    private String controle = "11";
 
     public void setControle(String controle) {
         this.controle = controle;
     }
 
-    public String ativar(String saidaULA, String controle){
-        short c = Short.parseShort(saidaULA);
-        if("00".equals(controle)) return this.saida = saidaULA;
-        if("01".equals(controle)){
-            c = (short)(c << 1);
-        } else {
-            c = (short) (c >> 1);
+    public void ativar(String saidaULA) {
+        if (saidaULA == null || saidaULA.length() != 16 || !saidaULA.matches("[01]+")) {
+            throw new IllegalArgumentException("Entrada deve ser string binária de 16 bits");
         }
-        return this.saida = String.format("%16s", Integer.toBinaryString(c & 0xFFFF)).replace(' ', '0');
+
+        if ("01".equals(this.controle)) {
+            this.saida = saidaULA.substring(1) + "0";
+        } else if (!"00".equals(this.controle)) {
+            char sinal = saidaULA.charAt(0);
+            this.saida = sinal + saidaULA.substring(0, 15);
+        } else {
+            this.saida = saidaULA;
+        }
     }
 
-    public String getSaida() { return saida; }
+    public String getSaida() {
+        return this.saida;
+    }
 }

@@ -26,20 +26,20 @@ public class Assembler {
         tabela.put("CALL", "1110");
         tabela.put("INSP", "11111100");
         tabela.put("DESP", "11111110");
-        tabela.put("PSHI", "111100000000");
-        tabela.put("POPI", "111100100000");
-        tabela.put("PUSH", "111101000000");
-        tabela.put("POP", "1111011000000");
-        tabela.put("RETN", "1111100000000");
-        tabela.put("SWAP", "1111101000000");
-        tabela.put("HALT", "0000000000000000");
+        tabela.put("PSHI", "1111000000000000");
+        tabela.put("POPI", "1111001000000000");
+        tabela.put("PUSH", "1111010000000000");
+        tabela.put("POP", "11110110000000000");
+        tabela.put("RETN", "1111100000000000");
+        tabela.put("SWAP", "1111101000000000");
+        tabela.put("HALT", "0001000000000000");
     }
 
     public void montar(MemoriaPrincipal mem, String[] programa, int tamProg) throws IllegalArgumentException, NumberFormatException{
         for(int i = 0; i < tamProg; i++){
             try {
                 String binario = macroPraBinario(programa[i]);
-                mem.escrever((short)i, binario);
+                mem.escrever(Integer.toBinaryString(i), binario);
             } catch (NumberFormatException e){
                 throw e;
             } catch (IllegalArgumentException e){

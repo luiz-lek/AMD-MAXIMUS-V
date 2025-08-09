@@ -1,7 +1,7 @@
 package Back;
 
 public class Registradores {
-    private Registrador[] registradores = {
+    public Registrador[] registradores = {
             new Registrador("PC"),
             new Registrador("AC"),
             new Registrador("SP"),
@@ -20,13 +20,27 @@ public class Registradores {
             new Registrador("F")
     };
 
-    public Registrador MPC = new Registrador("MPC");
-    public Microinstrucao MIR = new Microinstrucao("00000000000000000000000000000000");
+    public Registradores(){
+        this.registradores[6].setValor("0000000000000001");
+        this.registradores[7].setValor("1111111111111111");
+    }
 
-    public String getValor(String sinais){
+    public Registrador MPC = new Registrador("MPC");
+
+    private int determinarReg(String sinais){
         int i = 0;
         for(;i < 16 && sinais.charAt(i) != '1'; i++);
-        if(i == 16) return this.registradores[0].getValor();
+        if(i == 16) return 0;
+        return i;
+    }
+
+    public String getValor(String sinais){
+        int i = this.determinarReg(sinais);
         return this.registradores[i].getValor();
+    }
+
+    public void setValor(String sinais, String valor){
+        int i = determinarReg(sinais);
+        registradores[i].setValor(valor);
     }
 }

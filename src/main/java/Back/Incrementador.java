@@ -1,8 +1,12 @@
 package Back;
 
 public class Incrementador {
-    public short incrementar(String saidaMBR) {
-        short saida = Short.parseShort(saidaMBR);
-        return (short)(saida + 1);
+    private short saida = 0;
+
+    public void incrementar(String saidaMBR) {
+        short saida = Short.parseShort(saidaMBR, 2);
+        this.saida = (short)(saida + 1);
     }
+
+    public short getSaida() { return this.saida; }
 }

@@ -11,14 +11,14 @@ public class LogicaMicrosequenciamento {
         this.zBit = zBit;
     }
 
-    public boolean gerarSaida(){
-        if("00".equals(this.COND)) return this.saida = false;
-        if("11".equals(this.COND)) return this.saida = true;
-        if("01".equals(this.COND)){
-            if(this.nBit) return this.saida = true;
-            return this.saida = false;
+    public void gerarSaida(){
+        switch (this.COND) {
+            case "00" -> this.saida = false;
+            case "11" -> this.saida = true;
+            case "01" -> this.saida = this.nBit;
+            case null, default -> this.saida = this.zBit;
         }
-        if(this.zBit) return this.saida = true;
-        return this.saida = false;
     }
+
+    public boolean isSaida() { return saida; }
 }

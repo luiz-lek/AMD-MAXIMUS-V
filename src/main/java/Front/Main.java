@@ -29,7 +29,10 @@ public class Main{
             }
         }
 
-        imprimirProgramaMemoria(programa, memoriaPrincipal, i);
+        CPU cpu = new CPU();
+        cpu.iniciar(memoriaPrincipal);
+
+        //imprimirProgramaMemoria(programa, memoriaPrincipal, i);
 
         entrada.close();
     }
@@ -56,7 +59,7 @@ public class Main{
 
     public static void imprimirProgramaMemoria(String[] prog, MemoriaPrincipal mem, int tamProg){
         for(int i =  0; i < tamProg; i++){
-            System.out.println(prog[i] + " | " + mem.ler((short)i));
+            System.out.println(prog[i] + " | " + mem.ler(Integer.toBinaryString(i)));
         }
     }
 
