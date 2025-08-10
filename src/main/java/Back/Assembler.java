@@ -29,7 +29,7 @@ public class Assembler {
         tabela.put("PSHI", "1111000000000000");
         tabela.put("POPI", "1111001000000000");
         tabela.put("PUSH", "1111010000000000");
-        tabela.put("POP", "1111101100000000");
+        tabela.put("POP", "1111011000000000");
         tabela.put("RETN", "1111100000000000");
         tabela.put("SWAP", "1111101000000000");
         tabela.put("HALT", "1111111100000000");
