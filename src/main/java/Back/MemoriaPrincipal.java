@@ -1,7 +1,13 @@
 package Back;
 
+import java.util.stream.IntStream;
+
 public class MemoriaPrincipal{
     private String memoria[] = new String[MAX.TAMMEMP];
+
+    public MemoriaPrincipal(){
+        IntStream.range(0, MAX.TAMMEMP).forEach(i -> this.memoria[i] = "0000000000000000");
+    }
 
     public String ler(String posicao) throws IllegalAccessError{
         short pos = Short.parseShort(posicao, 2);

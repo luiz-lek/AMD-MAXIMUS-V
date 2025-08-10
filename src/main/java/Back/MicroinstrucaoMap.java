@@ -27,7 +27,7 @@ public class MicroinstrucaoMap {
         mapa.put(16, "ac := ac + 1; rd;");
         mapa.put(17, "a := inv(mbr);");
         mapa.put(18, "ac := ac + a; goto 0;");
-        mapa.put(19, "tir := lshift(ir); if n then goto 25;");
+        mapa.put(19, "tir := lshift(tir); if n then goto 25;");
         mapa.put(20, "alu := tir; if n then goto 23;");
         mapa.put(21, "alu := ac; if n then goto 0;");
         mapa.put(22, "pc := band(ir, amask); goto 0;");

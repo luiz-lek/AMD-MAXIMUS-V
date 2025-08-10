@@ -1,5 +1,7 @@
 package Back;
 
+import java.lang.classfile.instruction.ThrowInstruction;
+
 public class Registradores {
     public Registrador[] registradores = {
             new Registrador("PC"),
@@ -21,11 +23,12 @@ public class Registradores {
     };
 
     public Registradores(){
+        this.registradores[2].setValor("0001000000000000");
         this.registradores[6].setValor("0000000000000001");
         this.registradores[7].setValor("1111111111111111");
+        this.registradores[8].setValor("0000111111111111");
+        this.registradores[9].setValor("0000000011111111");
     }
-
-    public Registrador MPC = new Registrador("MPC");
 
     private int determinarReg(String sinais){
         int i = 0;

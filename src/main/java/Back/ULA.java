@@ -22,10 +22,9 @@ public class ULA {
         }
 
         this.zBit = (c == 0);
+        this.nBit = (c < 0);
 
         this.saida = String.format("%16s", Integer.toBinaryString(c & 0xFFFF)).replace(' ', '0');
-
-        nBit = '1' == this.saida.charAt(0);
     }
 
     private short soma(short a, short b) {

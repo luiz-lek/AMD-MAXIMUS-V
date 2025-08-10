@@ -1,48 +1,60 @@
 package Back;
 
+import java.util.IllegalFormatCodePointException;
+
 public class CPU {
-    MemoriaPrincipal memP;
-    MemoriaControle memC =  new MemoriaControle();
-    Registradores registradores = new Registradores();
-    MAR mar = new MAR("MAR");
-    MBR mbr = new MBR("MBR");
-    Microinstrucao mir = new Microinstrucao("00000000000000000000000000000000");
-    Latch latA = new Latch("A");
-    Latch latB = new Latch("B");
-    AMUX amux = new AMUX();
-    MMUX mmux = new MMUX();
-    ULA ula =  new ULA();
-    Deslocador deslocador  = new Deslocador();
-    Incrementador incrementador = new Incrementador();
-    Decodificador decA = new Decodificador();
-    Decodificador decB = new Decodificador();
-    Decodificador decC = new Decodificador();
-    LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
+    private MemoriaPrincipal memP;
+    private MemoriaControle memC =  new MemoriaControle();
+    private Registradores registradores = new Registradores();
+    private MAR mar = new MAR("MAR");
+    private MBR mbr = new MBR("MBR");
+    private Registrador mpc = new Registrador("MPC");
+    private Microinstrucao mir = new Microinstrucao("00000000000000000000000000000000");
+    private Latch latA = new Latch("A");
+    private Latch latB = new Latch("B");
+    private AMUX amux = new AMUX();
+    private MMUX mmux = new MMUX();
+    private ULA ula =  new ULA();
+    private Deslocador deslocador  = new Deslocador();
+    private Incrementador incrementador = new Incrementador();
+    private Decodificador decA = new Decodificador();
+    private Decodificador decB = new Decodificador();
+    private Decodificador decC = new Decodificador();
+    private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
 
     public void iniciar(MemoriaPrincipal memP){
         this.memP = memP;
         int i = 0;
 
-        while(true){
-            System.out.println("Microinstrução: " + MicroinstrucaoMap.getDescricao(registradores.MPC.getValor()));
-            // System.out.println("MIR: " + mir.getMic());
+        while/*(i < 100){*/(!"1111111100000000".equals(this.registradores.registradores[3].getValor())){
+            //if(i >= 91) {
+                System.out.println(MicroinstrucaoMap.getDescricao(this.mpc.getValor()));
+                System.out.println("PC: " + registradores.registradores[0].getValor());
+                System.out.println("AC: " + registradores.registradores[1].getValor());
+                System.out.println("IR: " + registradores.registradores[3].getValor());
+                System.out.println("TIR: " + registradores.registradores[4].getValor());
+                System.out.println("MAR: " + this.mar.getValor());
+                System.out.println("MBR: " + this.mbr.getValor());
+                System.out.println("\n");
+            //}
+//            System.out.println("AMASK: " + registradores.registradores[8].getValor());
+//            System.out.println("\n\n\n");
             this.subciclo1();
+//            System.out.println(this.mir.getMic());
             this.subciclo2();
             this.subciclo3();
             this.subciclo4();
 //            System.out.println("ULA\n" + ula.toString()+ "\n");
 //            System.out.println("\nMMUX\n" + mmux.toString());
-//            System.out.println("IR: " + registradores.registradores[3].getValor());
-//            System.out.println("TIR: " + registradores.registradores[4].getValor());
-//            System.out.println("MAR: " + this.mar.getValor());
-//            System.out.println("MBR: " + this.mbr.getValor());
-            //System.out.println("Memoria[10]: " + memP.ler("0000000000001010"));
             i++;
         }
+
+        //System.out.println("\nFim do programa\nMemoria[10]: " + memP.ler("0000000000001010"));
+        //System.out.println("Memoria[11]: " + memP.ler("0000000000001011"));
     }
 
     public void subciclo1(){
-        this.mir.setMic(memC.getPos(registradores.MPC.getValor()).getMic()); //passa a instrução em mem[mpc] para o mir
+        this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); //passa a instrução em mem[mpc] para o mir
     }
 
     public void subciclo2(){
@@ -58,7 +70,7 @@ public class CPU {
         this.decA.setEntrada(this.mir.getA());
         this.mmux.setADDR(this.mir.getADDR());
         this.latB.setValor(registradores.getValor(decB.decodificar()));
-        incrementador.incrementar(this.registradores.MPC.getValor());
+        incrementador.incrementar(this.mpc.getValor());
         this.latA.setValor(registradores.getValor(decA.decodificar()));
     }
 
@@ -79,7 +91,7 @@ public class CPU {
         mmux.setMPCIncrementado(incrementador.getSaida());
         this.mmux.setControle(logica.isSaida());
         this.mmux.ativar();
-        this.registradores.MPC.setValor(this.mmux.getSaida());
+        this.mpc.setValor(this.mmux.getSaida());
         if(this.mbr.isRD()) this.mbr.setValor(this.memP.ler(this.mar.getValor()));
         if(this.mbr.isWR()) this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
     }
