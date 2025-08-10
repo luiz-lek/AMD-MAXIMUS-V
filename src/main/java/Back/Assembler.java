@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.IllegalFormatException;
 
 public class Assembler {
-    private HashMap<String, String> tabela;
+    private final HashMap<String, String> tabela;
 
     public Assembler(){
         this.tabela = new HashMap<>();
