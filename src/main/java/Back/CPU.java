@@ -24,34 +24,22 @@ public class CPU {
 
     public void iniciar(MemoriaPrincipal memP){
         this.memP = memP;
-        int i = 0;
 
-        while/*(i < 100){*/(!"1111111100000000".equals(this.registradores.registradores[3].getValor())){
-            //if(i >= 91) {
-                System.out.println(MicroinstrucaoMap.getDescricao(this.mpc.getValor()));
-                System.out.println("SP: " + registradores.registradores[2].getValor());
-                System.out.println("AC: " + registradores.registradores[1].getValor());
-                System.out.println("IR: " + registradores.registradores[3].getValor());
-                System.out.println("TIR: " + registradores.registradores[4].getValor());
-                System.out.println("MAR: " + this.mar.getValor());
-                System.out.println("MBR: " + this.mbr.getValor());
-            //}
-//            System.out.println("AMASK: " + registradores.registradores[8].getValor());
-//            System.out.println("\n\n\n");
+        while(!"1111111100000000".equals(this.registradores.registradores[3].getValor())){
+            System.out.println(MicroinstrucaoMap.getDescricao(this.mpc.getValor()));
             this.subciclo1();
-//            System.out.println(this.mir.getMic());
             this.subciclo2();
             this.subciclo3();
             this.subciclo4();
-//            System.out.println("ULA\n" + ula.toString()+ "\n");
-//            System.out.println("\nMMUX\n" + mmux.toString());
-            System.out.println("Memoria[4095]: " + memP.ler("0000111111111111"));
+            for(int i = 0; i < 16; i++){
+                System.out.println(this.registradores.registradores[i].getNome() + ": " +
+                        this.registradores.registradores[i].getValor());
+            }
+            System.out.println("MAR: " + this.mar.getValor());
+            System.out.println("MBR: " + this.mbr.getValor());
+            System.out.println("MPC: " + this.mpc.getValor());
             System.out.println("\n");
-            i++;
         }
-
-        //System.out.println("\nFim do programa\nMemoria[10]: " + memP.ler("0000000000001010"));
-        //System.out.println("Memoria[11]: " + memP.ler("0000000000001011"));
     }
 
     public void subciclo1(){

@@ -20,14 +20,14 @@ public class MBR extends Registrador{
     }
 
     public boolean isRD() {
-        return RD;
+        return this.RD;
     }
 
     public boolean isWR() {
-        return WR;
+        return this.WR;
     }
 
     public boolean isAtivado() {
-        return ativado;
+        return this.ativado;
     }
 }

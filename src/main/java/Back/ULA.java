@@ -10,8 +10,8 @@ public class ULA {
     }
 
     public void ativar(String A, String B) {
-        short a = (short) Integer.parseInt(A, 2);
-        short b = (short) Integer.parseInt(B, 2);
+        short a = Short.parseShort(A, 2);
+        short b = Short.parseShort(B, 2);
         short c;
 
         switch (this.controle) {

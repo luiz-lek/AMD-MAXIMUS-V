@@ -1,14 +1,13 @@
 package Back;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.IllegalFormatException;
 
 public class Assembler {
-    private final HashMap<String, String> tabela;
+    private static final Map<String, String> tabela = new HashMap<>();
 
-    public Assembler(){
-        this.tabela = new HashMap<>();
-
+    static{
         tabela.put("LODD", "0000");
         tabela.put("STOD", "0001");
         tabela.put("ADDD", "0010");
