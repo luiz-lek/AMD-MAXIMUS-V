@@ -46,4 +46,21 @@ public class Registradores {
         int i = determinarReg(sinais);
         registradores[i].setValor(valor);
     }
+
+    public String getValoresMemoriaRascunho() {
+        StringBuilder s = new StringBuilder();
+        String nomeReg;
+
+        for(int i = 0; i < 15; i++) {
+            nomeReg = this.registradores[i].getNome();
+            for(int j = nomeReg.length(); j < 5; j++) s.append(" ");
+            s.append(this.registradores[i].getNome() + ": ");
+            s.append(this.registradores[i].getValor() + "\n");
+        }
+
+        s.append("    " + this.registradores[15].getNome() + ": ");
+        s.append(this.registradores[15].getValor());
+
+        return s.toString();
+    }
 }

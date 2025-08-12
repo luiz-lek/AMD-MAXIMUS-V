@@ -1,5 +1,7 @@
 package Back;
 
+import java.nio.charset.StandardCharsets;
+import java.util.HexFormat;
 import java.util.IllegalFormatCodePointException;
 
 public class CPU {
@@ -22,24 +24,15 @@ public class CPU {
     private Decodificador decC = new Decodificador();
     private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
 
-    public void iniciar(MemoriaPrincipal memP){
-        this.memP = memP;
+    public void setMemoriaPrincipal(MemoriaPrincipal memoria){
+        this.memP = memoria;
+    }
 
-        while(!"1111111100000000".equals(this.registradores.registradores[3].getValor())){
-            System.out.println(MicroinstrucaoMap.getDescricao(this.mpc.getValor()));
-            this.subciclo1();
-            this.subciclo2();
-            this.subciclo3();
-            this.subciclo4();
-            for(int i = 0; i < 16; i++){
-                System.out.println(this.registradores.registradores[i].getNome() + ": " +
-                        this.registradores.registradores[i].getValor());
-            }
-            System.out.println("MAR: " + this.mar.getValor());
-            System.out.println("MBR: " + this.mbr.getValor());
-            System.out.println("MPC: " + this.mpc.getValor());
-            System.out.println("\n");
-        }
+    public void executarCiclo(){
+        this.subciclo1();
+        this.subciclo2();
+        this.subciclo3();
+        this.subciclo4();
     }
 
     public void subciclo1(){
@@ -84,4 +77,40 @@ public class CPU {
         if(this.mbr.isRD()) this.mbr.setValor(this.memP.ler(this.mar.getValor()));
         if(this.mbr.isWR()) this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
     }
+
+    public String getMbrValor() {
+        return mbr.getValor();
+    }
+
+    public String getMarValorHexadecimal() {
+        String valorBinario = mar.getValor();
+
+        int valorNumerico;
+
+        valorNumerico = Integer.parseInt(valorBinario, 2);
+
+        return String.format("%#04x", valorNumerico);
+    }
+
+    public String getMpcValor() {
+        int mpc = Integer.parseInt(this.mpc.getValor(), 2);
+        return Integer.toString(mpc);
+    }
+
+    public String getValorRegistrador(int pos) throws IllegalAccessError{
+        if((pos < 0) || (15 < pos)) throw new IllegalAccessError("Posição inválida.");
+        return this.registradores.registradores[pos].getValor();
+    }
+
+    public String getValoresMemoriaRascunho() { return this.registradores.getValoresMemoriaRascunho(); }
+
+
+
+    public MemoriaPrincipal getMemP() { return memP; }
+
+    public String getMpc() {
+        return mpc.getValor();
+    }
+
+    public String getMir() { return this.mir.getMic(); }
 }

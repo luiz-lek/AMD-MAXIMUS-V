@@ -1,5 +1,6 @@
 package Back;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.IllegalFormatException;
@@ -31,24 +32,24 @@ public class Assembler {
         tabela.put("POP", "1111011000000000");
         tabela.put("RETN", "1111100000000000");
         tabela.put("SWAP", "1111101000000000");
-        tabela.put("HALT", "1111111100000000");
+        tabela.put("HALT", "0000000000000000");
     }
 
-    public void montar(MemoriaPrincipal mem, String[] programa, int tamProg) throws IllegalArgumentException, NumberFormatException{
+    public void montar(MemoriaPrincipal mem, String[] programa, int tamProg) throws IOException {
+        if(tamProg == 0) throw new IOException("Programa vazio");
         for(int i = 0; i < tamProg; i++){
             try {
                 String binario = macroPraBinario(programa[i]);
                 mem.escrever(Integer.toBinaryString(i), binario);
             } catch (NumberFormatException e){
                 throw e;
-            } catch (IllegalArgumentException e){
+            } catch (IOException e){
                 throw e;
             }
         }
     }
 
-    public String macroPraBinario(String instrucao)
-            throws IllegalArgumentException, NumberFormatException {
+    public String macroPraBinario(String instrucao) throws IOException {
         StringBuilder opcode = new StringBuilder();
         int tam = instrucao.length(), i = 0;
 
@@ -57,7 +58,7 @@ public class Assembler {
             opcode.append(instrucao.charAt(i));
         }
 
-        if(!this.tabela.containsKey(opcode.toString())) throw new IllegalArgumentException("Opcode " + opcode + " inválido.");
+        if(!this.tabela.containsKey(opcode.toString())) throw new IOException("Opcode " + opcode + " inválido.");
 
         StringBuilder binario = new StringBuilder();
         binario.append(this.tabela.get(opcode.toString()));
@@ -82,7 +83,7 @@ public class Assembler {
         return binario.toString();
     }
 
-    public String operandoPraBinario(int i, int tam, int limite, int completar, String instrucao) throws IllegalArgumentException, NumberFormatException{
+    public String operandoPraBinario(int i, int tam, int limite, int completar, String instrucao) throws IOException{
         StringBuilder operandoSTR = new StringBuilder();
         StringBuilder numFinal = new StringBuilder();
         String numBin;
@@ -98,7 +99,7 @@ public class Assembler {
             System.out.println("Erro: " + e.getMessage());
         }
 
-        if((operandoINT < 0) || (operandoINT > limite)) throw new IllegalArgumentException("Erro: Operando de estar entre 0 e " +
+        if((operandoINT < 0) || (operandoINT > limite)) throw new IOException("Erro: Operando de estar entre 0 e " +
                 + limite + ".");
         numBin = Integer.toBinaryString(operandoINT);
 

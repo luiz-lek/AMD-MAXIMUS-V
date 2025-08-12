@@ -45,4 +45,25 @@ public class MemoriaPrincipal{
         }
     }
 
+    public String lerStack(String posicaoSP){
+        int sp =  Short.parseShort(posicaoSP, 2);
+        StringBuilder stack = new StringBuilder();
+        StringBuilder saida = new StringBuilder();
+        int auxCont = 0;
+
+        if(sp >= MAX.TAMMEMP) return "Sem elementos na pilha.";
+
+        stack.append("SP -> " + sp + ": " + this.memoria[sp] + "\n");
+        sp++;
+
+        for(int i = sp; i < MAX.TAMMEMP; i++) {
+            stack.append("          " + i + ": "  + this.memoria[i] + "\n");
+            auxCont++;
+        }
+
+        for(int i = auxCont; i < 21; i++) saida.append("\n");
+        saida.append(stack);
+
+        return saida.toString();
+    }
 }
