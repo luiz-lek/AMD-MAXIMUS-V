@@ -3,13 +3,13 @@ package Back;
 import java.util.stream.IntStream;
 
 public class MemoriaPrincipal{
-    private String memoria[] = new String[MAX.TAMMEMP];
+    private String[] memoria = new String[MAX.TAMMEMP];
 
     public MemoriaPrincipal(){
         IntStream.range(0, MAX.TAMMEMP).forEach(i -> this.memoria[i] = "0000000000000000");
     }
 
-    public String ler(String posicao) throws IllegalAccessError{
+    public String ler(String posicao) throws IllegalAccessError {
         short pos = Short.parseShort(posicao, 2);
         try{
             validarPosicao(pos);
@@ -20,7 +20,7 @@ public class MemoriaPrincipal{
     }
 
     public void escrever(String posicao, String palavra)
-            throws IllegalAccessError, IllegalAccessError{
+            throws IllegalAccessError, IllegalAccessError {
         short pos = Short.parseShort(posicao, 2);
         try{
             validarPosicao(pos);
@@ -32,7 +32,7 @@ public class MemoriaPrincipal{
     }
 
     private void validarPosicao(short pos) throws IllegalAccessError{
-        if((pos < 0) || (pos > MAX.TAMMEMP)) throw new IllegalAccessError("Posição da memória inválida.");
+        if((pos < 0) || (pos >= MAX.TAMMEMP)) throw new IllegalAccessError("Posição da memória inválida.");
     }
 
     private void validarPalavra(String palavra) throws IllegalArgumentException{

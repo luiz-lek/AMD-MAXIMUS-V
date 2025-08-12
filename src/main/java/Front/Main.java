@@ -26,7 +26,7 @@ public class Main extends Application{
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("AMD MAXIMUS-V");
-            //primaryStage.setFullScreen(true);
+            //                  primaryStage.setFullScreen(true);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -5,38 +5,33 @@ import Back.CPU;
 import Back.MemoriaPrincipal;
 import Back.MicroinstrucaoMap;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
+//import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Controller {
     @FXML
-    private Label label;
+    private Label label, mir, mbr, mar, mpc, valorLidoMemoria;
     @FXML
     private TextArea lerPrograma, microinstrucoes, memoria, memoriaRascunho;
     @FXML
-    private TextField mbr, mar, mpc, mir;
+    private TextField posicaoMemoriaLida;
     @FXML
-    private Button executar;
-    @FXML
-    private Button pularMic;
+    private Button carregarNaMemoria, pularMic, lerEndereco;
 
-    private String[] programa;
     Assembler assembler = new Assembler();
     private MemoriaPrincipal memoriaPrincipal;
     private CPU cpu;
 
     public void lerPrograma(ActionEvent e) throws IOException {
+        String[] programa;
         this.microinstrucoes.setText("");
-        this.programa = this.lerPrograma.getText().toUpperCase().split("\\r?\\n");
+        programa = this.lerPrograma.getText().toUpperCase().split("\\r?\\n");
 
         System.out.println("Programa lido");
         for(String linha : programa) System.out.println(linha);
@@ -44,7 +39,7 @@ public class Controller {
         memoriaPrincipal = new MemoriaPrincipal();
 
         try{
-            assembler.montar(memoriaPrincipal, this.programa, this.programa.length);
+            assembler.montar(memoriaPrincipal, programa, programa.length);
         } catch (IOException ex) {
             System.out.println(ex.getMessage() + "\nDigite novamente o programa...");
                 throw ex;
@@ -56,7 +51,7 @@ public class Controller {
         this.executarCicloAux();
     }
 
-    public void executarCiclo(ActionEvent e) throws IOException {
+    public void executarCiclo(ActionEvent e) {
         this.executarCicloAux();
     }
 
@@ -74,5 +69,19 @@ public class Controller {
         this.mir.setText(this.cpu.getMir());
         this.mpc.setText(this.cpu.getMpcValor());
         this.memoriaRascunho.setText(this.cpu.getValoresMemoriaRascunho());
+    }
+
+    public void lerPosicaoMemoria(ActionEvent e) throws IOException {
+        int posicaoMemoria = Integer.parseInt(posicaoMemoriaLida.getText());
+
+        String posicaoMemoriaSTR = Integer.toBinaryString(posicaoMemoria);
+
+        try{
+            this.valorLidoMemoria.setText(memoriaPrincipal.ler(posicaoMemoriaSTR));
+        } catch (IllegalAccessError ex) {
+            System.out.println(ex.getMessage());
+            this.posicaoMemoriaLida.setText("");
+            this.posicaoMemoriaLida.setPromptText("Endereço deve estar entre 0 e 4095!");
+        }
     }
 }

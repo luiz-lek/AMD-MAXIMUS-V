@@ -1,9 +1,5 @@
 package Back;
 
-import java.nio.charset.StandardCharsets;
-import java.util.HexFormat;
-import java.util.IllegalFormatCodePointException;
-
 public class CPU {
     private MemoriaPrincipal memP;
     private MemoriaControle memC =  new MemoriaControle();

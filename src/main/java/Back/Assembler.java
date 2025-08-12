@@ -3,7 +3,6 @@ package Back;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.IllegalFormatException;
 
 public class Assembler {
     private static final Map<String, String> tabela = new HashMap<>();
@@ -41,9 +40,7 @@ public class Assembler {
             try {
                 String binario = macroPraBinario(programa[i]);
                 mem.escrever(Integer.toBinaryString(i), binario);
-            } catch (NumberFormatException e){
-                throw e;
-            } catch (IOException e){
+            }  catch (IOException e){
                 throw e;
             }
         }
@@ -58,10 +55,10 @@ public class Assembler {
             opcode.append(instrucao.charAt(i));
         }
 
-        if(!this.tabela.containsKey(opcode.toString())) throw new IOException("Opcode " + opcode + " inválido.");
+        if(!tabela.containsKey(opcode.toString())) throw new IOException("Opcode " + opcode + " inválido.");
 
         StringBuilder binario = new StringBuilder();
-        binario.append(this.tabela.get(opcode.toString()));
+        binario.append(tabela.get(opcode.toString()));
 
         if(i == tam) return binario.toString();
 
@@ -99,7 +96,7 @@ public class Assembler {
             System.out.println("Erro: " + e.getMessage());
         }
 
-        if((operandoINT < 0) || (operandoINT > limite)) throw new IOException("Erro: Operando de estar entre 0 e " +
+        if((operandoINT < 0) || (operandoINT > limite)) throw new IOException("Erro: Operando de estar entre 0 e "
                 + limite + ".");
         numBin = Integer.toBinaryString(operandoINT);
 

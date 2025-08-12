@@ -1,7 +1,5 @@
 package Back;
 
-import java.lang.classfile.instruction.ThrowInstruction;
-
 public class Registradores {
     public Registrador[] registradores = {
             new Registrador("PC"),

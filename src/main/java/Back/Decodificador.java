@@ -4,10 +4,6 @@ public class Decodificador {
     public String entrada = "0000", saida = "0000000000000000";
     private boolean ENC = false;
 
-    public Decodificador() {
-        saida = "0000000000000000";
-    }
-
     public void setEntrada(String entrada) {
         this.entrada = entrada;
     }

@@ -1,8 +1,7 @@
 package Back;
 
 public class MAX {
-    public static int TAMPROG = 100;
-    public static int TAMMEMP = 4096;
-    public static int TAMMEMC = 256;
-    public static int TAMPAL = 16;
+    public static final int TAMMEMP = 4096;
+    public static final int TAMMEMC = 256;
+    public static final int TAMPAL = 16;
 }
