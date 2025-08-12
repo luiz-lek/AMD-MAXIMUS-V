@@ -23,6 +23,7 @@ public class CPU {
     private Decodificador decB = new Decodificador();
     private Decodificador decC = new Decodificador();
     private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
+    private boolean iniciouRD = false, iniciouWR = false; //simulam o atraso de 2 ciclos para leitura e escrita da cpu
 
     public void setMemoriaPrincipal(MemoriaPrincipal memoria){
         this.memP = memoria;
@@ -57,6 +58,16 @@ public class CPU {
     }
 
     public void subciclo3(){
+        if(this.iniciouRD) {
+            this.mbr.setValor(this.memP.ler(this.mar.getValor()));
+            this.iniciouRD = false;
+        }
+
+        if(this.iniciouWR) {
+            this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
+            this.iniciouWR = false;
+        }
+
         this.amux.ativar(this.mbr.getValor(), this.latA.getValor());
         ula.ativar(this.amux.getSaida(), this.latB.getValor());
         this.deslocador.ativar(this.ula.getSaida());
@@ -74,8 +85,8 @@ public class CPU {
         this.mmux.setControle(logica.isSaida());
         this.mmux.ativar();
         this.mpc.setValor(this.mmux.getSaida());
-        if(this.mbr.isRD()) this.mbr.setValor(this.memP.ler(this.mar.getValor()));
-        if(this.mbr.isWR()) this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
+        if(this.mbr.isRD()) this.iniciouRD = true;
+        if(this.mbr.isWR()) this.iniciouWR = true;
     }
 
     public String getMbrValor() {
