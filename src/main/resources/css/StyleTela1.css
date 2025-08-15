@@ -9,6 +9,7 @@ AnchorPane {
 .text-area {
     -fx-background-color: #1f1f1f;
     -fx-text-fill: #ffd700;
+    -fx-prompt-text-fill: #A39458;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: black;

@@ -8,7 +8,7 @@
 <AnchorPane fx:id="pane" prefHeight="641.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Front.ControllerTela1">
    <children>
       <Label fx:id="label" layoutX="149.0" layoutY="14.0" prefHeight="46.0" prefWidth="119.0" text="MACROPROGRAMA" />
-      <TextArea fx:id="macroPrograma" layoutX="74.0" layoutY="58.0" prefHeight="498.0" prefWidth="270.0" />
+      <TextArea fx:id="macroPrograma" layoutX="74.0" layoutY="58.0" prefHeight="498.0" prefWidth="270.0" promptText="Digite aqui..." />
       <Button fx:id="gravarNaMemoria" layoutX="140.0" layoutY="574.0" mnemonicParsing="false" onAction="#carregarPrograma" text="Carregar programa" />
    </children>
 </AnchorPane>

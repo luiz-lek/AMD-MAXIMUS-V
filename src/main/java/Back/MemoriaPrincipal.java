@@ -53,15 +53,17 @@ public class MemoriaPrincipal{
 
         if(sp >= MAX.TAMMEMP) return "Sem elementos na pilha.";
 
-        stack.append("SP -> " + sp + ": " + this.memoria[sp] + "\n");
+        stack.append("SP -> " + sp + ": " + this.memoria[sp]);
         sp++;
 
-        for(int i = sp; i < MAX.TAMMEMP; i++) {
-            stack.append("          " + i + ": "  + this.memoria[i] + "\n");
+        int i;
+
+        for(i = sp; i < MAX.TAMMEMP; i++) {
+            stack.append("\n          " + i + ": "  + this.memoria[i]);
             auxCont++;
         }
 
-        for(int i = auxCont; i < 21; i++) saida.append("\n");
+        for(i = auxCont; i < 22; i++) saida.append("\n");
         saida.append(stack);
 
         return saida.toString();

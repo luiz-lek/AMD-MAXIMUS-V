@@ -109,12 +109,6 @@ public class CPU {
         return this.registradores.registradores[pos].getValor();
     }
 
-    public String getValoresMemoriaRascunho() { return this.registradores.getValoresMemoriaRascunho(); }
-
-
-
-    public MemoriaPrincipal getMemP() { return memP; }
-
     public String getMpc() {
         return mpc.getValor();
     }
