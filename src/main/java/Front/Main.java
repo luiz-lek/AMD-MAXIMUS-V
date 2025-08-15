@@ -1,18 +1,13 @@
 package Front;
 
-import Back.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Main extends Application{
-    public String[] programa;
 
     public static void main(String[] args){
         launch(args);
@@ -21,15 +16,20 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            String css = getClass().getResource("/css/StyleTela1.css").toExternalForm();
+            scene.getStylesheets().add(css);
             primaryStage.setScene(scene);
             primaryStage.setTitle("AMD MAXIMUS-V");
-            //                  primaryStage.setFullScreen(true);
+            primaryStage.setResizable(false);
+            //primaryStage.setFullScreen(true);
+            //primaryStage.setFullScreenExitHint("");
+            //          primaryStage.setFullScreen(true);
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 }
