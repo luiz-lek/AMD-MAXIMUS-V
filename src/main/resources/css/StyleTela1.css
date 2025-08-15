@@ -28,36 +28,26 @@ AnchorPane {
     -fx-border-color: #1f1f1f;
 }
 
-/*.rectangle {*/
-/*    -fx-fill: white;*/
-/*    -fx-opacity: 0.12;*/
-/*    -fx-arc-width: 30;*/
-/*    -fx-arc-height: 30;*/
-/*}*/
-
 .button {
     -fx-background-color: #1f1f1f;
-    -fx-border-color: #2d2d2d;
+    -fx-border-color: #363636;
     -fx-text-fill: #ffd700;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 }
 
-/* Estiliza o trilho da barra de rolagem */
 .scroll-bar:vertical .track {
-    -fx-background-color: #1a1a1a; /* Cinza escuro para o trilho */
+    -fx-background-color: #1a1a1a;
     -fx-background-insets: 0;
     -fx-background-radius: 5em;
 }
 
-/* Estiliza a parte que você arrasta (o "thumb") */
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #ffd700; /* Vermelho do seu tema */
+    -fx-background-color: #ffd700;
     -fx-background-insets: 0;
     -fx-background-radius: 5em;
 }
 
-/* Estiliza os botões de incremento e decremento */
 .scroll-bar:vertical .increment-button,
 .scroll-bar:vertical .decrement-button {
     -fx-background-color: #1f1f1f;
@@ -65,10 +55,9 @@ AnchorPane {
     -fx-background-radius: 5em;
 }
 
-/* Estiliza as setas de incremento e decremento */
 .scroll-bar:vertical .increment-arrow,
 .scroll-bar:vertical .decrement-arrow {
-    -fx-background-color: #ffd700; /* As setas ficam vermelhas */
+    -fx-background-color: #ffd700;
 }
 
 .scroll-pane .track-background {
