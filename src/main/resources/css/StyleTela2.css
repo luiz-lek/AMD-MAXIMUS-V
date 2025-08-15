@@ -80,3 +80,8 @@ AnchorPane {
 #pilha {
     -fx-font-size: 12.5;
 }
+
+Rectangle {
+    -fx-fill: #ADFF2F;
+    -fx-opacity: 0.3;
+}

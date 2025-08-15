@@ -3,6 +3,7 @@ package Front;
 import Back.CPU;
 import Back.MemoriaPrincipal;
 import Back.MicroinstrucaoMap;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 
@@ -24,15 +26,21 @@ public class ControllerTela2 {
     Scene scene, sceneVoltar;
 
     @FXML
-    private Button voltarTela1, proximaMic, lerMemoria;
+    private Button voltarTela1, proximaMic, lerMemoria, pularMacro;
     @FXML
     private TextArea macroprograma, microinstrucoes, pilha;
     @FXML
     private TextField PC, AC, SP, IR, TIR, MIR, MBR, MAR, MPC, buscarMemoria, lidoPosicaoMemoria;
+    @FXML
+    private Rectangle highlight;
+    @FXML
+    TranslateTransition translate = new TranslateTransition();
 
-    private String macroPrograma;
     private CPU cpu;
     private MemoriaPrincipal memoriaPrincipal;
+
+    private String macroPrograma;
+    private int linhaAtual;
 
     public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem) {
         this.macroPrograma = macroPrograma;
@@ -40,11 +48,13 @@ public class ControllerTela2 {
         this.cpu = cpu;
         this.memoriaPrincipal = mem;
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
+        this.translate.setNode(this.highlight);
         executarCicloAux();
     }
 
 
     public void executarCiclo(ActionEvent e) {
+        if("0".equals(this.cpu.getMpcValor())) this.pularMacro();
         this.executarCicloAux();
     }
 
@@ -68,8 +78,16 @@ public class ControllerTela2 {
         this.TIR.setText(this.cpu.getValorRegistrador(4));
     }
 
+    private void pularMacro() {
+        int proxPos = Integer.parseInt(this.cpu.getValorRegistrador(0), 2);
+        this.translate.setByY(18 * (proxPos - this.linhaAtual));
+        System.out.println("Moveu.");
+        this.translate.play();
+        this.linhaAtual = Integer.parseInt(this.cpu.getValorRegistrador(0), 2);
+    }
+
     @FXML
-    private void confirmarVoltar (ActionEvent e) throws IOException{
+    private void confirmarVoltar (ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2Voltar.fxml"));
         this.root = loader.load();
         ControllerTela2Voltar controllerTela2Voltar = loader.getController();

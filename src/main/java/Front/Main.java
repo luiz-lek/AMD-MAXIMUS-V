@@ -30,3 +30,12 @@ public class Main extends Application{
         }
     }
 }
+
+/*
+loco 5
+push
+loco 6
+push
+pop
+halt
+*/
