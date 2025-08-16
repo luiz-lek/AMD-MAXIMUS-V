@@ -34,12 +34,12 @@ public class ControllerTela1 {
     @FXML
     private void carregarPrograma(ActionEvent e) throws IOException {
         try {
-            this.escreverProgramaMemoria();
+            String[] programaArray= this.escreverProgramaMemoria();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2.fxml"));
             this.root = loader.load();
             ControllerTela2 controllerTela2 = loader.getController();
-            controllerTela2.setConteudo(macroPrograma.getText(), this.cpu, this.memoriaPrincipal);
+            controllerTela2.setConteudo(macroPrograma.getText().toUpperCase(), programaArray, this.cpu, this.memoriaPrincipal);
             this.stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stage);
             this.scene = new Scene(this.root);
@@ -58,14 +58,20 @@ public class ControllerTela1 {
         this.macroPrograma.positionCaret(macroPrograma.length());
     }
 
-    public void escreverProgramaMemoria() throws IOException {
+    public String[] escreverProgramaMemoria() throws IOException {
         this.cpu = new CPU();
         this.memoriaPrincipal = new MemoriaPrincipal();
 
 
         String[] programa = macroPrograma.getText().toUpperCase().split("\\r?\\n");
 
+        int tamProg = programa.length;
+
         this.assembler.montar(this.memoriaPrincipal, programa, programa.length);
+
+        if("HALT".equals(programa[tamProg - 1])) tamProg--;
+
+        return programa;
     }
 
     private void telaFalha(ActionEvent e) throws IOException {

@@ -17,13 +17,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.shape.Rectangle;
-
 import java.io.IOException;
 
 public class ControllerTela2 {
-    Parent root, rootVoltar;
+    Parent root;
     Stage stage, stageTelaAtual;
-    Scene scene, sceneVoltar;
+    Scene scene;
 
     @FXML
     private Button voltarTela1, proximaMic, lerMemoria, pularMacro;
@@ -32,41 +31,48 @@ public class ControllerTela2 {
     @FXML
     private TextField PC, AC, SP, IR, TIR, MIR, MBR, MAR, MPC, buscarMemoria, lidoPosicaoMemoria;
     @FXML
-    private Rectangle highlight;
+    private Rectangle highlightMacro, highlightMic;
     @FXML
-    TranslateTransition translate = new TranslateTransition();
+    TranslateTransition translateMacro = new TranslateTransition(),
+            translateMic = new TranslateTransition();
 
     private CPU cpu;
     private MemoriaPrincipal memoriaPrincipal;
 
     private String macroPrograma;
-    private int linhaAtual;
+    private String[] macroProgramaArray;
+    private int linhaAtual, qtdLinhas = 0;
 
-    public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem) {
+    public void setConteudo(String macroPrograma, String[] macroProgramaArray, CPU cpu, MemoriaPrincipal mem) {
         this.macroPrograma = macroPrograma;
+        this.macroProgramaArray = macroProgramaArray;
+        this.qtdLinhas = macroProgramaArray.length;
         this.macroprograma.setText(macroPrograma);
         this.cpu = cpu;
         this.memoriaPrincipal = mem;
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
-        this.translate.setNode(this.highlight);
-        executarCicloAux();
+        this.translateMacro.setNode(this.highlightMacro);
+        this.translateMic.setNode(this.highlightMic);
+        this.atualizarTela();
     }
 
 
     public void executarCiclo(ActionEvent e) {
-        if("0".equals(this.cpu.getMpcValor())) this.pularMacro();
-        this.executarCicloAux();
+        this.cpu.executarCiclo();
+        this.atualizarTela();
     }
 
-    private void executarCicloAux(){
+    private void atualizarTela() {
         StringBuilder temp = new StringBuilder();
         temp.append(this.microinstrucoes.getText());
         temp.append(MicroinstrucaoMap.getDescricao(this.cpu.getMpc()) + "\n");
+
         this.microinstrucoes.setText(temp.toString());
         this.microinstrucoes.positionCaret(microinstrucoes.getText().length());
         this.microinstrucoes.setScrollTop(Double.MAX_VALUE);
-        this.cpu.executarCiclo();
         this.pilha.setText(this.memoriaPrincipal.lerStack(this.cpu.getValorRegistrador(2)));
+        this.pilha.positionCaret(this.pilha.getText().length());
+        this.pilha.setScrollTop(Double.MAX_VALUE);
         this.MBR.setText(this.cpu.getMbrValor());
         this.MAR.setText(this.cpu.getMarValorHexadecimal());
         this.MIR.setText(this.cpu.getMir());
@@ -76,14 +82,40 @@ public class ControllerTela2 {
         this.SP.setText(this.cpu.getValorRegistrador(2));
         this.IR.setText(this.cpu.getValorRegistrador(3));
         this.TIR.setText(this.cpu.getValorRegistrador(4));
+
+        if("0".equals(this.cpu.getMpcValor())) this.pularMacro();
     }
 
     private void pularMacro() {
         int proxPos = Integer.parseInt(this.cpu.getValorRegistrador(0), 2);
-        this.translate.setByY(18 * (proxPos - this.linhaAtual));
-        System.out.println("Moveu.");
-        this.translate.play();
-        this.linhaAtual = Integer.parseInt(this.cpu.getValorRegistrador(0), 2);
+
+        if(proxPos >= this.qtdLinhas) {
+            this.proximaMic.setDisable(true);
+            if(!"HALT".equals(macroProgramaArray[qtdLinhas-1])) return;
+        }
+
+
+        this.translateMacro.setByY(18 * (proxPos - this.linhaAtual));
+        this.translateMacro.play();
+
+        System.out.println("Moveu highlight macro.");
+
+        this.linhaAtual = proxPos;
+    }
+
+    @FXML
+    public void lerPosicaoMemoria(ActionEvent e) throws IOException {
+        int posicaoMemoria = Integer.parseInt(buscarMemoria.getText());
+
+        String posicaoMemoriaSTR = Integer.toBinaryString(posicaoMemoria);
+
+        try{
+            this.lidoPosicaoMemoria.setText(memoriaPrincipal.ler(posicaoMemoriaSTR));
+        } catch (IllegalAccessError ex) {
+            System.out.println(ex.getMessage());
+            this.buscarMemoria.setText("");
+            this.buscarMemoria.setPromptText("Endereço deve estar entre 0 e 4095!");
+        }
     }
 
     @FXML
@@ -102,24 +134,6 @@ public class ControllerTela2 {
         this.stage.initOwner(((Node) e.getSource()).getScene().getWindow());
         this.stage.initStyle(StageStyle.UNDECORATED);
         this.stage.showAndWait();
-    }
-
-    @FXML
-    public void voltarTela1 (ActionEvent e) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1.fxml"));
-            Parent root = loader.load();
-            ControllerTela1 controllerTela1 = loader.getController();
-            controllerTela1.setMacroPrograma(macroPrograma);
-            this.stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            this.scene = new Scene(root);
-            String css = getClass().getResource("/css/StyleTela1.css").toExternalForm();
-            this.scene.getStylesheets().add(css);
-            this.stage.setScene(this.scene);
-            this.stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
     public void setStageAtual (Stage stage) { this.stageTelaAtual = stage; }
