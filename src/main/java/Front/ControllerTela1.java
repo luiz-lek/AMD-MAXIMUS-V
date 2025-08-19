@@ -48,7 +48,6 @@ public class ControllerTela1 {
             this.stage.setScene(this.scene);
             this.stage.show();
         } catch (IOException ex) {
-            ex.printStackTrace();
             this.telaFalha(e);
         }
     }
@@ -62,14 +61,9 @@ public class ControllerTela1 {
         this.cpu = new CPU();
         this.memoriaPrincipal = new MemoriaPrincipal();
 
-
         String[] programa = macroPrograma.getText().toUpperCase().split("\\r?\\n");
 
-        int tamProg = programa.length;
-
         this.assembler.montar(this.memoriaPrincipal, programa, programa.length);
-
-        if("HALT".equals(programa[tamProg - 1])) tamProg--;
 
         return programa;
     }

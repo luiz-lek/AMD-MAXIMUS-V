@@ -25,22 +25,18 @@ public class ControllerTela2Voltar {
         this.fecharJanela(e);
         this.stageTela2.close();
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1.fxml"));
-            Parent root = loader.load();
-            ControllerTela1 controllerTela1 = loader.getController();
-            controllerTela1.setMacroPrograma(this.macroPrograma);
-            this.stage = new Stage();
-            this.scene = new Scene(root);
-            String css = getClass().getResource("/css/StyleTela1.css").toExternalForm();
-            this.scene.getStylesheets().add(css);
-            this.stage.setScene(this.scene);
-            this.stage.setTitle("AMD MAXIMUS-V");
-            this.stage.setResizable(false);
-            this.stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1.fxml"));
+        Parent root = loader.load();
+        ControllerTela1 controllerTela1 = loader.getController();
+        controllerTela1.setMacroPrograma(this.macroPrograma);
+        this.stage = new Stage();
+        this.scene = new Scene(root);
+        String css = getClass().getResource("/css/StyleTela1.css").toExternalForm();
+        this.scene.getStylesheets().add(css);
+        this.stage.setScene(this.scene);
+        this.stage.setTitle("AMD MAXIMUS-V");
+        this.stage.setResizable(false);
+        this.stage.show();
     }
 
     @FXML

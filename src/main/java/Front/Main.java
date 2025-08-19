@@ -15,19 +15,15 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            String css = getClass().getResource("/css/StyleTela1.css").toExternalForm();
-            scene.getStylesheets().add(css);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("AMD MAXIMUS-V");
-            primaryStage.setResizable(false);
-            primaryStage.show();
-        } catch (IOException e) {
-            throw e;
-        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        String css = getClass().getResource("/css/StyleTela1.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("AMD MAXIMUS-V");
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 }
 

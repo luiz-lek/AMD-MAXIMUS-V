@@ -1,8 +1,5 @@
 package Back;
 
-import java.security.PublicKey;
-import java.util.IllegalFormatException;
-
 public class Microinstrucao {
     private String mic;
 

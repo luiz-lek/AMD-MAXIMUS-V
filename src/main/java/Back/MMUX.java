@@ -19,7 +19,7 @@ public class MMUX {
 
     public void ativar(){
         short saidaSH = (this.controle) ? this.ADDR : this.MPCIncrementado;
-        this.saida = String.format("%16s", Integer.toBinaryString(saidaSH & 0xFFFF)).replace(' ', '0');
+        this.saida = ConversaoTipos.shorToString(saidaSH);
     }
 
     public String getSaida() { return saida; }

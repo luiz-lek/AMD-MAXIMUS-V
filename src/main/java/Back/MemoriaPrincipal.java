@@ -1,5 +1,6 @@
 package Back;
 
+import java.io.IOException;
 import java.util.stream.IntStream;
 
 public class MemoriaPrincipal{
@@ -11,24 +12,18 @@ public class MemoriaPrincipal{
 
     public String ler(String posicao) throws IllegalAccessError {
         short pos = Short.parseShort(posicao, 2);
-        try{
-            validarPosicao(pos);
-            return this.memoria[pos];
-        } catch(IllegalAccessError e){
-            throw e;
-        }
+
+        validarPosicao(pos);
+        return this.memoria[pos];
     }
 
     public void escrever(String posicao, String palavra)
             throws IllegalAccessError, IllegalAccessError {
         short pos = Short.parseShort(posicao, 2);
-        try{
-            validarPosicao(pos);
-            validarPalavra(palavra);
-            this.memoria[pos] = palavra;
-        } catch(IllegalArgumentException | IllegalAccessError e){
-            throw e;
-        }
+
+        validarPosicao(pos);
+        validarPalavra(palavra);
+        this.memoria[pos] = palavra;
     }
 
     private void validarPosicao(short pos) throws IllegalAccessError{
@@ -53,13 +48,13 @@ public class MemoriaPrincipal{
 
         if(sp >= MAX.TAMMEMP) return "Sem elementos na pilha.";
 
-        stack.append("SP -> " + sp + ": " + this.memoria[sp]);
+        stack.append("SP -> ").append(sp).append(": ").append(this.memoria[sp]);
         sp++;
 
         int i;
 
         for(i = sp; i < MAX.TAMMEMP; i++) {
-            stack.append("\n          " + i + ": "  + this.memoria[i]);
+            stack.append("\n          " + i).append(": ").append(this.memoria[i]);
             auxCont++;
         }
 

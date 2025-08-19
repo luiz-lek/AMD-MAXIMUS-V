@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public class ControllerTela2 {
     Parent root;
-    Stage stage, stageTelaAtual;
+    Stage stageAtual, stageConfirmarVoltar;
     Scene scene;
 
     @FXML
@@ -41,12 +41,12 @@ public class ControllerTela2 {
 
     private String macroPrograma;
     private String[] macroProgramaArray;
-    private int linhaAtual, qtdLinhas = 0;
+    private int linhaAtualMacro, qtdLinhasMacro = 0;
 
-    public void setConteudo(String macroPrograma, String[] macroProgramaArray, CPU cpu, MemoriaPrincipal mem) {
+    public void setConteudo(String macroPrograma, String[] macroProgramaArray, CPU cpu, MemoriaPrincipal mem) throws IOException{
         this.macroPrograma = macroPrograma;
         this.macroProgramaArray = macroProgramaArray;
-        this.qtdLinhas = macroProgramaArray.length;
+        this.qtdLinhasMacro = macroProgramaArray.length;
         this.macroprograma.setText(macroPrograma);
         this.cpu = cpu;
         this.memoriaPrincipal = mem;
@@ -57,15 +57,15 @@ public class ControllerTela2 {
     }
 
 
-    public void executarCiclo(ActionEvent e) {
+    public void executarCiclo(ActionEvent e) throws  IOException {
         this.cpu.executarCiclo();
         this.atualizarTela();
     }
 
-    private void atualizarTela() {
+    private void atualizarTela() throws IOException {
         StringBuilder temp = new StringBuilder();
         temp.append(this.microinstrucoes.getText());
-        temp.append(MicroinstrucaoMap.getDescricao(this.cpu.getMpc()) + "\n");
+        temp.append(MicroinstrucaoMap.getDescricao(this.cpu.getMpc())).append("\n");
 
         this.microinstrucoes.setText(temp.toString());
         this.microinstrucoes.positionCaret(microinstrucoes.getText().length());
@@ -89,18 +89,18 @@ public class ControllerTela2 {
     private void pularMacro() {
         int proxPos = Integer.parseInt(this.cpu.getValorRegistrador(0), 2);
 
-        if(proxPos >= this.qtdLinhas) {
+        if(proxPos >= this.qtdLinhasMacro) {
             this.proximaMic.setDisable(true);
-            if(!"HALT".equals(macroProgramaArray[qtdLinhas-1])) return;
+            if(!"HALT".equals(macroProgramaArray[qtdLinhasMacro-1])) return;
         }
 
 
-        this.translateMacro.setByY(18 * (proxPos - this.linhaAtual));
+        this.translateMacro.setByY(18 * (proxPos - this.linhaAtualMacro));
         this.translateMacro.play();
 
         System.out.println("Moveu highlight macro.");
 
-        this.linhaAtual = proxPos;
+        this.linhaAtualMacro = proxPos;
     }
 
     @FXML
@@ -124,17 +124,17 @@ public class ControllerTela2 {
         this.root = loader.load();
         ControllerTela2Voltar controllerTela2Voltar = loader.getController();
         controllerTela2Voltar.setMacroPrograma(this.macroPrograma);
-        controllerTela2Voltar.setStage2( this.stageTelaAtual );
-        this.stage = new Stage();
+        controllerTela2Voltar.setStage2( this.stageConfirmarVoltar );
+        this.stageAtual = new Stage();
         this.scene = new Scene(this.root);
         String css = getClass().getResource("/css/StyleTela1Falha.css").toExternalForm();
         this.scene.getStylesheets().add(css);
-        this.stage.setScene(this.scene);
-        this.stage.initModality(Modality.APPLICATION_MODAL);
-        this.stage.initOwner(((Node) e.getSource()).getScene().getWindow());
-        this.stage.initStyle(StageStyle.UNDECORATED);
-        this.stage.showAndWait();
+        this.stageAtual.setScene(this.scene);
+        this.stageAtual.initModality(Modality.APPLICATION_MODAL);
+        this.stageAtual.initOwner(((Node) e.getSource()).getScene().getWindow());
+        this.stageAtual.initStyle(StageStyle.UNDECORATED);
+        this.stageAtual.showAndWait();
     }
 
-    public void setStageAtual (Stage stage) { this.stageTelaAtual = stage; }
+    public void setStageAtual (Stage stage) { this.stageConfirmarVoltar = stage; }
 }

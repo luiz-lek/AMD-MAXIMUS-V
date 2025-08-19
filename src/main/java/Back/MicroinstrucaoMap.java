@@ -1,5 +1,6 @@
 package Back;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,8 +90,8 @@ public class MicroinstrucaoMap {
         mapa.put(78, "a := a + 1; goto 75;");
     }
 
-    public static String getDescricao(String linha) {
-        int linhaINT = Integer.parseInt(linha, 2);
+    public static String getDescricao(String linha) throws IOException {
+        int linhaINT = ConversaoTipos.bitsToInt(linha, 16);
         return mapa.getOrDefault(linhaINT, "Instrução não encontrada");
     }
 }

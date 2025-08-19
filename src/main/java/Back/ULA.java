@@ -24,7 +24,7 @@ public class ULA {
         this.zBit = (c == 0);
         this.nBit = (c < 0);
 
-        this.saida = String.format("%16s", Integer.toBinaryString(c & 0xFFFF)).replace(' ', '0');
+        this.saida = ConversaoTipos.shorToString(c);
     }
 
     private short soma(short a, short b) {

@@ -52,11 +52,11 @@ public class Registradores {
         for(int i = 0; i < 15; i++) {
             nomeReg = this.registradores[i].getNome();
             for(int j = nomeReg.length(); j < 5; j++) s.append(" ");
-            s.append(this.registradores[i].getNome() + ": ");
-            s.append(this.registradores[i].getValor() + "\n");
+            s.append(this.registradores[i].getNome()).append(": ");
+            s.append(this.registradores[i].getValor()).append("\n");
         }
 
-        s.append("    " + this.registradores[15].getNome() + ": ");
+        s.append(this.registradores[15].getNome()).append(": ");
         s.append(this.registradores[15].getValor());
 
         return s.toString();

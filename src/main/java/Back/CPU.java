@@ -1,8 +1,10 @@
 package Back;
 
+import java.io.IOException;
+
 public class CPU {
     private MemoriaPrincipal memP;
-    private MemoriaControle memC =  new MemoriaControle();
+    private final MemoriaControle memC =  new MemoriaControle();
     private Registradores registradores = new Registradores();
     private MAR mar = new MAR("MAR");
     private MBR mbr = new MBR("MBR");
@@ -19,13 +21,13 @@ public class CPU {
     private Decodificador decB = new Decodificador();
     private Decodificador decC = new Decodificador();
     private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
-    private boolean iniciouRD = false, iniciouWR = false; //simulam o atraso de 2 ciclos para leitura e escrita da cpu
+    private boolean rdIniciado = false, wrIniciado = false; //simulam o atraso de 2 ciclos para leitura e escrita na memória pela cpu.
 
     public void setMemoriaPrincipal(MemoriaPrincipal memoria){
         this.memP = memoria;
     }
 
-    public void executarCiclo(){
+    public void executarCiclo() throws IOException {
         this.subciclo1();
         this.subciclo2();
         this.subciclo3();
@@ -33,10 +35,10 @@ public class CPU {
     }
 
     public void subciclo1(){
-        this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); //passa a instrução em mem[mpc] para o mir
+        this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); //passa a instrução em mem[mpc] para o mir e estabiliza suas saídas.
     }
 
-    public void subciclo2(){
+    public void subciclo2() throws IOException { //manda os sinais de controle do mir para todos os componentes.
         this.amux.setControle(this.mir.getAMUX());
         this.logica.setCOND(this.mir.getCOND());
         this.ula.setControle(this.mir.getALU());
@@ -53,15 +55,17 @@ public class CPU {
         this.latA.setValor(registradores.getValor(decA.decodificar()));
     }
 
-    public void subciclo3(){
-        if(this.iniciouRD) {
-            this.mbr.setValor(this.memP.ler(this.mar.getValor()));
-            this.iniciouRD = false;
+    public void subciclo3() {
+        if(this.rdIniciado) {// Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
+            this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor é passado para o mbr
+            this.mbr.setRD("0");
+            this.rdIniciado = false;
         }
 
-        if(this.iniciouWR) {
+        if(this.wrIniciado) { //mesmo que o bloco a cima, mas para escrita
             this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
-            this.iniciouWR = false;
+            this.mbr.setWR("0");
+            this.wrIniciado = false;
         }
 
         this.amux.ativar(this.mbr.getValor(), this.latA.getValor());
@@ -70,7 +74,7 @@ public class CPU {
         if(mar.isAtivado()) mar.setValor(latB.getValor());
     }
 
-    public void subciclo4(){
+    public void subciclo4() throws IOException {
         if(decC.isENC()) this.registradores.setValor(decC.decodificar(), deslocador.getSaida());
         if(this.mbr.isAtivado()) mbr.setValor(this.deslocador.getSaida());
         this.mbr.setRD(this.mir.getRD());
@@ -81,27 +85,20 @@ public class CPU {
         this.mmux.setControle(logica.isSaida());
         this.mmux.ativar();
         this.mpc.setValor(this.mmux.getSaida());
-        if(this.mbr.isRD()) this.iniciouRD = true;
-        if(this.mbr.isWR()) this.iniciouWR = true;
+        if(this.mbr.isRD()) this.rdIniciado = true;
+        if(this.mbr.isWR()) this.wrIniciado = true;
     }
 
     public String getMbrValor() {
-        return mbr.getValor();
+        return this.mbr.getValor();
     }
 
     public String getMarValorHexadecimal() {
-        String valorBinario = mar.getValor();
-
-        int valorNumerico;
-
-        valorNumerico = Integer.parseInt(valorBinario, 2);
-
-        return String.format("%#04x", valorNumerico);
+        return ConversaoTipos.binaryToHexadecimal(this.mar.getValor());
     }
 
-    public String getMpcValor() {
-        int mpc = Integer.parseInt(this.mpc.getValor(), 2);
-        return Integer.toString(mpc);
+    public String getMpcValor() throws IOException {
+        return Integer.toString(ConversaoTipos.bitsToInt(this.mpc.getValor(), 16));
     }
 
     public String getValorRegistrador(int pos) throws IllegalAccessError{
