@@ -139,7 +139,7 @@
             <Font name="Monospaced Regular" size="17.0" />
          </font>
       </Label>
-      <Button fx:id="lerMemoria" layoutX="697.0" layoutY="537.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="119.0" text="Ler na memória" />
+      <Button fx:id="lerMemoria" layoutX="697.0" layoutY="537.0" mnemonicParsing="false" onAction="#lerPosicaoMemoria" prefHeight="66.0" prefWidth="119.0" text="Ler na memória" />
       <TextField fx:id="buscarMemoria" layoutX="474.0" layoutY="537.0" prefHeight="26.0" prefWidth="214.0" promptText="Digite um valor entre 0 e 4095..." />
       <TextField fx:id="lidoPosicaoMemoria" editable="false" layoutX="474.0" layoutY="579.0" prefHeight="26.0" prefWidth="214.0" />
       <Label layoutX="27.0" layoutY="7.0" text="Voltar para macroprograma">
