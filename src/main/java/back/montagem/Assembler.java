@@ -1,4 +1,4 @@
-package back.macroprograma;
+package back.montagem;
 
 import back.cpu.MemoriaPrincipal;
 
@@ -35,25 +35,52 @@ public class Assembler {
         tabela.put("SWAP", "1111101000000000");
     }
 
+    public static Map<Integer, Integer> correspondencia = new HashMap<>();
+    private Map<String, Integer> flags;
+
     public void montar(MemoriaPrincipal mem, String[] programa, int tamProg) throws IOException {
+        flags = new HashMap<>();
+
         if(tamProg == 0) throw new IOException("Programa vazio");
+        int posEscMem = 0;
+
         for(int i = 0; i < tamProg; i++){
-            try {
-                String binario = macroPraBinario(programa[i]);
-                mem.escrever(Integer.toBinaryString(i), binario);
-            }  catch (IOException e){
-                throw e;
+            String programaTrim = programa[i].trim();
+            programa[i] = programaTrim;
+            String binario = this.macroPraBinario(programa[i], posEscMem);
+
+            if("".equals(binario)) continue;
+
+            correspondencia.put(posEscMem, i);
+
+            if(binario != null) {
+                mem.escrever(Integer.toBinaryString(posEscMem), binario);
+                posEscMem++;
             }
         }
+
+        System.out.println(correspondencia.toString());
+        System.out.println(flags.toString());
     }
 
-    public String macroPraBinario(String instrucao) throws IOException {
+    public String macroPraBinario(String instrucao, int posEscMem) throws IOException {
+        if(instrucao.isEmpty()) return "";
+
         StringBuilder opcode = new StringBuilder();
         int tam = instrucao.length(), i = 0;
 
         for(; i < tam; i++){
-            if(instrucao.charAt(i) == ' ') break;
+            if((instrucao.charAt(i) == ' ') || (instrucao.charAt(i) == ':')) break;
             opcode.append(instrucao.charAt(i));
+        }
+
+        if((i < tam) && (instrucao.charAt(i) == ':')){
+            String op = opcode.toString();
+
+            if(flags.containsKey(op))  throw new IOException("Flag já foi usada" + op);
+            flags.put(opcode.toString(), posEscMem);
+
+            return null;
         }
 
         if(!tabela.containsKey(opcode.toString())) throw new IOException("Opcode " + opcode + " inválido.");
@@ -63,19 +90,15 @@ public class Assembler {
 
         if(i == tam) return binario.toString();
 
-        try {
-            String binarioSTR =  binario.toString();
-            int tamBin = binarioSTR.length();
+        String binarioSTR =  binario.toString();
+        int tamBin = binarioSTR.length();
 
-            if (tamBin == 8) {//opcode de 8 bits
-                binario.append(operandoPraBinario(i, tam, 255, 8, instrucao));
-            } else if (binarioSTR.equals("0111") || binarioSTR.equals("0000000000000000")) {// instrução sem operando
-                binario.append(operandoPraBinario(i, tam, 4095, 12, instrucao));
-            } else {
-                binario.append(operandoPraBinario(i, tam, Integer.MAX_VALUE, 12, instrucao));
-            }
-        } catch (IllegalArgumentException e) {
-            throw e;
+        if (tamBin == 8) {//opcode de 8 bits
+            binario.append(operandoPraBinario(i, tam, 255, 8, instrucao));
+        } else if (binarioSTR.equals("0111") || binarioSTR.equals("0000000000000000")) {// instrução sem operando
+            binario.append(operandoPraBinario(i, tam, 4095, 12, instrucao));
+        } else {
+            binario.append(operandoPraBinario(i, tam, Integer.MAX_VALUE, 12, instrucao));
         }
 
         return binario.toString();
@@ -85,7 +108,7 @@ public class Assembler {
         StringBuilder operandoSTR = new StringBuilder();
         StringBuilder numFinal = new StringBuilder();
         String numBin;
-        int operandoINT = -1;
+        int operandoINT;
 
         while(instrucao.charAt(i) == ' ') i++;
 
@@ -94,7 +117,11 @@ public class Assembler {
         try {
             operandoINT = Integer.parseInt(operandoSTR.toString());
         } catch (NumberFormatException e) {
-            System.out.println("Erro: " + e.getMessage());
+            Integer op = flags.get(operandoSTR.toString());
+
+            if(op == null) throw new IOException("Nenhum valor associado a flag " + operandoSTR.toString());
+
+            operandoINT = op;
         }
 
         if((operandoINT < 0) || (operandoINT > limite)) throw new IOException("Erro: Operando de estar entre 0 e "

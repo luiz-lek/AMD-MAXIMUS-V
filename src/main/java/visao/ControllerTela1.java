@@ -1,6 +1,6 @@
 package visao;
 
-import back.macroprograma.Assembler;
+import back.montagem.Assembler;
 import back.cpu.CPU;
 import back.cpu.MemoriaPrincipal;
 import javafx.event.ActionEvent;
@@ -36,6 +36,8 @@ public class ControllerTela1 {
         try {
             String[] programaArray= this.escreverProgramaMemoria();
 
+            this.cpu = new CPU();
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2.fxml"));
             this.root = loader.load();
             ControllerTela2 controllerTela2 = loader.getController();
@@ -59,7 +61,6 @@ public class ControllerTela1 {
     }
 
     public String[] escreverProgramaMemoria() throws IOException {
-        this.cpu = new CPU();
         this.memoriaPrincipal = new MemoriaPrincipal();
 
         String[] programa = macroPrograma.getText().toUpperCase().split("\\r?\\n");

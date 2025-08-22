@@ -4,6 +4,7 @@ import back.comum.ConversaoTipos;
 import back.cpu.CPU;
 import back.cpu.MemoriaPrincipal;
 import back.comum.MicroinstrucaoMap;
+import back.montagem.Assembler;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -87,12 +88,14 @@ public class ControllerTela2 {
         if("0".equals(this.cpu.getValorMPC())) this.pularMacro();
     }
 
-    private void pularMacro() {
-        int proxPos = Integer.parseInt(this.cpu.getValorRegistrador(0), 2);
+    private void pularMacro() throws IOException {
+        Integer proxPos = Assembler.correspondencia.get(ConversaoTipos.binarioToInt(this.cpu.getValorRegistrador(0), 16));
 
-        if(proxPos >= this.qtdLinhasMacro) {
+        System.out.println("ProxPos: " + proxPos);
+
+        if((proxPos == null) || (proxPos > this.qtdLinhasMacro)) {
             this.proximaMic.setDisable(true);
-            if(!"HALT".equals(macroProgramaArray[qtdLinhasMacro-1])) return;
+            return;
         }
 
 
