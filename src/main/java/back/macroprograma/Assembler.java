@@ -1,4 +1,6 @@
-package Back;
+package back.macroprograma;
+
+import back.cpu.MemoriaPrincipal;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,7 +33,6 @@ public class Assembler {
         tabela.put("POP", "1111011000000000");
         tabela.put("RETN", "1111100000000000");
         tabela.put("SWAP", "1111101000000000");
-        tabela.put("HALT", "0000000000000000");
     }
 
     public void montar(MemoriaPrincipal mem, String[] programa, int tamProg) throws IOException {

@@ -1,4 +1,4 @@
-package Back;
+package back.cpu;
 
 public class Registradores {
     public Registrador[] registradores = {

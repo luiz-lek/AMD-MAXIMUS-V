@@ -4,6 +4,6 @@ module com.example.amdmaximusv {
     requires jdk.unsupported.desktop;
 
 
-    opens Front to javafx.fxml;
-    exports Front;
+    opens visao to javafx.fxml;
+    exports visao;
 }

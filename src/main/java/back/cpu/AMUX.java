@@ -1,4 +1,4 @@
-package Back;
+package back.cpu;
 
 public class AMUX {
     private String saida = "0000000000000000";

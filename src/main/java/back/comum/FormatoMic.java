@@ -1,4 +1,4 @@
-package Back;
+package back.comum;
 
 public class FormatoMic { //armazena os intervalos de cada campo da microinstrução
     public static final int AMUX = 0;

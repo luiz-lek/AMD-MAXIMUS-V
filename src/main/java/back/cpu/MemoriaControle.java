@@ -1,4 +1,6 @@
-package Back;
+package back.cpu;
+
+import back.comum.Microinstrucao;
 
 public class MemoriaControle {
     private final Microinstrucao[] memoria = {

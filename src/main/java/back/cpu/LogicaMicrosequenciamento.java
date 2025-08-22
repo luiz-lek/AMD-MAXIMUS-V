@@ -1,4 +1,4 @@
-package Back;
+package back.cpu;
 
 public class LogicaMicrosequenciamento {
     private boolean saida = false, nBit = false, zBit = false;

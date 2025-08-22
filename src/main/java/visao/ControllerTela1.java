@@ -1,8 +1,8 @@
-package Front;
+package visao;
 
-import Back.Assembler;
-import Back.CPU;
-import Back.MemoriaPrincipal;
+import back.macroprograma.Assembler;
+import back.cpu.CPU;
+import back.cpu.MemoriaPrincipal;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +46,7 @@ public class ControllerTela1 {
             String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
             this.scene.getStylesheets().add(css);
             this.stage.setScene(this.scene);
+            this.stage.centerOnScreen();
             this.stage.show();
         } catch (IOException ex) {
             this.telaFalha(e);

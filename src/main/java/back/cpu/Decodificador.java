@@ -1,4 +1,4 @@
-package Back;
+package back.cpu;
 
 import java.io.IOException;
 

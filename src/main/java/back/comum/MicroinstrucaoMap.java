@@ -1,4 +1,4 @@
-package Back;
+package back.comum;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -91,7 +91,7 @@ public class MicroinstrucaoMap {
     }
 
     public static String getDescricao(String linha) throws IOException {
-        int linhaINT = ConversaoTipos.bitsToInt(linha, 16);
+        int linhaINT = ConversaoTipos.binarioToInt(linha, 16);
         return mapa.getOrDefault(linhaINT, "Instrução não encontrada");
     }
 }

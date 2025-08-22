@@ -1,4 +1,6 @@
-package Back;
+package back.cpu;
+
+import back.comum.ConversaoTipos;
 
 import java.io.IOException;
 

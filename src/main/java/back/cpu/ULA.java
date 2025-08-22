@@ -1,4 +1,6 @@
-package Back;
+package back.cpu;
+
+import back.comum.ConversaoTipos;
 
 public class ULA {
     private String saida = "0000000000000000";
@@ -24,7 +26,7 @@ public class ULA {
         this.zBit = (c == 0);
         this.nBit = (c < 0);
 
-        this.saida = ConversaoTipos.shorToString(c);
+        this.saida = ConversaoTipos.shortToString(c);
     }
 
     private short soma(short a, short b) {

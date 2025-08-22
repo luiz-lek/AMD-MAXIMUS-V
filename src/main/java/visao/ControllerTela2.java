@@ -1,8 +1,9 @@
-package Front;
+package visao;
 
-import Back.CPU;
-import Back.MemoriaPrincipal;
-import Back.MicroinstrucaoMap;
+import back.comum.ConversaoTipos;
+import back.cpu.CPU;
+import back.cpu.MemoriaPrincipal;
+import back.comum.MicroinstrucaoMap;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,16 +75,16 @@ public class ControllerTela2 {
         this.pilha.positionCaret(this.pilha.getText().length());
         this.pilha.setScrollTop(Double.MAX_VALUE);
         this.MBR.setText(this.cpu.getMbrValor());
-        this.MAR.setText(this.cpu.getMarValorHexadecimal());
+        this.MAR.setText(this.cpu.getValorHexadecimalMar());
         this.MIR.setText(this.cpu.getMir());
-        this.MPC.setText(this.cpu.getMpcValor());
-        this.PC.setText(this.cpu.getValorRegistrador(0));
-        this.AC.setText(this.cpu.getValorRegistrador(1));
-        this.SP.setText(this.cpu.getValorRegistrador(2));
+        this.MPC.setText(this.cpu.getValorMPC());
+        this.PC.setText(ConversaoTipos.binarioToInt(this.cpu.getValorRegistrador(0), 16, true));
+        this.AC.setText(ConversaoTipos.binarioToInt(this.cpu.getValorRegistrador(1), 16, true));
+        this.SP.setText(ConversaoTipos.binarioToInt(this.cpu.getValorRegistrador(2), 16, true));
         this.IR.setText(this.cpu.getValorRegistrador(3));
         this.TIR.setText(this.cpu.getValorRegistrador(4));
 
-        if("0".equals(this.cpu.getMpcValor())) this.pularMacro();
+        if("0".equals(this.cpu.getValorMPC())) this.pularMacro();
     }
 
     private void pularMacro() {

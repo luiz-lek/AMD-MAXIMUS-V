@@ -1,6 +1,7 @@
-package Back;
+package back.cpu;
 
-import java.io.IOException;
+import back.comum.MAX;
+
 import java.util.stream.IntStream;
 
 public class MemoriaPrincipal{

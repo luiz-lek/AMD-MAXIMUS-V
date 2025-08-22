@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="708.0" prefWidth="883.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Front.ControllerTela2">
+<AnchorPane prefHeight="708.0" prefWidth="883.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerTela2">
    <children>
       <TextArea fx:id="microinstrucoes" editable="false" layoutX="229.0" layoutY="45.0" prefHeight="447.0" prefWidth="245.0" />
       <Label layoutX="293.0" layoutY="27.0" text="MICROINSTRUÇÔES" />

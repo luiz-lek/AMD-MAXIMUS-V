@@ -1,4 +1,4 @@
-package Back;
+package back.cpu;
 
 public class Registrador {
     private String valor = "0000000000000000";

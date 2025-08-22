@@ -1,4 +1,4 @@
-package Back;
+package back.cpu;
 
 public class Deslocador {
     private String saida = "0000000000000000";

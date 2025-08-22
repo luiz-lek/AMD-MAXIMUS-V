@@ -1,4 +1,4 @@
-package Back;
+package back.cpu;
 
 public class MBR extends Registrador{
     private boolean RD = false, WR = false, ativado = false;

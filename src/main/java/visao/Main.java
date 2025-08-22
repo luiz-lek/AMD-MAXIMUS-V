@@ -1,4 +1,4 @@
-package Front;
+package visao;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

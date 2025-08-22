@@ -1,4 +1,4 @@
-package Back;
+package back.comum;
 
 public class Microinstrucao {
     private String mic;

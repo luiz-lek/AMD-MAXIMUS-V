@@ -1,4 +1,4 @@
-package Back;
+package back.cpu;
 
 public class MAR extends Registrador {
     private boolean ativado = false;

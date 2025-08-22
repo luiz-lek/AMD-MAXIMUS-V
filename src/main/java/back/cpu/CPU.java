@@ -1,4 +1,7 @@
-package Back;
+package back.cpu;
+
+import back.comum.ConversaoTipos;
+import back.comum.Microinstrucao;
 
 import java.io.IOException;
 
@@ -93,12 +96,12 @@ public class CPU {
         return this.mbr.getValor();
     }
 
-    public String getMarValorHexadecimal() {
-        return ConversaoTipos.binaryToHexadecimal(this.mar.getValor());
+    public String getValorHexadecimalMar() {
+        return ConversaoTipos.binarioToHexadecimal(this.mar.getValor());
     }
 
-    public String getMpcValor() throws IOException {
-        return Integer.toString(ConversaoTipos.bitsToInt(this.mpc.getValor(), 16));
+    public String getValorMPC() throws IOException {
+        return Integer.toString(ConversaoTipos.binarioToInt(this.mpc.getValor(), 16));
     }
 
     public String getValorRegistrador(int pos) throws IllegalAccessError{

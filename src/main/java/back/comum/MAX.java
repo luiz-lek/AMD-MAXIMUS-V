@@ -1,4 +1,4 @@
-package Back;
+package back.comum;
 
 public class MAX {
     public static final int TAMMEMP = 4096;
