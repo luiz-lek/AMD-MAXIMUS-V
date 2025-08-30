@@ -35,37 +35,33 @@ public class Assembler {
         tabela.put("SWAP", "1111101000000000");
     }
 
-    public static Map<Integer, Integer> correspondencia = new HashMap<>();
     private Map<String, Integer> flags;
 
-    public void montar(MemoriaPrincipal mem, String[] programa, int tamProg) throws IOException {
+    public String[] montar(MemoriaPrincipal mem, String programa) throws IOException {
         flags = new HashMap<>();
 
+        String[] programaFormatado = CodeParser.parse(programa);
+
+        int tamProg = programaFormatado.length;
+
         if(tamProg == 0) throw new IOException("Programa vazio");
-        int posEscMem = 0;
 
         for(int i = 0; i < tamProg; i++){
-            String programaTrim = programa[i].trim();
-            programa[i] = programaTrim;
-            String binario = this.macroPraBinario(programa[i], posEscMem);
-
-            if("".equals(binario)) continue;
-
-            correspondencia.put(posEscMem, i);
+            String programaTrim = programaFormatado[i].trim();
+            programaFormatado[i] = programaTrim;
+            String binario = this.macroPraBinario(programaFormatado[i], i);
 
             if(binario != null) {
-                mem.escrever(Integer.toBinaryString(posEscMem), binario);
-                posEscMem++;
+                System.out.println("Linha" + i + ": " + binario);
+                mem.escrever(Integer.toBinaryString(i), binario);
             }
         }
 
-        System.out.println(correspondencia.toString());
         System.out.println(flags.toString());
+        return programaFormatado;
     }
 
     public String macroPraBinario(String instrucao, int posEscMem) throws IOException {
-        if(instrucao.isEmpty()) return "";
-
         StringBuilder opcode = new StringBuilder();
         int tam = instrucao.length(), i = 0;
 
@@ -77,10 +73,11 @@ public class Assembler {
         if((i < tam) && (instrucao.charAt(i) == ':')){
             String op = opcode.toString();
 
-            if(flags.containsKey(op))  throw new IOException("Flag já foi usada" + op);
-            flags.put(opcode.toString(), posEscMem);
+            if(flags.containsKey(op)) throw new IOException("Flag já foi usada" + op);
+            flags.put(op, posEscMem);
 
-            return null;
+            String aposFlag  = instrucao.substring(i + 2, tam);
+            return macroPraBinario(aposFlag, posEscMem);
         }
 
         if(!tabela.containsKey(opcode.toString())) throw new IOException("Opcode " + opcode + " inválido.");
@@ -108,29 +105,29 @@ public class Assembler {
         StringBuilder operandoSTR = new StringBuilder();
         StringBuilder numFinal = new StringBuilder();
         String numBin;
-        int operandoINT;
+        int operando;
 
         while(instrucao.charAt(i) == ' ') i++;
 
         for(; i < tam; i++) operandoSTR.append(instrucao.charAt(i));
 
         try {
-            operandoINT = Integer.parseInt(operandoSTR.toString());
+            operando = Integer.parseInt(operandoSTR.toString());
         } catch (NumberFormatException e) {
             Integer op = flags.get(operandoSTR.toString());
 
             if(op == null) throw new IOException("Nenhum valor associado a flag " + operandoSTR.toString());
 
-            operandoINT = op;
+            operando = op;
         }
 
-        if((operandoINT < 0) || (operandoINT > limite)) throw new IOException("Erro: Operando de estar entre 0 e "
+        if((operando < 0) || (operando > limite)) throw new IOException("Erro: Operando deve estar entre 0 e "
                 + limite + ".");
-        numBin = Integer.toBinaryString(operandoINT);
+        numBin = Integer.toBinaryString(operando);
 
         completar -= numBin.length();
 
-        for(i = 0; i < completar; i++) numFinal.append('0');    //completa com 0 nos bits mais significativos
+        for(i = 0; i < completar; i++) numFinal.append('0'); //completa com 0 nos bits mais significativos
         numFinal.append(numBin);
 
         return numFinal.toString();

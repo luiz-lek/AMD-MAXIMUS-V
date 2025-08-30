@@ -2,7 +2,7 @@ package back.comum;
 
 import java.io.IOException;
 
-public class ConversaoTipos {
+public class Conversao {
     public static short bitsToShort(String bits, int qtdBitsEsperada) throws IOException {
         if(bits.length() != qtdBitsEsperada) throw new IOException("String com " + bits.length() + " bits");
         return (short) Integer.parseInt(bits, 2);
@@ -30,6 +30,13 @@ public class ConversaoTipos {
 
     public static String binarioToInt(String bits, int qtdBitsEsperada, boolean retornarComoString) throws IOException {
         int valorNumerico = binarioToInt(bits, qtdBitsEsperada);
+        return Integer.toString(valorNumerico);
+    }
+
+    public static String binarioToStrDecimal(String bits, int qtdBitsEsperada) throws IOException{
+        if(bits.length() != qtdBitsEsperada) throw new IOException("String com " + bits.length() + " bits\nQuantidade esperada: " + qtdBitsEsperada);
+
+        int valorNumerico = Integer.parseInt(bits, 2);
         return Integer.toString(valorNumerico);
     }
 }

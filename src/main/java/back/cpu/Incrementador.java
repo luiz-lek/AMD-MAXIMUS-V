@@ -1,6 +1,6 @@
 package back.cpu;
 
-import back.comum.ConversaoTipos;
+import back.comum.Conversao;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ public class Incrementador {
     private short saida = 0;
 
     public void incrementar(String saidaMBR) throws IOException {
-        short saida = ConversaoTipos.bitsToShort(saidaMBR, 16);
+        short saida = Conversao.bitsToShort(saidaMBR, 16);
         this.saida = (short)(saida + 1);
     }
 

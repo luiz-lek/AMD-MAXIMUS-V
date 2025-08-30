@@ -10,12 +10,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class ControllerTela1 {
     Stage stage, stageFalha;
@@ -26,7 +28,6 @@ public class ControllerTela1 {
     private TextArea macroPrograma;
     @FXML
     private Button gravarNaMemoria, confirmarFalha;
-
     private CPU cpu;
     private MemoriaPrincipal memoriaPrincipal;
     private Assembler assembler = new Assembler();
@@ -34,14 +35,14 @@ public class ControllerTela1 {
     @FXML
     private void carregarPrograma(ActionEvent e) throws IOException {
         try {
-            String[] programaArray= this.escreverProgramaMemoria();
+            String[] programaArray = this.escreverProgramaMemoria();
 
             this.cpu = new CPU();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2.fxml"));
             this.root = loader.load();
             ControllerTela2 controllerTela2 = loader.getController();
-            controllerTela2.setConteudo(macroPrograma.getText().toUpperCase(), programaArray, this.cpu, this.memoriaPrincipal);
+            controllerTela2.setConteudo(String.join("\n", programaArray), programaArray, this.cpu, this.memoriaPrincipal);
             this.stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stage);
             this.scene = new Scene(this.root);
@@ -51,6 +52,7 @@ public class ControllerTela1 {
             this.stage.centerOnScreen();
             this.stage.show();
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
             this.telaFalha(e);
         }
     }
@@ -63,16 +65,16 @@ public class ControllerTela1 {
     public String[] escreverProgramaMemoria() throws IOException {
         this.memoriaPrincipal = new MemoriaPrincipal();
 
-        String[] programa = macroPrograma.getText().toUpperCase().split("\\r?\\n");
+        String[] progFormatado = this.assembler.montar(this.memoriaPrincipal, macroPrograma.getText());
 
-        this.assembler.montar(this.memoriaPrincipal, programa, programa.length);
-
-        return programa;
+        return progFormatado;
     }
 
-    private void telaFalha(ActionEvent e) throws IOException {
+    public void telaFalha(ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1Falha.fxml"));
         this.rootFalha = loader.load();
+        ControllerTela1Falha controllerTela1Falha = loader.getController();
+        controllerTela1Falha.setTextoAlerta("Falha ao carregar programa", "Digite novamente.");
         this.stageFalha = new Stage();
         this.sceneFalha = new Scene(this.rootFalha);
         String css = getClass().getResource("/css/StyleTela1Falha.css").toExternalForm();

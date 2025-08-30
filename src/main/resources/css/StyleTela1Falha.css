@@ -1,5 +1,5 @@
 .root {
-    -fx-border-color: #ffd700; /* Vermelho */
+    -fx-border-color: #01e2f2; /* Vermelho */
     -fx-border-width: 3px;      /* Largura da borda */
     -fx-border-radius: 10px;    /* Arredondar os cantos */
 }
@@ -9,13 +9,13 @@ AnchorPane {
 }
 
 .label{
-    -fx-text-fill: #ffd700;
+    -fx-text-fill: #01e2f2;
 }
 
 .button {
     -fx-background-color: #1f1f1f;
     -fx-border-color: #363636;
-    -fx-text-fill: #ffd700;
+    -fx-text-fill: #01e2f2;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 }

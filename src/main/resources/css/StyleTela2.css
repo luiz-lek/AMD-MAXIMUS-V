@@ -1,15 +1,103 @@
+/*AnchorPane {*/
+/*    -fx-background-color: black;*/
+/*}*/
+
+/*.label{*/
+/*    -fx-text-fill: #ffd700;*/
+/*}*/
+
+/*.text-field {*/
+/*    -fx-background-color: #1f1f1f;*/
+/*    -fx-text-fill: #ffd700;*/
+/*    -fx-prompt-text-fill: #A39458;*/
+/*    -fx-background-radius: 10;*/
+/*    -fx-border-radius: 10;*/
+/*    -fx-border-color: black;*/
+/*}*/
+
+/*.text-field:focused {*/
+/*    -fx-border-color: #1f1f1f;*/
+/*}*/
+
+/*.text-area {*/
+/*    -fx-background-color: #1f1f1f;*/
+/*    -fx-text-fill: #ffd700;*/
+/*    -fx-background-radius: 10;*/
+/*    -fx-border-radius: 10;*/
+/*    -fx-border-color: black;*/
+/*}*/
+
+/*.text-area .scroll-pane .viewport {*/
+/*    -fx-background-color: #1f1f1f;*/
+/*    -fx-background-radius: 10;*/
+/*}*/
+
+/*.text-area .scroll-pane .content {*/
+/*    -fx-background-color: #1f1f1f;*/
+/*    -fx-background-radius: 10;*/
+/*}*/
+
+/*.text-area:focused {*/
+/*    -fx-border-color: #1f1f1f;*/
+/*}*/
+
+/*.button {*/
+/*    -fx-background-color: #1f1f1f;*/
+/*    -fx-border-color: #363636;*/
+/*    -fx-text-fill: #ffd700;*/
+/*    -fx-border-radius: 10;*/
+/*    -fx-background-radius: 10;*/
+/*}*/
+
+/*.scroll-bar:vertical .track {*/
+/*    -fx-background-color: #1a1a1a;*/
+/*    -fx-background-insets: 0;*/
+/*    -fx-background-radius: 5em;*/
+/*}*/
+
+/*.scroll-bar:vertical .thumb {*/
+/*    -fx-background-color: #ffd700;*/
+/*    -fx-background-insets: 0;*/
+/*    -fx-background-radius: 5em;*/
+/*}*/
+
+/*.scroll-bar:vertical .increment-button,*/
+/*.scroll-bar:vertical .decrement-button {*/
+/*    -fx-background-color: #1f1f1f;*/
+/*    -fx-background-insets: 0;*/
+/*    -fx-background-radius: 5em;*/
+/*}*/
+
+/*.scroll-bar:vertical .increment-arrow,*/
+/*.scroll-bar:vertical .decrement-arrow {*/
+/*    -fx-background-color: #ffd700;*/
+/*}*/
+
+/*.scroll-pane .track-background {*/
+/*    -fx-background-color: #1f1f1f;*/
+/*}*/
+
+/*#pilha {*/
+/*    -fx-font-size: 12.5;*/
+/*}*/
+
+/*Rectangle {*/
+/*    -fx-fill: #ADFF2F;*/
+/*    -fx-opacity: 0.3;*/
+/*}*/
+
 AnchorPane {
     -fx-background-color: black;
 }
 
 .label{
-    -fx-text-fill: #ffd700;
+    -fx-text-fill: #01e2f2;
 }
 
 .text-field {
     -fx-background-color: #1f1f1f;
-    -fx-text-fill: #ffd700;
-    -fx-prompt-text-fill: #A39458;
+    -fx-text-fill: #01e2f2;
+    -fx-prompt-text-fill: #45729c;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: black;
@@ -21,7 +109,7 @@ AnchorPane {
 
 .text-area {
     -fx-background-color: #1f1f1f;
-    -fx-text-fill: #ffd700;
+    -fx-text-fill: #01e2f2;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: black;
@@ -44,7 +132,7 @@ AnchorPane {
 .button {
     -fx-background-color: #1f1f1f;
     -fx-border-color: #363636;
-    -fx-text-fill: #ffd700;
+    -fx-text-fill: #01e2f2;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 }
@@ -56,7 +144,7 @@ AnchorPane {
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #ffd700;
+    -fx-background-color: #01e2f2;
     -fx-background-insets: 0;
     -fx-background-radius: 5em;
 }
@@ -70,7 +158,7 @@ AnchorPane {
 
 .scroll-bar:vertical .increment-arrow,
 .scroll-bar:vertical .decrement-arrow {
-    -fx-background-color: #ffd700;
+    -fx-background-color: #01e2f2;
 }
 
 .scroll-pane .track-background {
@@ -82,6 +170,6 @@ AnchorPane {
 }
 
 Rectangle {
-    -fx-fill: #ADFF2F;
+    -fx-fill: #01e2f2;
     -fx-opacity: 0.3;
 }

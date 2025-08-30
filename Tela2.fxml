@@ -18,36 +18,36 @@
       <Label layoutX="569.0" layoutY="27.0" text="PILHA" />
       <TextArea fx:id="macroprograma" editable="false" layoutX="9.0" layoutY="45.0" prefHeight="447.0" prefWidth="214.0" />
       <Label layoutX="57.0" layoutY="27.0" text="MACROPROGRAMA" />
-      <Button fx:id="proximaMic" layoutX="433.0" layoutY="502.0" mnemonicParsing="false" onAction="#executarMicEAtualizar" prefHeight="26.0" prefWidth="138.0" text="Executar microinstrução">
+      <Button fx:id="proximaMic" layoutX="213.0" layoutY="502.0" mnemonicParsing="false" onAction="#executarMicEAtualizar" prefHeight="26.0" prefWidth="138.0" text="Executar microinstrução">
          <font>
             <Font size="10.0" />
          </font></Button>
-      <Label layoutX="14.0" layoutY="584.0" prefHeight="16.0" prefWidth="24.0" text="MIR">
+      <Label layoutX="14.0" layoutY="550.0" prefHeight="16.0" prefWidth="24.0" text="MIR">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="612.0" text="MBR">
+      <Label layoutX="14.0" layoutY="592.0" text="MBR">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font></Label>
-      <Label layoutX="14.0" layoutY="641.0" text="MAR">
+      <Label layoutX="14.0" layoutY="620.0" text="MAR">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font></Label>
-      <TextField fx:id="MIR" editable="false" layoutX="64.0" layoutY="583.0" prefHeight="26.0" prefWidth="261.0" text="00000000000000000000000000000000" />
-      <TextField fx:id="MBR" layoutX="64.0" layoutY="612.0" prefHeight="26.0" prefWidth="137.0" text="0000000000000000" />
-      <TextField fx:id="MAR" layoutX="64.0" layoutY="641.0" prefHeight="26.0" prefWidth="137.0" text="0000000000000000" />
+      <TextField fx:id="MIR" editable="false" layoutX="64.0" layoutY="549.0" prefHeight="26.0" prefWidth="261.0" />
+      <TextField fx:id="MBR" layoutX="64.0" layoutY="592.0" prefHeight="26.0" prefWidth="137.0" text="0000000000000000" />
+      <TextField fx:id="MAR" layoutX="64.0" layoutY="620.0" prefHeight="26.0" prefWidth="137.0" text="0000000000000000" />
       <TextField editable="false" layoutX="730.0" layoutY="185.0" prefHeight="26.0" prefWidth="137.0" text="0000000000000000" />
       <TextField editable="false" layoutX="730.0" layoutY="213.0" prefHeight="26.0" prefWidth="137.0" text="0000000000000001" />
       <Button fx:id="voltarTela1" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#confirmarVoltar" opacity="0.0" prefHeight="26.0" prefWidth="26.0" />
       <Label layoutX="748.0" layoutY="27.0" text="REGISTRADORES" />
-      <Label layoutX="14.0" layoutY="670.0" text="MPC">
+      <Label layoutX="14.0" layoutY="649.0" text="MPC">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="MPC" layoutX="64.0" layoutY="670.0" prefHeight="26.0" prefWidth="137.0" text="0000000000000000" />
+      <TextField fx:id="MPC" layoutX="64.0" layoutY="648.0" prefHeight="26.0" prefWidth="137.0" text="0000000000000000" />
       <TextField editable="false" layoutX="730.0" layoutY="241.0" prefHeight="26.0" prefWidth="137.0" text="1111111111111111" />
       <TextField editable="false" layoutX="730.0" layoutY="269.0" prefHeight="26.0" prefWidth="138.0" text="0000111111111111" />
       <TextField editable="false" layoutX="730.0" layoutY="297.0" prefHeight="26.0" prefWidth="138.0" text="0000000011111111" />
@@ -142,9 +142,9 @@
             <Font name="Monospaced Regular" size="17.0" />
          </font>
       </Label>
-      <Button fx:id="lerMemoria" layoutX="703.0" layoutY="585.0" mnemonicParsing="false" onAction="#lerPosicaoMemoria" prefHeight="68.0" prefWidth="119.0" text="Ler na memória" />
-      <TextField fx:id="buscarMemoria" layoutX="481.0" layoutY="584.0" prefHeight="26.0" prefWidth="214.0" promptText="Digite um valor entre 0 e 4095..." />
-      <TextField fx:id="lidoPosicaoMemoria" editable="false" layoutX="481.0" layoutY="626.0" prefHeight="26.0" prefWidth="214.0" />
+      <Button fx:id="lerMemoria" layoutX="696.0" layoutY="548.0" mnemonicParsing="false" onAction="#lerPosicaoMemoria" prefHeight="68.0" prefWidth="119.0" text="Ler na memória" />
+      <TextField fx:id="buscarMemoria" layoutX="474.0" layoutY="549.0" prefHeight="26.0" prefWidth="214.0" promptText="Digite um valor entre 0 e 4095..." />
+      <TextField fx:id="lidoPosicaoMemoria" editable="false" layoutX="474.0" layoutY="590.0" prefHeight="26.0" prefWidth="214.0" />
       <Label layoutX="27.0" layoutY="7.0" text="Voltar para macroprograma">
          <font>
             <Font size="9.0" />
@@ -156,12 +156,9 @@
             <Image url="@../images/seta_amarela.png" />
          </image>
       </ImageView>
-      <TextField fx:id="valorPc" layoutX="303.0" layoutY="533.0" prefHeight="26.0" prefWidth="102.0" promptText="Valor do pc..." />
-      <Button fx:id="executarPc" layoutX="285.0" layoutY="502.0" mnemonicParsing="false" onAction="#executarAtePc" prefHeight="26.0" prefWidth="138.0" text="Executar até PC">
-         <font>
-            <Font size="10.0" />
-         </font></Button>
-      <Button fx:id="executarMacroAtual" layoutX="137.0" layoutY="502.0" mnemonicParsing="false" onAction="#executarMacroEAtualizar" prefHeight="26.0" prefWidth="138.0" text="Executar Macro Atual">
+      <TextField fx:id="valorPc" layoutX="474.0" layoutY="645.0" prefHeight="26.0" prefWidth="214.0" promptText="Valor do pc..." />
+      <Button fx:id="executarPc" layoutX="705.0" layoutY="645.0" mnemonicParsing="false" onAction="#executarAtePc" prefHeight="26.0" prefWidth="102.0" text="Executar" />
+      <Button fx:id="executarMacroAtual" layoutX="354.0" layoutY="502.0" mnemonicParsing="false" onAction="#executarMacroEAtualizar" prefHeight="26.0" prefWidth="138.0" text="Executar Macro Atual">
          <font>
             <Font size="10.0" />
          </font>

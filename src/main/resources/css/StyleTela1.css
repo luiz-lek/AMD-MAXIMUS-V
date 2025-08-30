@@ -3,13 +3,13 @@ AnchorPane {
 }
 
 .label{
-    -fx-text-fill: #ffd700;
+    -fx-text-fill: #01e2f2;
 }
 
 .text-area {
     -fx-background-color: #1f1f1f;
-    -fx-text-fill: #ffd700;
-    -fx-prompt-text-fill: #A39458;
+    -fx-text-fill: #01e2f2;
+    -fx-prompt-text-fill: #45729c;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: black;
@@ -32,7 +32,7 @@ AnchorPane {
 .button {
     -fx-background-color: #1f1f1f;
     -fx-border-color: #363636;
-    -fx-text-fill: #ffd700;
+    -fx-text-fill: #01e2f2;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 }
@@ -44,7 +44,7 @@ AnchorPane {
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #ffd700;
+    -fx-background-color: #01e2f2;
     -fx-background-insets: 0;
     -fx-background-radius: 5em;
 }
@@ -58,7 +58,7 @@ AnchorPane {
 
 .scroll-bar:vertical .increment-arrow,
 .scroll-bar:vertical .decrement-arrow {
-    -fx-background-color: #ffd700;
+    -fx-background-color: #01e2f2;
 }
 
 .scroll-pane .track-background {

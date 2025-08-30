@@ -91,7 +91,7 @@ public class MicroinstrucaoMap {
     }
 
     public static String getDescricao(String linha) throws IOException {
-        int linhaINT = ConversaoTipos.binarioToInt(linha, 16);
+        int linhaINT = Conversao.binarioToInt(linha, 16);
         return mapa.getOrDefault(linhaINT, "Instrução não encontrada");
     }
 }

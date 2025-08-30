@@ -1,6 +1,6 @@
 package back.cpu;
 
-import back.comum.ConversaoTipos;
+import back.comum.Conversao;
 import back.comum.Microinstrucao;
 
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.io.IOException;
 public class CPU {
     private MemoriaPrincipal memP;
     private final MemoriaControle memC =  new MemoriaControle();
-    private Registradores registradores = new Registradores();
+    public Registradores registradores = new Registradores();
     private MAR mar = new MAR("MAR");
     private MBR mbr = new MBR("MBR");
     private Registrador mpc = new Registrador("MPC");
@@ -92,26 +92,20 @@ public class CPU {
         if(this.mbr.isWR()) this.wrIniciado = true;
     }
 
-    public String getMbrValor() {
+    public String getValorMbr() {
         return this.mbr.getValor();
     }
 
-    public String getValorHexadecimalMar() {
-        return ConversaoTipos.binarioToHexadecimal(this.mar.getValor());
-    }
+    public String getMar() { return this.mar.getValor(); }
 
-    public String getValorMPC() throws IOException {
-        return Integer.toString(ConversaoTipos.binarioToInt(this.mpc.getValor(), 16));
-    }
+    public String getValorMPC() { return this.mpc.getValor(); }
+
+    public String getValorMpc() { return mpc.getValor(); }
+
+    public String getValorMir() { return this.mir.getMic(); }
 
     public String getValorRegistrador(int pos) throws IllegalAccessError{
         if((pos < 0) || (15 < pos)) throw new IllegalAccessError("Posição inválida.");
         return this.registradores.registradores[pos].getValor();
     }
-
-    public String getMpc() {
-        return mpc.getValor();
-    }
-
-    public String getMir() { return this.mir.getMic(); }
 }

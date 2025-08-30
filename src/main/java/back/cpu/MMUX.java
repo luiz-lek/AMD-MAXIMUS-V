@@ -1,6 +1,6 @@
 package back.cpu;
 
-import back.comum.ConversaoTipos;
+import back.comum.Conversao;
 
 public class MMUX {
     private String saida = "00000000000000000000000000000000";
@@ -21,7 +21,7 @@ public class MMUX {
 
     public void ativar(){
         short saidaSH = (this.controle) ? this.ADDR : this.MPCIncrementado;
-        this.saida = ConversaoTipos.shortToString(saidaSH);
+        this.saida = Conversao.shortToString(saidaSH);
     }
 
     public String getSaida() { return saida; }
