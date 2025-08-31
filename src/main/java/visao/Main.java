@@ -17,7 +17,7 @@ public class Main extends Application {
         scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.setTitle("AMD MAXIMUS-V");
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
         primaryStage.show();
     }
 
@@ -25,9 +25,25 @@ public class Main extends Application {
 }
 
 /*
-loco 5
-push
 loco 6
 push
-pop
+loco 1
+push
+loco 0
+push
+push
+loco 1
+push
+loop: lodl 0
+stol 2
+addl 1
+stol 0
+lodl 2
+stol 1
+lodl 4
+subl 3
+stol 4
+jnze loop
+1000111111111011
+1000111111111011
 */

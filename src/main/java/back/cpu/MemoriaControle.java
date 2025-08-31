@@ -19,7 +19,7 @@ public class MemoriaControle {
             new Microinstrucao("00010000110000000011000000000000"),
             new Microinstrucao("00010000010000000000000000000000"),
             new Microinstrucao("11100000000100010001000000000000"),
-            new Microinstrucao("00010000110000000001000000000000"),
+            new Microinstrucao("00010000110000000011000000000000"),
             new Microinstrucao("00000000010100010110000100000000"),
             new Microinstrucao("10011000010110100000000000000000"),
             new Microinstrucao("01100000000100011010000100000000"),
@@ -34,10 +34,10 @@ public class MemoriaControle {
             new Microinstrucao("01101000000100011000001100000000"),
             new Microinstrucao("00100010000101000011001100101000"),
             new Microinstrucao("00110010000101000000010000100011"),
-            new Microinstrucao("00110000000000000000000000100001"), //30
+            new Microinstrucao("00110000000000000000010000100001"), //30
             new Microinstrucao("00000000000110100010001100000000"),
             new Microinstrucao("01110000110000001010000000000111"),
-            new Microinstrucao("01110000110000001010000000000111"),
+            new Microinstrucao("00000000000110100010001100000000"),
             new Microinstrucao("01110001101000001010000100001010"),
             new Microinstrucao("00110000000000000000010000100110"),
             new Microinstrucao("00000000000110100010001100000000"),

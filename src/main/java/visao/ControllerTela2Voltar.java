@@ -35,7 +35,7 @@ public class ControllerTela2Voltar {
         this.scene.getStylesheets().add(css);
         this.stage.setScene(this.scene);
         this.stage.setTitle("AMD MAXIMUS-V");
-        this.stage.setResizable(false);
+        //this.stage.setResizable(false);
         this.stage.show();
     }
 

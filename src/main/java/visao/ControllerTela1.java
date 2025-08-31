@@ -10,14 +10,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
-import java.util.Arrays;
 
 public class ControllerTela1 {
     Stage stage, stageFalha;
@@ -45,7 +42,7 @@ public class ControllerTela1 {
             controllerTela2.setConteudo(String.join("\n", programaArray), programaArray, this.cpu, this.memoriaPrincipal);
             this.stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stage);
-            this.scene = new Scene(this.root);
+            this.scene = new Scene(root);
             String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
             this.scene.getStylesheets().add(css);
             this.stage.setScene(this.scene);
@@ -74,7 +71,7 @@ public class ControllerTela1 {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1Falha.fxml"));
         this.rootFalha = loader.load();
         ControllerTela1Falha controllerTela1Falha = loader.getController();
-        controllerTela1Falha.setTextoAlerta("Falha ao carregar programa", "Digite novamente.");
+        controllerTela1Falha.setTextoAlerta("Falha ao carregar programa", "", "         Digite novamente.");
         this.stageFalha = new Stage();
         this.sceneFalha = new Scene(this.rootFalha);
         String css = getClass().getResource("/css/StyleTela1Falha.css").toExternalForm();
