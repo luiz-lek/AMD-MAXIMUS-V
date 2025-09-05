@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,6 +18,8 @@ public class ControllerTela2Voltar {
 
     @FXML
     private Button confirmarVoltar, cancelarVoltar;
+    @FXML
+    private Label l1;
 
     String macroPrograma;
 
@@ -35,7 +38,7 @@ public class ControllerTela2Voltar {
         this.scene.getStylesheets().add(css);
         this.stage.setScene(this.scene);
         this.stage.setTitle("AMD MAXIMUS-V");
-        //this.stage.setResizable(false);
+        this.stage.setResizable(false);
         this.stage.show();
     }
 

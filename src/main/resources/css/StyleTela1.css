@@ -37,13 +37,15 @@ AnchorPane {
     -fx-background-radius: 10;
 }
 
-.scroll-bar:vertical .track {
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track {
     -fx-background-color: #1a1a1a;
     -fx-background-insets: 0;
     -fx-background-radius: 5em;
 }
 
-.scroll-bar:vertical .thumb {
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
     -fx-background-color: #01e2f2;
     -fx-background-insets: 0;
     -fx-background-radius: 5em;

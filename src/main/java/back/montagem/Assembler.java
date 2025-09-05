@@ -35,12 +35,10 @@ public class Assembler {
         tabela.put("SWAP", "1111101000000000");
     }
 
-    private Map<String, Integer> flags;
+    public CodeParser parser = new CodeParser();
 
     public String[] montar(MemoriaPrincipal mem, String programa) throws IOException {
-        flags = new HashMap<>();
-
-        String[] programaFormatado = CodeParser.parse(programa);
+        String[] programaFormatado = parser.parse(programa);
 
         int tamProg = programaFormatado.length;
 
@@ -57,7 +55,7 @@ public class Assembler {
             }
         }
 
-        System.out.println(flags.toString());
+        System.out.println(this.parser.flags.toString());
         return programaFormatado;
     }
 
@@ -73,8 +71,7 @@ public class Assembler {
         if((i < tam) && (instrucao.charAt(i) == ':')){
             String op = opcode.toString();
 
-            if(flags.containsKey(op)) throw new IOException("Flag já foi usada" + op);
-            flags.put(op, posEscMem);
+            if(i+1 == tam) return null;
 
             String aposFlag  = instrucao.substring(i + 2, tam);
             return macroPraBinario(aposFlag, posEscMem);
@@ -111,12 +108,20 @@ public class Assembler {
 
         for(; i < tam; i++) operandoSTR.append(instrucao.charAt(i));
 
-        try {
-            operando = Integer.parseInt(operandoSTR.toString());
-        } catch (NumberFormatException e) {
-            Integer op = flags.get(operandoSTR.toString());
+        String oper = operandoSTR.toString();
 
-            if(op == null) throw new IOException("Nenhum valor associado a flag " + operandoSTR.toString());
+        try {
+            operando = Integer.parseInt(oper);
+        } catch (NumberFormatException e) {
+            Integer op = this.parser.flags.get(oper);
+
+            if(op == null) {
+                op = this.parser.variaveis.get(oper);
+                if(op == null) {
+                    op = this.parser.getEIncremntaPosLivre();
+                    this.parser.variaveis.put(oper, op);
+                }
+            }
 
             operando = op;
         }
@@ -130,6 +135,8 @@ public class Assembler {
         for(i = 0; i < completar; i++) numFinal.append('0'); //completa com 0 nos bits mais significativos
         numFinal.append(numBin);
 
+        System.out.println(this.parser.flags.toString());
+        System.out.println(this.parser.variaveis.toString());
         return numFinal.toString();
     }
 }

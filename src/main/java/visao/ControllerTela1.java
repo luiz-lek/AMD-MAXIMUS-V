@@ -17,9 +17,9 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class ControllerTela1 {
-    Stage stage, stageFalha;
-    Scene scene, sceneFalha;
-    Parent root, rootFalha;
+    Stage stageTela2, stageFalha;
+    Scene scenetela2, sceneFalha;
+    Parent rootTela2, rootFalha;
 
     @FXML
     private TextArea macroPrograma;
@@ -27,27 +27,27 @@ public class ControllerTela1 {
     private Button gravarNaMemoria, confirmarFalha;
     private CPU cpu;
     private MemoriaPrincipal memoriaPrincipal;
-    private Assembler assembler = new Assembler();
+    private Assembler assembler;
 
     @FXML
     private void carregarPrograma(ActionEvent e) throws IOException {
         try {
+            this.assembler = new Assembler();
             String[] programaArray = this.escreverProgramaMemoria();
-
             this.cpu = new CPU();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2.fxml"));
-            this.root = loader.load();
+            this.rootTela2 = loader.load();
             ControllerTela2 controllerTela2 = loader.getController();
-            controllerTela2.setConteudo(String.join("\n", programaArray), programaArray, this.cpu, this.memoriaPrincipal);
-            this.stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            controllerTela2.setStageAtual(this.stage);
-            this.scene = new Scene(root);
+            controllerTela2.setConteudo(String.join("\n", programaArray), programaArray, this.cpu, this.memoriaPrincipal, this.assembler);
+            this.stageTela2 = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            controllerTela2.setStageAtual(this.stageTela2);
+            this.scenetela2 = new Scene(rootTela2);
             String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
-            this.scene.getStylesheets().add(css);
-            this.stage.setScene(this.scene);
-            this.stage.centerOnScreen();
-            this.stage.show();
+            this.scenetela2.getStylesheets().add(css);
+            this.stageTela2.setScene(this.scenetela2);
+            this.stageTela2.centerOnScreen();
+            this.stageTela2.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             this.telaFalha(e);
@@ -61,9 +61,7 @@ public class ControllerTela1 {
 
     public String[] escreverProgramaMemoria() throws IOException {
         this.memoriaPrincipal = new MemoriaPrincipal();
-
         String[] progFormatado = this.assembler.montar(this.memoriaPrincipal, macroPrograma.getText());
-
         return progFormatado;
     }
 
