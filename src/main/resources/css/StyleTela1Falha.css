@@ -5,11 +5,12 @@
 }
 
 AnchorPane {
-    -fx-background-color: black;
+    -fx-background-color: #111111;
 }
 
 .label{
     -fx-text-fill: #01e2f2;
+    -fx-alignment: center;
 }
 
 .button {

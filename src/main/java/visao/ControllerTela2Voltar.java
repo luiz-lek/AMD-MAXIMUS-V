@@ -24,8 +24,8 @@ public class ControllerTela2Voltar {
     String macroPrograma;
 
     @FXML
-    public void voltarTela1 (ActionEvent e) throws IOException {
-        this.fecharJanela(e);
+    public void voltarTela1 (ActionEvent event) throws IOException {
+        this.fecharJanela(event);
         this.stageTela2.close();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1.fxml"));
@@ -43,8 +43,8 @@ public class ControllerTela2Voltar {
     }
 
     @FXML
-    private void fecharJanela(ActionEvent e) throws IOException {
-        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+    private void fecharJanela(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 

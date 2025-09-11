@@ -30,7 +30,7 @@ public class CPU {
         this.memP = memoria;
     }
 
-    public void executarCiclo() throws IOException {
+    public void executarCiclo() throws Exception {
         this.subciclo1();
         this.subciclo2();
         this.subciclo3();
@@ -58,7 +58,7 @@ public class CPU {
         this.latA.setValor(registradores.getValor(decA.decodificar()));
     }
 
-    public void subciclo3() {
+    public void subciclo3() throws Exception{
         if(this.rdIniciado) {// Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
             this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor é passado para o mbr
             this.mbr.setRD("0");

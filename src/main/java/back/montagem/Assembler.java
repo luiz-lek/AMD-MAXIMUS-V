@@ -3,6 +3,7 @@ package back.montagem;
 import back.cpu.MemoriaPrincipal;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,108 +36,84 @@ public class Assembler {
         tabela.put("SWAP", "1111101000000000");
     }
 
+    private int tamProg;
     public CodeParser parser = new CodeParser();
 
-    public String[] montar(MemoriaPrincipal mem, String programa) throws IOException {
-        String[] programaFormatado = parser.parse(programa);
+    public String[] montar(MemoriaPrincipal mem, String programa) throws IOException, Exception {
+        String[][] programaFormatado = parser.parse(programa);
+        System.out.println("Programa formatado: " + Arrays.deepToString(programaFormatado));
+        String programaEmBinario = "";
 
-        int tamProg = programaFormatado.length;
+        int i = 0;
 
-        if(tamProg == 0) throw new IOException("Programa vazio");
-
-        for(int i = 0; i < tamProg; i++){
-            String programaTrim = programaFormatado[i].trim();
-            programaFormatado[i] = programaTrim;
-            String binario = this.macroPraBinario(programaFormatado[i], i);
-
-            if(binario != null) {
-                System.out.println("Linha" + i + ": " + binario);
-                mem.escrever(Integer.toBinaryString(i), binario);
-            }
+        for(String[] linha : programaFormatado){
+            programaEmBinario = macroPraBinario(linha);
+            mem.escrever(Integer.toBinaryString(i), programaEmBinario);
+            i++;
         }
 
-        System.out.println(this.parser.flags.toString());
-        return programaFormatado;
+        this.tamProg = i;
+        return parser.progFormatado;
     }
 
-    public String macroPraBinario(String instrucao, int posEscMem) throws IOException {
-        StringBuilder opcode = new StringBuilder();
-        int tam = instrucao.length(), i = 0;
+    public String macroPraBinario(String instrucao[]) throws Exception { //Instrução[0] contém o mnemônimo
+                                                                        //e instrucao[1] um possível operando.
+        if(!tabela.containsKey(instrucao[0])) throw new IOException("Mnemônimo " + instrucao[0] + " inválido.");
 
-        for(; i < tam; i++){
-            if((instrucao.charAt(i) == ' ') || (instrucao.charAt(i) == ':')) break;
-            opcode.append(instrucao.charAt(i));
-        }
+        StringBuilder binario = new StringBuilder(tabela.get(instrucao[0]));
 
-        if((i < tam) && (instrucao.charAt(i) == ':')){
-            String op = opcode.toString();
+        if(instrucao[1] == null) return binario.toString(); //Instrução sem operando
 
-            if(i+1 == tam) return null;
+        String binarioStr = binario.toString();
+        int tamBin = binarioStr.length();
 
-            String aposFlag  = instrucao.substring(i + 2, tam);
-            return macroPraBinario(aposFlag, posEscMem);
-        }
-
-        if(!tabela.containsKey(opcode.toString())) throw new IOException("Opcode " + opcode + " inválido.");
-
-        StringBuilder binario = new StringBuilder();
-        binario.append(tabela.get(opcode.toString()));
-
-        if(i == tam) return binario.toString();
-
-        String binarioSTR =  binario.toString();
-        int tamBin = binarioSTR.length();
-
-        if (tamBin == 8) {//opcode de 8 bits
-            binario.append(operandoPraBinario(i, tam, 255, 8, instrucao));
-        } else if (binarioSTR.equals("0111") || binarioSTR.equals("0000000000000000")) {// instrução sem operando
-            binario.append(operandoPraBinario(i, tam, 4095, 12, instrucao));
-        } else {
-            binario.append(operandoPraBinario(i, tam, Integer.MAX_VALUE, 12, instrucao));
+        if (tamBin == 8) { //operando com 8 bits tem limite entre 0 e 255
+            binario.append(operandoPraBinario(instrucao[0], instrucao[1], 255, 8));
+        } else if ("LOCO".equals(instrucao[0])) { //loco tem limite até 4095
+            binario.append(operandoPraBinario(instrucao[0], instrucao[1], 4095, 12));
+        } else { //mnemônimo com 4 bits, sem limite no operando
+            binario.append(operandoPraBinario(instrucao[0], instrucao[1], Integer.MAX_VALUE, 12));
         }
 
         return binario.toString();
     }
 
-    public String operandoPraBinario(int i, int tam, int limite, int completar, String instrucao) throws IOException{
-        StringBuilder operandoSTR = new StringBuilder();
+    public String operandoPraBinario(String operacao, String operando, int limite, int completar) throws Exception {
         StringBuilder numFinal = new StringBuilder();
         String numBin;
-        int operando;
+        Integer op;
 
-        while(instrucao.charAt(i) == ' ') i++;
-
-        for(; i < tam; i++) operandoSTR.append(instrucao.charAt(i));
-
-        String oper = operandoSTR.toString();
-
-        try {
-            operando = Integer.parseInt(oper);
-        } catch (NumberFormatException e) {
-            Integer op = this.parser.flags.get(oper);
-
-            if(op == null) {
-                op = this.parser.variaveis.get(oper);
-                if(op == null) {
-                    op = this.parser.getEIncremntaPosLivre();
-                    this.parser.variaveis.put(oper, op);
+        try { //Caso seja uma constante.
+            op = Integer.parseInt(operando);
+        } catch (NumberFormatException e) { //É uma flag, variável, ou jump inválido(com uma flag inexistente).
+            op = this.parser.flags.get(operando);
+            if(op == null) { //Não encontrou flag, então verifica se a operaçao é do tipo jump.
+                if(parser.verificarOpercaoDeDesvio(operacao)) { //Verifica se é um jump inválido.
+                    throw new Exception("Desvio para flag \"" + operando + "\"impossível, flag inexistente.");
+                }
+                op = this.parser.variaveis.get(operando);
+                if(op == null) { //A variável ainda não existe, então aloca uma nova posição..
+                    op = this.parser.getEIncrementaPosLivre();
+                    this.parser.variaveis.put(operando, op);
                 }
             }
-
-            operando = op;
         }
 
-        if((operando < 0) || (operando > limite)) throw new IOException("Erro: Operando deve estar entre 0 e "
+        if((op < 0) || (op > limite)) throw new IOException("Erro: Operando deve estar entre 0 e "
                 + limite + ".");
-        numBin = Integer.toBinaryString(operando);
+        numBin = Integer.toBinaryString(op);
 
         completar -= numBin.length();
 
-        for(i = 0; i < completar; i++) numFinal.append('0'); //completa com 0 nos bits mais significativos
+        for(int i = 0; i < completar; i++) numFinal.append('0'); //completa com 0 nos bits mais significativos
         numFinal.append(numBin);
 
-        System.out.println(this.parser.flags.toString());
-        System.out.println(this.parser.variaveis.toString());
+        //System.out.println(this.parser.flags.toString());
+        //System.out.println(this.parser.variaveis.toString());
         return numFinal.toString();
+    }
+
+    public int getTamProg() {
+        return tamProg;
     }
 }

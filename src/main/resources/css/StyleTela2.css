@@ -87,7 +87,7 @@
 /*}*/
 
 AnchorPane {
-    -fx-background-color: black;
+    -fx-background-color: #111111;
 }
 
 .label{
@@ -95,12 +95,12 @@ AnchorPane {
 }
 
 .text-field {
-    -fx-background-color: #1f1f1f;
+    -fx-background-color: #1a1a1a;
     -fx-text-fill: #01e2f2;
-    -fx-prompt-text-fill: #48638C;
+    -fx-prompt-text-fill: #4682B4;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-    -fx-border-color: black;
+    -fx-border-color: #1f1f1f;
 }
 
 .text-field:focused {
@@ -112,7 +112,7 @@ AnchorPane {
     -fx-text-fill: #01e2f2;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-    -fx-border-color: black;
+    -fx-border-color: #111111;
 }
 
 .text-area .scroll-pane .viewport {
@@ -177,7 +177,23 @@ AnchorPane {
     -fx-font-size: 12.5;
 }
 
-Rectangle {
+#highlightMacro {
     -fx-fill: #01e2f2;
     -fx-opacity: 0.3;
+}
+
+#caixaMemoriaRascunho, #caixaBuscarMemoria, #caixaExecutarAtePc, #caixaRegistradores, #caixaExecucao {
+    -fx-fill: #1f1f1f;
+    -fx-arc-width: 20;
+    -fx-arc-height: 20;
+}
+
+#executarTudo, #pausar {
+    -fx-background-color: #00FFFF;
+    -fx-border-color: #000000;
+    -fx-text-fill: #000000;
+}
+
+#macroprograma, memoriaEmBinario, memoriaEmDecimal {
+    -fx-font: Monospace;
 }

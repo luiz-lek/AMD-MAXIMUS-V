@@ -30,7 +30,7 @@ public class ControllerTela1 {
     private Assembler assembler;
 
     @FXML
-    private void carregarPrograma(ActionEvent e) throws IOException {
+    private void carregarPrograma(ActionEvent event) throws Exception {
         try {
             this.assembler = new Assembler();
             String[] programaArray = this.escreverProgramaMemoria();
@@ -39,8 +39,8 @@ public class ControllerTela1 {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2.fxml"));
             this.rootTela2 = loader.load();
             ControllerTela2 controllerTela2 = loader.getController();
-            controllerTela2.setConteudo(String.join("\n", programaArray), programaArray, this.cpu, this.memoriaPrincipal, this.assembler);
-            this.stageTela2 = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            controllerTela2.setConteudo(programaArray, this.cpu, this.memoriaPrincipal, this.assembler);
+            this.stageTela2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stageTela2);
             this.scenetela2 = new Scene(rootTela2);
             String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
@@ -48,9 +48,8 @@ public class ControllerTela1 {
             this.stageTela2.setScene(this.scenetela2);
             this.stageTela2.centerOnScreen();
             this.stageTela2.show();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            this.telaFalha(e);
+        } catch (Exception e) {
+            this.telaFalha(event, e.getMessage());
         }
     }
 
@@ -59,24 +58,23 @@ public class ControllerTela1 {
         this.macroPrograma.positionCaret(macroPrograma.length());
     }
 
-    public String[] escreverProgramaMemoria() throws IOException {
+    public String[] escreverProgramaMemoria() throws Exception {
         this.memoriaPrincipal = new MemoriaPrincipal();
-        String[] progFormatado = this.assembler.montar(this.memoriaPrincipal, macroPrograma.getText());
-        return progFormatado;
+        return this.assembler.montar(this.memoriaPrincipal, macroPrograma.getText());
     }
 
-    public void telaFalha(ActionEvent e) throws IOException {
+    public void telaFalha(ActionEvent event, String mensagem) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1Falha.fxml"));
         this.rootFalha = loader.load();
         ControllerTela1Falha controllerTela1Falha = loader.getController();
-        controllerTela1Falha.setTextoAlerta("Falha ao carregar programa", "", "         Digite novamente.");
+        controllerTela1Falha.setTextoAlerta(mensagem, "", "Digite novamente.");
         this.stageFalha = new Stage();
         this.sceneFalha = new Scene(this.rootFalha);
         String css = getClass().getResource("/css/StyleTela1Falha.css").toExternalForm();
         this.sceneFalha.getStylesheets().add(css);
         this.stageFalha.setScene(this.sceneFalha);
         this.stageFalha.initModality(Modality.APPLICATION_MODAL);
-        this.stageFalha.initOwner(((Node) e.getSource()).getScene().getWindow());
+        this.stageFalha.initOwner(((Node) event.getSource()).getScene().getWindow());
         this.stageFalha.initStyle(StageStyle.UNDECORATED);
         this.stageFalha.showAndWait();
     }

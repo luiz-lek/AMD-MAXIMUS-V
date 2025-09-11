@@ -46,31 +46,18 @@ lodl 2
 stol 1
 jump loop
 end:
-
-1000111111111011
-1000111111111011
 */
 
 /*
-loco 6
-stod contador
-loco 0
-stod soma
-stod aux
-loco 1
-stod anterior
-stod decrementador
-loop: lodd contador
-subd decrementador
-jzer end
-stod contador
-lodd soma
-stod aux
-addd anterior
-stod soma
-loco aux
-stod anterior
-jump loop
-end: lodd soma
-push
- */
+    loco 10
+    stod x
+    loco 1
+    stod y
+    loop:
+    lodd x
+    subd y
+    jzer end
+    stod x
+    jump loop
+    end:
+*/
