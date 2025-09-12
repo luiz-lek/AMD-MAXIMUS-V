@@ -193,7 +193,3 @@ AnchorPane {
     -fx-border-color: #000000;
     -fx-text-fill: #000000;
 }
-
-#macroprograma, memoriaEmBinario, memoriaEmDecimal {
-    -fx-font: Monospace;
-}

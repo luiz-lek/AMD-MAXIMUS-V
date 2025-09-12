@@ -1,6 +1,5 @@
 package back.cpu;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import visao.ControllerTela2;
 
@@ -23,11 +22,16 @@ public class ExecutarPrograma implements Runnable {
     @FXML
     public void executarTodoPrograma() throws Exception {
         this.controllerTela2.executarTudo.setDisable(true);
+        this.controllerTela2.desabilitarExecucao();
 
-        while (!controllerTela2.execucaoEncerrada) {
-            controllerTela2.executarCiclo();
+        while (!this.controllerTela2.execucaoEncerrada) {
+            if(this.controllerTela2.pausarPrograma) break;
+            this.controllerTela2.executarCiclo();
         }
 
-        this.atualizarTela();
+        this.controllerTela2.avaliarEstadoProgramaEAtivarExecucao();
+        this.controllerTela2.pausar.setDisable(true);
+
+        this.controllerTela2.atualizarTela();
     }
 }

@@ -2,6 +2,7 @@ package visao;
 
 import back.comum.Conversao;
 import back.cpu.CPU;
+import back.cpu.ExecutarPrograma;
 import back.cpu.MemoriaPrincipal;
 import back.comum.MicroinstrucaoMap;
 import back.montagem.Assembler;
@@ -49,7 +50,7 @@ public class ControllerTela2 {
 
     public int qtdLinhasMacro = 0, linhaAtualMacro = 0, linhaAnteriorMacro = 0;
 
-    public boolean execucaoEncerrada = false;
+    public boolean execucaoEncerrada = false, pausarPrograma = false;
 
     public Assembler assembler;
 
@@ -65,6 +66,7 @@ public class ControllerTela2 {
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
         this.translateMacro.setNode(this.highlightMacro);
         this.atualizarTela();
+        this.pausar.setDisable(true);
     }
 
     public void executarMicEAtualizar(ActionEvent e) throws Exception {
@@ -83,18 +85,31 @@ public class ControllerTela2 {
             // Pega o valor do registrador "PC" para setar a linha atual
         }
 
-        this.desabilitarExecucao();
+        this.avaliarEstadoProgramaEDesativarExecucao();
     }
 
     public void desabilitarExecucao() {
+        this.executarMicroinstrucao.setDisable(true);
+        this.executarMacroAtual.setDisable(true);
+        this.valorPc.setDisable(true);
+    }
+
+    public void avaliarEstadoProgramaEDesativarExecucao() {
         this.execucaoEncerrada = this.linhaAtualMacro >= this.qtdLinhasMacro;
 
         if(this.execucaoEncerrada) {
-            this.executarMicroinstrucao.setDisable(true);
-            this.executarMacroAtual.setDisable(true);
-            this.pausar.setDisable(true);
-            this.valorPc.setDisable(true);
+            this.desabilitarExecucao();
+            this.executarTudo.setDisable(true);
         }
+    }
+
+    public void avaliarEstadoProgramaEAtivarExecucao() {
+        if(this.execucaoEncerrada) return;
+
+        this.executarMicroinstrucao.setDisable(false);
+        this.executarMacroAtual.setDisable(false);
+        this.valorPc.setDisable(false);
+        this.executarTudo.setDisable(false);
     }
 
     //Execução macro instrução
@@ -141,12 +156,18 @@ public class ControllerTela2 {
         if(!this.executarTudo.isDisable()) return;
 
         this.executarTudo.setDisable(false);
+        this.pausarPrograma = true;
+    }
 
-        this.atualizarTela();
+    @FXML
+    private void executarTodoPrograma(ActionEvent event) throws Exception {
+        this.pausar.setDisable(false);
+        Thread thread = new Thread(new ExecutarPrograma(this));
+        thread.start();
     }
 
 
-    private void atualizarTela() throws IOException {
+    public void atualizarTela() throws IOException {
         this.atualizarMemoria();
         this.atualizarMicroinstrucoes();
         this.atualizarRegs();
@@ -190,6 +211,7 @@ public class ControllerTela2 {
         this.executarMicroinstrucao.setDisable(false);
         this.executarMacroAtual.setDisable(false);
         this.valorPc.setDisable(false);
+        this.executarTudo.setDisable(false);
     }
 
     @FXML

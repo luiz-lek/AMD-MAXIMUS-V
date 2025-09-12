@@ -18,7 +18,7 @@
       <Rectangle fx:id="caixaRegistradores" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="139.0" layoutX="12.0" layoutY="555.0" stroke="BLACK" strokeType="INSIDE" width="298.0" />
       <TextArea fx:id="microinstrucoes" editable="false" layoutX="368.0" layoutY="48.0" prefHeight="447.0" prefWidth="264.0" />
       <Label layoutX="439.0" layoutY="28.0" text="MICROINSTRUÇÔES" />
-      <TextArea fx:id="memoriaEmBinario" editable="false" layoutX="711.0" layoutY="46.0" prefHeight="447.0" prefWidth="193.0">
+      <TextArea fx:id="memoriaEmBinario" editable="false" layoutX="701.0" layoutY="46.0" prefHeight="447.0" prefWidth="209.0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font></TextArea>
@@ -155,8 +155,8 @@
          </image>
       </ImageView>
       <Label layoutX="861.0" layoutY="494.0" />
-      <Label layoutX="786.0" layoutY="28.0" text="Binário" />
-      <TextArea fx:id="memoriaEmDecimal" editable="false" layoutX="910.0" layoutY="46.0" prefHeight="447.0" prefWidth="77.0" text="000000">
+      <Label layoutX="785.0" layoutY="28.0" text="Binário" />
+      <TextArea fx:id="memoriaEmDecimal" editable="false" layoutX="912.0" layoutY="46.0" prefHeight="447.0" prefWidth="79.0" text="000000">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font></TextArea>

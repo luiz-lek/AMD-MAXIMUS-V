@@ -2,6 +2,7 @@ package back.cpu;
 
 import back.comum.Conversao;
 import back.comum.Microinstrucao;
+import visao.ControllerTela2;
 
 import java.io.IOException;
 
@@ -107,5 +108,22 @@ public class CPU {
     public String getValorRegistrador(int pos) throws IllegalAccessError{
         if((pos < 0) || (15 < pos)) throw new IllegalAccessError("Posição inválida.");
         return this.registradores.registradores[pos].getValor();
+    }
+
+    public void ajustarBotoesExecucao(ControllerTela2 controllerTela2) {
+        controllerTela2.execucaoEncerrada = controllerTela2.linhaAtualMacro >= controllerTela2.qtdLinhasMacro;
+
+        if(controllerTela2.execucaoEncerrada) {
+            controllerTela2.executarMicroinstrucao.setDisable(true);
+            controllerTela2.executarMacroAtual.setDisable(true);
+            controllerTela2.pausar.setDisable(true);
+            controllerTela2.valorPc.setDisable(true);
+            return;
+        }
+
+        controllerTela2.executarMicroinstrucao.setDisable(false);
+        controllerTela2.executarMacroAtual.setDisable(false);
+        controllerTela2.pausar.setDisable(false);
+        controllerTela2.valorPc.setDisable(false);
     }
 }
