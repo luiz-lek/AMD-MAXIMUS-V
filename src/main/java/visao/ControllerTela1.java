@@ -39,7 +39,7 @@ public class ControllerTela1 {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2.fxml"));
             this.rootTela2 = loader.load();
             ControllerTela2 controllerTela2 = loader.getController();
-            controllerTela2.setConteudo(programaArray, this.cpu, this.memoriaPrincipal, this.assembler);
+            controllerTela2.setConteudo(this.macroPrograma.getText(), programaArray, this.cpu, this.memoriaPrincipal, this.assembler);
             this.stageTela2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stageTela2);
             this.scenetela2 = new Scene(rootTela2);

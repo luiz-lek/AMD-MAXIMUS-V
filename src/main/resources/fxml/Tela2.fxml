@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -18,11 +19,11 @@
       <Rectangle fx:id="caixaRegistradores" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="139.0" layoutX="12.0" layoutY="555.0" stroke="BLACK" strokeType="INSIDE" width="298.0" />
       <TextArea fx:id="microinstrucoes" editable="false" layoutX="368.0" layoutY="48.0" prefHeight="447.0" prefWidth="264.0" />
       <Label layoutX="439.0" layoutY="28.0" text="MICROINSTRUÇÔES" />
-      <TextArea fx:id="memoriaEmBinario" editable="false" layoutX="701.0" layoutY="46.0" prefHeight="447.0" prefWidth="209.0">
+      <TextArea fx:id="memoriaEmBinario" editable="false" layoutX="711.0" layoutY="48.0" prefHeight="447.0" prefWidth="270.0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font></TextArea>
-      <Label layoutX="823.0" layoutY="9.0" text="MEMÓRIA" />
+      <Label layoutX="830.0" layoutY="28.0" text="MEMÓRIA" />
       <Label layoutX="97.0" layoutY="28.0" text="MACROPROGRAMA" />
       <TextArea fx:id="macroprograma" editable="false" layoutX="25.0" layoutY="48.0" prefHeight="447.0" prefWidth="264.0">
          <font>
@@ -155,12 +156,6 @@
          </image>
       </ImageView>
       <Label layoutX="861.0" layoutY="494.0" />
-      <Label layoutX="785.0" layoutY="28.0" text="Binário" />
-      <TextArea fx:id="memoriaEmDecimal" editable="false" layoutX="912.0" layoutY="46.0" prefHeight="447.0" prefWidth="79.0" text="000000">
-         <font>
-            <Font name="Monospaced Regular" size="13.0" />
-         </font></TextArea>
-      <Label layoutX="924.0" layoutY="28.0" text="Decimal" />
       <Label layoutX="876.0" layoutY="536.0" text="Executar até pc" />
       <Label layoutX="783.0" layoutY="603.0" text="Buscar na memória" />
       <Rectangle fx:id="highlightMacro" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="25.0" layoutY="52.0" stroke="BLACK" strokeType="INSIDE" width="264.0" />
@@ -174,5 +169,6 @@
             <Font size="10.0" />
          </font>
       </Button>
+      <Line fx:id="divisoriaMemoria" endX="100.00006103515625" endY="-22.000003814697266" layoutX="780.0" layoutY="70.0" startX="100.00006103515625" startY="425.0" strokeWidth="2.0" />
    </children>
 </AnchorPane>

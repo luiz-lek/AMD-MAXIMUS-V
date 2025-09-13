@@ -43,7 +43,8 @@ public class ControllerTela2Voltar {
     }
 
     @FXML
-    private void fecharJanela(ActionEvent event) throws IOException {
+    private void fecharJanela(ActionEvent event
+    ) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }

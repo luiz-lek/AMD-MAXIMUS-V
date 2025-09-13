@@ -33,10 +33,21 @@ public class Conversao {
         return Integer.toString(valorNumerico);
     }
 
-    public static String binarioToStrDecimal(String bits, int qtdBitsEsperada) throws IOException{
-        if(bits.length() != qtdBitsEsperada) throw new IOException("String com " + bits.length() + " bits\nQuantidade esperada: " + qtdBitsEsperada);
+    public static String binarioToStrDecimal(String bits, int qtdBitsEsperada) throws Exception{
+        if(bits.length() != qtdBitsEsperada) throw new Exception("String com " + bits.length() + " bits\nQuantidade esperada: " + qtdBitsEsperada);
 
         int valorNumerico = Integer.parseInt(bits, 2);
         return Integer.toString(valorNumerico);
+    }
+
+    public static String ajustarDigitosDecimal(String digitos, int qtdBitsDesejada) throws IOException {
+        int digitosLength = digitos.length();
+        StringBuilder digitosFormatado = new StringBuilder();
+
+        for(int i = digitosLength; i < qtdBitsDesejada; i++) digitosFormatado.append("0");
+
+        digitosFormatado.append(digitos);
+
+        return digitosFormatado.toString();
     }
 }

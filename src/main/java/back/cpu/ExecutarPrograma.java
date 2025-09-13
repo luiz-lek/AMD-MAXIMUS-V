@@ -25,13 +25,16 @@ public class ExecutarPrograma implements Runnable {
         this.controllerTela2.desabilitarExecucao();
 
         while (!this.controllerTela2.execucaoEncerrada) {
-            if(this.controllerTela2.pausarPrograma) break;
+            if(this.controllerTela2.pausarPrograma) {
+                this.controllerTela2.pausarPrograma = false;
+                break;
+            }
             this.controllerTela2.executarCiclo();
         }
 
-        this.controllerTela2.avaliarEstadoProgramaEAtivarExecucao();
         this.controllerTela2.pausar.setDisable(true);
 
         this.controllerTela2.atualizarTela();
+        this.controllerTela2.avaliarEstadoProgramaEAtivarExecucao();
     }
 }

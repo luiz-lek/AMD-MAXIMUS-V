@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -32,11 +33,13 @@ public class ControllerTela2 {
     @FXML
     public Button voltarTela1, executarMicroinstrucao, executarMacroAtual, reiniciar, executarTudo, pausar;
     @FXML
-    public TextArea macroprograma, microinstrucoes, memoriaEmBinario, memoriaEmDecimal;
+    public TextArea macroprograma, microinstrucoes, memoriaEmBinario;
     @FXML
     public TextField PC, AC, SP, IR, TIR, MIR, MBR, MAR, MPC, A, receberEnderecoMemoria, valorLidoMemoria, valorPc;
     @FXML
     public Rectangle highlightMacro;
+    @FXML
+    Line divisoriaMemoria;
     @FXML
     TranslateTransition translateMacro = new TranslateTransition();
     @FXML
@@ -45,7 +48,7 @@ public class ControllerTela2 {
     public CPU cpu;
     public MemoriaPrincipal memoriaPrincipal;
 
-    public String macroPrograma, textoMics = "mar := pc; rd;\n";
+    public String macroProgramaFormatado, macroProgramaUsuario, textoMics = "mar := pc; rd;\n";
     public String[] macroProgramaArray;
 
     public int qtdLinhasMacro = 0, linhaAtualMacro = 0, linhaAnteriorMacro = 0;
@@ -54,13 +57,14 @@ public class ControllerTela2 {
 
     public Assembler assembler;
 
-    public void setConteudo(String[] macroProgramaArray, CPU cpu, MemoriaPrincipal mem, Assembler assembler) throws IOException {
-        this.macroPrograma = assembler.parser.progFormatado();
+    public void setConteudo(String macroPrograma, String[] macroProgramaArray, CPU cpu, MemoriaPrincipal mem, Assembler assembler) throws Exception {
+        this.macroProgramaFormatado = assembler.parser.progFormatado();
+        this.macroProgramaUsuario = macroPrograma;
         this.macroProgramaArray = macroProgramaArray;
         this.qtdLinhasMacro = assembler.getTamProg();
         this.assembler = assembler;
         System.out.println("qtdLinhasMacro: " + this.qtdLinhasMacro);
-        this.macroprograma.setText(macroPrograma);
+        this.macroprograma.setText(this.macroProgramaFormatado);
         this.cpu = cpu;
         this.memoriaPrincipal = mem;
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
@@ -167,7 +171,7 @@ public class ControllerTela2 {
     }
 
 
-    public void atualizarTela() throws IOException {
+    public void atualizarTela() throws Exception {
         this.atualizarMemoria();
         this.atualizarMicroinstrucoes();
         this.atualizarRegs();
@@ -244,7 +248,7 @@ public class ControllerTela2 {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2Voltar.fxml"));
         this.rootTela2Voltar = loader.load();
         ControllerTela2Voltar controllerTela2Voltar = loader.getController();
-        controllerTela2Voltar.setMacroPrograma(this.macroPrograma);
+        controllerTela2Voltar.setMacroPrograma(this.macroProgramaUsuario);
         controllerTela2Voltar.setStage2( this.stageTela2Voltar );
         this.stageAtual = new Stage();
         this.sceneTela2Voltar = new Scene(this.rootTela2Voltar);
@@ -257,10 +261,10 @@ public class ControllerTela2 {
         this.stageAtual.showAndWait();
     }
 
-    private void atualizarMemoria() throws IOException {
+    private void atualizarMemoria() throws Exception {
         this.memoriaEmBinario.setText(this.memoriaPrincipal.posicoesAcessadasBinario());
-        this.memoriaEmDecimal.setText(this.memoriaPrincipal.posicoesAcessadasDecimal());
-
+        int deslocamentoBarraDivisao = this.memoriaPrincipal.maiorEndereco();
+        this.divisoriaMemoria.setTranslateX(8 * (deslocamentoBarraDivisao - 1));
     }
 
     private void atualizarMicroinstrucoes() throws IOException {
@@ -308,12 +312,13 @@ public class ControllerTela2 {
         this.assembler = new Assembler();
         this.memoriaPrincipal = new MemoriaPrincipal();
         this.cpu = new CPU();
-        this.assembler.montar(this.memoriaPrincipal, this.macroPrograma);
+        this.assembler.montar(this.memoriaPrincipal, this.macroProgramaFormatado);
         this.pularMacro(this.linhaAnteriorMacro, 0);
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
         this.textoMics = "mar := pc; rd;\n";
         this.ativarExecucao();
         this.execucaoEncerrada = false;
+        //this.executarTudo.setDisable(false);
         this.linhaAtualMacro = 0;
         this.atualizarTela();
     }

@@ -49,15 +49,15 @@ end:
 */
 
 /*
-    loco 10
-    stod x
-    loco 1
-    stod y
-    loop:
-    lodd x
-    subd y
-    jzer end
-    stod x
-    jump loop
-    end:
+loco 10
+stod x
+loco 1
+stod y
+loop:
+lodd x
+subd y
+jzer end
+stod x
+jump loop
+end:
 */

@@ -61,17 +61,28 @@ public class MemoriaPrincipal{
         this.enderecosAcessadas.add(i, pos);
     }
 
-    public String posicoesAcessadasBinario() { //Retorna uma string em binário de todos os endereços
-        StringBuilder saida = new StringBuilder(); // acessados na memória.
+    public String posicoesAcessadasBinario() throws Exception { //Retorna uma string em binário de todos os endereços
+        StringBuilder saida = new StringBuilder(); // Acessados na memória.
+        int maiorEndereco = this.maiorEndereco();
 
-        for(Integer i : enderecosAcessadas) {
-            saida.append(i.toString()).append(": ").append(memoria[i]).append("\n");
+        String endereco;
+
+        for(Integer i : this.enderecosAcessadas) {
+            endereco = i.toString();
+            endereco = Conversao.ajustarDigitosDecimal(endereco, maiorEndereco);
+
+            saida.append(endereco).append(": ").append(this.memoria[i]);
+
+            String decimal = Conversao.binarioToStrDecimal(this.memoria[i], 16);
+            decimal = Conversao.ajustarDigitosDecimal(decimal, 5);
+
+            saida.append("   ").append(decimal).append("\n");
         }
 
         return saida.toString();
     }
 
-    public String posicoesAcessadasDecimal() throws IOException { //Mesmo que o método acima, mas em decimal
+    public String posicoesAcessadasDecimal() throws Exception { //Mesmo que o método acima, mas em decimal
         StringBuilder saida = new StringBuilder();               // e sem o número dos endereços
 
         for(Integer i : enderecosAcessadas) {
@@ -79,5 +90,11 @@ public class MemoriaPrincipal{
         }
 
         return saida.toString();
+    }
+
+    public int maiorEndereco() {
+        Integer maiorEndereco = this.enderecosAcessadas.getLast();
+        String maiorEnderecoStr =  Integer.toString(maiorEndereco);
+        return maiorEnderecoStr.length();
     }
 }
