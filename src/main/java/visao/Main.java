@@ -47,8 +47,3 @@ stol 1
 jump loop
 end:
 */
-
-/*
-5
-
-*/

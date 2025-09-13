@@ -67,7 +67,7 @@ public class ControllerTela2 {
         this.macroProgramaUsuario = macroPrograma;
         this.macroProgramaArray = this.macroProgramaFormatado.split("\\r?\\n|\\r");
         System.out.println("macroProgramaFormatado: " + Arrays.toString(macroProgramaArray));
-        this.qtdLinhasMacro = assembler.getTamProg();
+        this.qtdLinhasMacro = macroProgramaArray.length;
         this.assembler = assembler;
 
         if(this.qtdLinhasMacro >= 26) {
@@ -190,7 +190,12 @@ public class ControllerTela2 {
 
         if("0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16))) {
             this.pularMacro(this.linhaAnteriorMacro, this.linhaAtualMacro);
-            this.textoLinhaAtualMacro.setText(this.macroProgramaArray[this.linhaAtualMacro]);
+            int linhaTexto = linhaAtualMacro;
+
+            if(this.linhaAtualMacro >= this.qtdLinhasMacro) {
+                linhaTexto = this.qtdLinhasMacro - 1;
+            }
+            this.textoLinhaAtualMacro.setText(this.macroProgramaArray[linhaTexto]);
         }
     }
 
