@@ -39,10 +39,10 @@ public class Assembler {
     private int tamProg;
     public CodeParser parser = new CodeParser();
 
-    public String[] montar(MemoriaPrincipal mem, String programa) throws IOException, Exception {
-        String[][] programaFormatado = parser.parse(programa);
-        System.out.println("Programa formatado: " + Arrays.deepToString(programaFormatado));
-        String programaEmBinario = "";
+    public void montar(MemoriaPrincipal mem, String programa) throws Exception {
+        String[][] programaFormatado = this.parser.parse(programa); // Retira flags, linhas vazias e separa cada linha
+        String programaEmBinario = "";                              // em mnemônico e opereando
+
 
         int i = 0;
 
@@ -53,7 +53,6 @@ public class Assembler {
         }
 
         this.tamProg = i;
-        return parser.progFormatado;
     }
 
     public String macroPraBinario(String instrucao[]) throws Exception { //Instrução[0] contém o mnemônimo
@@ -62,14 +61,14 @@ public class Assembler {
 
         StringBuilder binario = new StringBuilder(tabela.get(instrucao[0]));
 
-        if(instrucao[1] == null) return binario.toString(); //Instrução sem operando
+        if(instrucao[1] == null) return binario.toString(); // Instrução sem operando
 
         String binarioStr = binario.toString();
         int tamBin = binarioStr.length();
 
-        if (tamBin == 8) { //operando com 8 bits tem limite entre 0 e 255
+        if (tamBin == 8) { // Operando com 8 bits tem limite entre 0 e 255.
             binario.append(operandoPraBinario(instrucao[0], instrucao[1], 255, 8));
-        } else if ("LOCO".equals(instrucao[0])) { //loco tem limite até 4095
+        } else if ("LOCO".equals(instrucao[0])) { // Loco tem limite até 4095
             binario.append(operandoPraBinario(instrucao[0], instrucao[1], 4095, 12));
         } else { //mnemônimo com 4 bits, sem limite no operando
             binario.append(operandoPraBinario(instrucao[0], instrucao[1], Integer.MAX_VALUE, 12));

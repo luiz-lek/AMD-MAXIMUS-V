@@ -1,6 +1,7 @@
 package visao;
 
 import back.comum.Conversao;
+import back.comum.MAX;
 import back.cpu.CPU;
 import back.cpu.ExecutarPrograma;
 import back.cpu.MemoriaPrincipal;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Line;
@@ -24,6 +26,7 @@ import javafx.stage.StageStyle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class ControllerTela2 {
     Parent rootTela2Voltar, rootFalha;
@@ -35,15 +38,17 @@ public class ControllerTela2 {
     @FXML
     public TextArea macroprograma, microinstrucoes, memoriaEmBinario;
     @FXML
-    public TextField PC, AC, SP, IR, TIR, MIR, MBR, MAR, MPC, A, receberEnderecoMemoria, valorLidoMemoria, valorPc;
+    public TextField PC, AC, SP, IR, TIR, MIR, MBR, MAR, MPC, A, receberEnderecoMemoria, valorLidoMemoria, valorPc, textoLinhaAtualMacro;
     @FXML
     public Rectangle highlightMacro;
     @FXML
-    Line divisoriaMemoria;
+    private Line divisoriaMemoria;
     @FXML
-    TranslateTransition translateMacro = new TranslateTransition();
+    private TranslateTransition translateMacro = new TranslateTransition();
     @FXML
-    PauseTransition pause = new PauseTransition(Duration.millis(400));
+    private PauseTransition pause = new PauseTransition(Duration.millis(400));
+    @FXML
+    private Label labelLinhaAtual;
 
     public CPU cpu;
     public MemoriaPrincipal memoriaPrincipal;
@@ -51,19 +56,26 @@ public class ControllerTela2 {
     public String macroProgramaFormatado, macroProgramaUsuario, textoMics = "mar := pc; rd;\n";
     public String[] macroProgramaArray;
 
-    public int qtdLinhasMacro = 0, linhaAtualMacro = 0, linhaAnteriorMacro = 0;
+    public int qtdLinhasMacro = 0, qtdLinhasTextoMics = 1, linhaAtualMacro = 0, linhaAnteriorMacro = 0;
 
     public boolean execucaoEncerrada = false, pausarPrograma = false;
 
     public Assembler assembler;
 
-    public void setConteudo(String macroPrograma, String[] macroProgramaArray, CPU cpu, MemoriaPrincipal mem, Assembler assembler) throws Exception {
+    public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem, Assembler assembler) throws Exception {
         this.macroProgramaFormatado = assembler.parser.progFormatado();
         this.macroProgramaUsuario = macroPrograma;
-        this.macroProgramaArray = macroProgramaArray;
+        this.macroProgramaArray = this.macroProgramaFormatado.split("\\r?\\n|\\r");
+        System.out.println("macroProgramaFormatado: " + Arrays.toString(macroProgramaArray));
         this.qtdLinhasMacro = assembler.getTamProg();
         this.assembler = assembler;
-        System.out.println("qtdLinhasMacro: " + this.qtdLinhasMacro);
+
+        if(this.qtdLinhasMacro >= 26) {
+            this.highlightMacro.setVisible(false);
+            this.labelLinhaAtual.setVisible(true);
+            this.textoLinhaAtualMacro.setVisible(true);
+        }
+
         this.macroprograma.setText(this.macroProgramaFormatado);
         this.cpu = cpu;
         this.memoriaPrincipal = mem;
@@ -178,6 +190,7 @@ public class ControllerTela2 {
 
         if("0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16))) {
             this.pularMacro(this.linhaAnteriorMacro, this.linhaAtualMacro);
+            this.textoLinhaAtualMacro.setText(this.macroProgramaArray[this.linhaAtualMacro]);
         }
     }
 
@@ -263,7 +276,7 @@ public class ControllerTela2 {
 
     private void atualizarMemoria() throws Exception {
         this.memoriaEmBinario.setText(this.memoriaPrincipal.posicoesAcessadasBinario());
-        int deslocamentoBarraDivisao = this.memoriaPrincipal.maiorEndereco();
+        int deslocamentoBarraDivisao = this.memoriaPrincipal.maiorEnderecoAcessado();
         this.divisoriaMemoria.setTranslateX(8 * (deslocamentoBarraDivisao - 1));
     }
 
@@ -273,16 +286,25 @@ public class ControllerTela2 {
         this.microinstrucoes.setScrollTop(Double.MAX_VALUE);
     }
 
-    private void atualizarTextoMics() throws IOException {
-        StringBuilder temp = new StringBuilder();
-        temp.append(this.textoMics);
+    private void atualizarTextoMics() throws Exception {
+        if(this.qtdLinhasTextoMics > MAX.MAXTAMTEXTOMICS) {
+            int i;
+
+            for(i = 0; this.textoMics.charAt(i) != '\n'; i++);
+
+            this.textoMics = this.textoMics.substring(i + 1);
+            this.qtdLinhasTextoMics--;
+        }
+
+        StringBuilder temp = new StringBuilder(this.textoMics);
         temp.append(MicroinstrucaoMap.getDescricao(this.cpu.getValorMpc())).append("\n");
         this.textoMics = temp.toString();
+        this.qtdLinhasTextoMics++;
     }
 
-    private void atualizarRegs() throws IOException {
+    private void atualizarRegs() throws Exception {
         this.MBR.setText(this.cpu.getValorMbr());
-        this.MAR.setText(Conversao.binarioToHexadecimal(this.cpu.getMar()));
+        this.MAR.setText(Conversao.binarioToHexadecimal(this.cpu.getValorMar()));
         this.MIR.setText(this.cpu.getValorMir());
         this.MPC.setText(this.cpu.getValorMPC());
         this.PC.setText(Conversao.binarioToInt(this.cpu.getValorRegistrador(0), 16, true));
@@ -318,7 +340,6 @@ public class ControllerTela2 {
         this.textoMics = "mar := pc; rd;\n";
         this.ativarExecucao();
         this.execucaoEncerrada = false;
-        //this.executarTudo.setDisable(false);
         this.linhaAtualMacro = 0;
         this.atualizarTela();
     }

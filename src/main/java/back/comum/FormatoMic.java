@@ -1,6 +1,6 @@
 package back.comum;
 
-public class FormatoMic { //armazena os intervalos de cada campo da microinstrução
+public class FormatoMic { //Armazena os intervalos de cada campo da microinstrução
     public static final int AMUX = 0;
     public static final int[] COND = new int[]{1, 3};
     public static final int[] ALU = new int[]{3, 5};

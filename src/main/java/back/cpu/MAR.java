@@ -12,11 +12,11 @@ public class MAR extends Registrador {
         this.ativado = !"0".equals(ativado);
     }
 
-    public boolean isAtivado() { return ativado; }
+    public boolean isAtivado() { return this.ativado; }
 
     @Override
     public void setValor(String valor) throws IllegalArgumentException {
+        //if(valor.length() != 12) throw new IllegalArgumentException("MAR precisa receber 12 bits.");
         super.setValor(valor.substring(4));
-        if(this.getValor().length() != 12) throw new IllegalArgumentException("MAR precisa receber 12 bits.");
     }
 }

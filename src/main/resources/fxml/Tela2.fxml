@@ -11,19 +11,19 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerTela2">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="767.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerTela2">
    <children>
-      <Rectangle fx:id="caixaExecutarAtePc" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="49.0" layoutX="861.0" layoutY="555.0" stroke="BLACK" strokeType="INSIDE" width="126.0" />
-      <Rectangle fx:id="caixaBuscarMemoria" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="73.0" layoutX="709.0" layoutY="621.0" stroke="BLACK" strokeType="INSIDE" width="278.0" />
-      <Rectangle fx:id="caixaMemoriaRascunho" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="139.0" layoutX="320.0" layoutY="555.0" stroke="BLACK" strokeType="INSIDE" width="379.0" />
-      <Rectangle fx:id="caixaRegistradores" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="139.0" layoutX="12.0" layoutY="555.0" stroke="BLACK" strokeType="INSIDE" width="298.0" />
+      <Rectangle fx:id="caixaExecutarAtePc" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="49.0" layoutX="862.0" layoutY="614.0" stroke="BLACK" strokeType="INSIDE" width="126.0" />
+      <Rectangle fx:id="caixaBuscarMemoria" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="73.0" layoutX="710.0" layoutY="680.0" stroke="BLACK" strokeType="INSIDE" width="278.0" />
+      <Rectangle fx:id="caixaMemoriaRascunho" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="139.0" layoutX="321.0" layoutY="614.0" stroke="BLACK" strokeType="INSIDE" width="379.0" />
+      <Rectangle fx:id="caixaRegistradores" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="139.0" layoutX="13.0" layoutY="614.0" stroke="BLACK" strokeType="INSIDE" width="298.0" />
       <TextArea fx:id="microinstrucoes" editable="false" layoutX="368.0" layoutY="48.0" prefHeight="447.0" prefWidth="264.0" />
       <Label layoutX="439.0" layoutY="28.0" text="MICROINSTRUÇÔES" />
       <TextArea fx:id="memoriaEmBinario" editable="false" layoutX="711.0" layoutY="48.0" prefHeight="447.0" prefWidth="270.0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font></TextArea>
-      <Label layoutX="830.0" layoutY="28.0" text="MEMÓRIA" />
+      <Label layoutX="829.0" layoutY="9.0" text="MEMÓRIA" />
       <Label layoutX="97.0" layoutY="28.0" text="MACROPROGRAMA" />
       <TextArea fx:id="macroprograma" editable="false" layoutX="25.0" layoutY="48.0" prefHeight="447.0" prefWidth="264.0">
          <font>
@@ -33,100 +33,100 @@
          <font>
             <Font size="10.0" />
          </font></Button>
-      <Label layoutX="19.0" layoutY="565.0" prefHeight="16.0" prefWidth="24.0" text="MIR">
+      <Label layoutX="20.0" layoutY="624.0" prefHeight="16.0" prefWidth="24.0" text="MIR">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="19.0" layoutY="595.0" text="MBR">
+      <Label layoutX="20.0" layoutY="654.0" text="MBR">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font></Label>
-      <Label layoutX="19.0" layoutY="625.0" text="MAR">
+      <Label layoutX="20.0" layoutY="684.0" text="MAR">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font></Label>
-      <TextField fx:id="MIR" editable="false" layoutX="66.0" layoutY="565.0" prefHeight="26.0" prefWidth="236.0" text="00000000000000000000000000000000">
+      <TextField fx:id="MIR" editable="false" layoutX="67.0" layoutY="624.0" prefHeight="26.0" prefWidth="236.0" text="00000000000000000000000000000000">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <TextField fx:id="MBR" editable="false" layoutX="66.0" layoutY="595.0" prefHeight="26.0" prefWidth="125.0" text="0000000000000000">
+      <TextField fx:id="MBR" editable="false" layoutX="67.0" layoutY="654.0" prefHeight="26.0" prefWidth="125.0" text="0000000000000000">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <TextField fx:id="MAR" editable="false" layoutX="66.0" layoutY="625.0" prefHeight="26.0" prefWidth="126.0" text="0000000000000000">
+      <TextField fx:id="MAR" editable="false" layoutX="67.0" layoutY="684.0" prefHeight="26.0" prefWidth="126.0" text="0000000000000000">
          <font>
             <Font size="12.0" />
          </font></TextField>
       <Button fx:id="voltarTela1" layoutX="-1.0" layoutY="-1.0" mnemonicParsing="false" onAction="#confirmarVoltar" opacity="0.0" prefHeight="26.0" prefWidth="26.0" />
-      <Label layoutX="19.0" layoutY="654.0" text="MPC">
+      <Label layoutX="20.0" layoutY="713.0" text="MPC">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="MPC" editable="false" layoutX="66.0" layoutY="654.0" prefHeight="26.0" prefWidth="126.0" text="0000000000000000">
+      <TextField fx:id="MPC" editable="false" layoutX="67.0" layoutY="713.0" prefHeight="26.0" prefWidth="126.0" text="0000000000000000">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <TextField fx:id="A" editable="false" layoutX="560.0" layoutY="654.0" prefHeight="26.0" prefWidth="126.0" text="0000000000000000">
+      <TextField fx:id="A" editable="false" layoutX="561.0" layoutY="713.0" prefHeight="26.0" prefWidth="126.0" text="0000000000000000">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <TextField fx:id="TIR" editable="false" layoutX="560.0" layoutY="612.0" prefHeight="26.0" prefWidth="126.0">
+      <TextField fx:id="TIR" editable="false" layoutX="561.0" layoutY="671.0" prefHeight="26.0" prefWidth="126.0">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <TextField fx:id="IR" editable="false" layoutX="560.0" layoutY="565.0" prefHeight="26.0" prefWidth="126.0">
+      <TextField fx:id="IR" editable="false" layoutX="561.0" layoutY="624.0" prefHeight="26.0" prefWidth="126.0">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <TextField fx:id="SP" editable="false" layoutX="359.0" layoutY="654.0" prefHeight="26.0" prefWidth="126.0">
+      <TextField fx:id="SP" editable="false" layoutX="360.0" layoutY="713.0" prefHeight="26.0" prefWidth="126.0">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <TextField fx:id="AC" editable="false" layoutX="359.0" layoutY="610.0" prefHeight="26.0" prefWidth="126.0">
+      <TextField fx:id="AC" editable="false" layoutX="360.0" layoutY="669.0" prefHeight="26.0" prefWidth="126.0">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <TextField fx:id="PC" editable="false" layoutX="359.0" layoutY="564.0" prefHeight="26.0" prefWidth="126.0">
+      <TextField fx:id="PC" editable="false" layoutX="360.0" layoutY="623.0" prefHeight="26.0" prefWidth="126.0">
          <font>
             <Font size="12.0" />
          </font></TextField>
-      <Label layoutX="328.0" layoutY="565.0" text="PC">
+      <Label layoutX="329.0" layoutY="624.0" text="PC">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="328.0" layoutY="610.0" text="AC">
+      <Label layoutX="329.0" layoutY="669.0" text="AC">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="328.0" layoutY="654.0" text="SP">
+      <Label layoutX="329.0" layoutY="713.0" text="SP">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="529.0" layoutY="565.0" text="IR">
+      <Label layoutX="530.0" layoutY="624.0" text="IR">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="522.0" layoutY="612.0" text="TIR">
+      <Label layoutX="523.0" layoutY="671.0" text="TIR">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="534.0" layoutY="654.0" text="A">
+      <Label layoutX="535.0" layoutY="713.0" text="A">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="receberEnderecoMemoria" layoutX="774.0" layoutY="628.0" onAction="#lerPosicaoMemoria" prefHeight="26.0" prefWidth="138.0" promptText="Digite o endereço...">
+      <TextField fx:id="receberEnderecoMemoria" layoutX="775.0" layoutY="687.0" onAction="#lerPosicaoMemoria" prefHeight="26.0" prefWidth="138.0" promptText="Digite o endereço...">
          <font>
             <Font size="11.0" />
          </font></TextField>
-      <TextField fx:id="valorLidoMemoria" editable="false" layoutX="774.0" layoutY="660.0" prefHeight="26.0" prefWidth="138.0" />
+      <TextField fx:id="valorLidoMemoria" editable="false" layoutX="775.0" layoutY="719.0" prefHeight="26.0" prefWidth="138.0" />
       <Label layoutX="25.0" layoutY="5.0">
          <font>
             <Font size="9.0" />
@@ -137,7 +137,7 @@
             <Image url="@../images/seta_amarela.png" />
          </image>
       </ImageView>
-      <TextField fx:id="valorPc" layoutX="876.0" layoutY="566.0" onAction="#executarAtePc" prefHeight="26.0" prefWidth="94.0" promptText="Valor do pc...">
+      <TextField fx:id="valorPc" layoutX="877.0" layoutY="625.0" onAction="#executarAtePc" prefHeight="26.0" prefWidth="94.0" promptText="Valor do pc...">
          <font>
             <Font size="11.0" />
          </font></TextField>
@@ -156,19 +156,23 @@
          </image>
       </ImageView>
       <Label layoutX="861.0" layoutY="494.0" />
-      <Label layoutX="876.0" layoutY="536.0" text="Executar até pc" />
-      <Label layoutX="783.0" layoutY="603.0" text="Buscar na memória" />
+      <Label layoutX="877.0" layoutY="595.0" text="Executar até pc" />
+      <Label layoutX="784.0" layoutY="662.0" text="Buscar na memória" />
       <Rectangle fx:id="highlightMacro" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="25.0" layoutY="52.0" stroke="BLACK" strokeType="INSIDE" width="264.0" />
-      <Button fx:id="executarTudo" layoutX="709.0" layoutY="555.0" mnemonicParsing="false" onAction="#executarTodoPrograma" prefHeight="41.0" prefWidth="70.0" text="Executar">
+      <Button fx:id="executarTudo" layoutX="710.0" layoutY="614.0" mnemonicParsing="false" onAction="#executarTodoPrograma" prefHeight="41.0" prefWidth="70.0" text="Executar">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="pausar" layoutX="786.0" layoutY="555.0" mnemonicParsing="false" onAction="#pausarExecucao" prefHeight="42.0" prefWidth="70.0" text="Pausar ">
+      <Button fx:id="pausar" layoutX="787.0" layoutY="614.0" mnemonicParsing="false" onAction="#pausarExecucao" prefHeight="42.0" prefWidth="70.0" text="Pausar ">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
       <Line fx:id="divisoriaMemoria" endX="100.00006103515625" endY="-22.000003814697266" layoutX="780.0" layoutY="70.0" startX="100.00006103515625" startY="425.0" strokeWidth="2.0" />
+      <Label layoutX="774.0" layoutY="28.0" text="BINÁRIO" />
+      <Label layoutX="900.0" layoutY="28.0" text="DECIMAL" />
+      <TextField fx:id="textoLinhaAtualMacro" editable="false" layoutX="28.0" layoutY="562.0" prefHeight="26.0" prefWidth="264.0" visible="false" />
+      <Label fx:id="labelLinhaAtual" layoutX="54.0" layoutY="543.0" text="LINHA ATUAL MACROPROGRAMA" visible="false" />
    </children>
 </AnchorPane>

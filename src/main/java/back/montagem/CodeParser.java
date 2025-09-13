@@ -72,8 +72,8 @@ public class CodeParser {
 
         if(linha.charAt(i) == ':') {// Caso seja uma flag
             this.flags.put(mnemonicoStr, numLinha);
-            return parseLinhaEFlags(linha.substring(i + 1).trim(), numLinha); //Retorna uma possível operação
-                                                                                       // existente após a flag.
+            return parseLinhaEFlags(linha.substring(i + 1).trim(), numLinha); // Retorna uma possível operação
+                                                                                        // existente após a flag.
         }
 
         // Linha sem flag
@@ -81,7 +81,7 @@ public class CodeParser {
 
         String operando = this.pegarOperando(linha, mnemonicoStr, i++);
 
-        try{ // Verifica se a operação deve trabalhar com constante ou variável
+        try { // Verifica se a operação deve trabalhar com constante ou variável.
             int operandoInt = Integer.parseInt(operando);
         } catch(Exception e) {
             if(this.mnemonicoComConstante(mnemonicoStr)){
@@ -118,7 +118,7 @@ public class CodeParser {
 
         for (; j < operacaoLength; j++) {
             c = operacao.charAt(j);
-            if (c == ' ' || c == '/') break;
+            if (c == ' ' || c == '#') break;
             operando.append(operacao.charAt(j));
         }
 
@@ -135,7 +135,7 @@ public class CodeParser {
         return null;
     }
 
-    public boolean verificarOpercaoDeDesvio(String mnemonico) throws Exception {
+    public boolean verificarOpercaoDeDesvio(String mnemonico) {
         return mnemonico.charAt(0) == 'J';
     }
 
@@ -217,7 +217,7 @@ public class CodeParser {
         String flag;
         StringBuilder progFormatado = new StringBuilder();
 
-        for(int i = 0; i < progLength; i++) {
+        for(Integer i = 0; i < progLength; i++) {
             esquerda = new StringBuilder();
             flag = buscarChave(i);
 

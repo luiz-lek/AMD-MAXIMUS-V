@@ -8,7 +8,7 @@ public class MicroinstrucaoMap {
 
     private static final Map<Integer, String> mapa = new HashMap<>();
 
-    static {
+    static { //Armazena a descrição de cada linha da memória de controle
         mapa.put(0,  "mar := pc; rd;");
         mapa.put(1,  "pc := pc + 1; rd;");
         mapa.put(2,  "ir := mbr; if n then goto 28;");
@@ -90,7 +90,7 @@ public class MicroinstrucaoMap {
         mapa.put(78, "a := a + 1; goto 75;");
     }
 
-    public static String getDescricao(String linha) throws IOException {
+    public static String getDescricao(String linha) throws Exception {
         int linhaINT = Conversao.binarioToInt(linha, 16);
         return mapa.getOrDefault(linhaINT, "Instrução não encontrada");
     }

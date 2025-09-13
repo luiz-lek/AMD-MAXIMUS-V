@@ -8,6 +8,7 @@ public class AMUX {
         this.controle = controle;
     }
 
+    //Recebe os valores do barramento A e MBR e decide a saída de acordo com o valor do bit de controle
     public void ativar(String regMBR, String latA) {
         this.saida = "0".equals(controle) ? latA : regMBR;
     }

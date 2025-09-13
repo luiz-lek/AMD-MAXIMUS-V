@@ -1,6 +1,5 @@
 package back.cpu;
 
-import back.comum.Conversao;
 import back.comum.Microinstrucao;
 import visao.ControllerTela2;
 
@@ -25,7 +24,7 @@ public class CPU {
     private Decodificador decB = new Decodificador();
     private Decodificador decC = new Decodificador();
     private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
-    private boolean rdIniciado = false, wrIniciado = false; //simulam o atraso de 2 ciclos para leitura e escrita na memória pela cpu.
+    private boolean rdIniciado = false, wrIniciado = false; //Simulam o atraso de 2 ciclos para leitura e escrita pela cpu na memória.
 
     public void setMemoriaPrincipal(MemoriaPrincipal memoria){
         this.memP = memoria;
@@ -39,10 +38,11 @@ public class CPU {
     }
 
     public void subciclo1(){
-        this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); //passa a instrução em mem[mpc] para o mir e estabiliza suas saídas.
+        this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); // Passa a instrução em mem[mpc] para o mir
+                                                                   // e estabiliza suas saídas.
     }
 
-    public void subciclo2() throws IOException { //manda os sinais de controle do mir para todos os componentes.
+    public void subciclo2() throws Exception { // Manda os sinais de controle do mir para todos os componentes.
         this.amux.setControle(this.mir.getAMUX());
         this.logica.setCOND(this.mir.getCOND());
         this.ula.setControle(this.mir.getALU());
@@ -54,38 +54,39 @@ public class CPU {
         this.decB.setEntrada(this.mir.getB());
         this.decA.setEntrada(this.mir.getA());
         this.mmux.setADDR(this.mir.getADDR());
-        this.latB.setValor(registradores.getValor(decB.decodificar()));
-        incrementador.incrementar(this.mpc.getValor());
-        this.latA.setValor(registradores.getValor(decA.decodificar()));
+        this.latB.setValor(this.registradores.getValor(decB.decodificar()));
+        this.incrementador.incrementar(this.mpc.getValor());
+        this.latA.setValor(this.registradores.getValor(decA.decodificar()));
     }
 
     public void subciclo3() throws Exception{
         if(this.rdIniciado) {// Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
-            this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor é passado para o mbr
+            this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
             this.mbr.setRD("0");
             this.rdIniciado = false;
         }
 
-        if(this.wrIniciado) { //mesmo que o bloco a cima, mas para escrita
+        if(this.wrIniciado) { // Mesmo que o bloco a cima, mas para escrita.
             this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
             this.mbr.setWR("0");
             this.wrIniciado = false;
         }
 
         this.amux.ativar(this.mbr.getValor(), this.latA.getValor());
-        ula.ativar(this.amux.getSaida(), this.latB.getValor());
-        this.deslocador.ativar(this.ula.getSaida());
+        ula.ativar(this.amux.getSaida(), this.latB.getValor()); // No subciclo 3, após as entradas da ula estarem definidas,
+        this.deslocador.ativar(this.ula.getSaida());            // a ula realiza o seu cálculo.
         if(mar.isAtivado()) mar.setValor(latB.getValor());
     }
 
-    public void subciclo4() throws IOException {
+    public void subciclo4() throws Exception {
         if(decC.isENC()) this.registradores.setValor(decC.decodificar(), deslocador.getSaida());
-        if(this.mbr.isAtivado()) mbr.setValor(this.deslocador.getSaida());
-        this.mbr.setRD(this.mir.getRD());
-        this.mbr.setWR(this.mir.getWR());
+        if(this.mbr.isAtivado()) mbr.setValor(this.deslocador.getSaida()); //Em caso de MBR acionado, a saída do
+                                                                          // deslocador e passada para MBR.
+        this.mbr.setRD(this.mir.getRD());  // Os campos rd e wr são como laths, segundo a descriçãoo do livro do Tanenbaum.
+        this.mbr.setWR(this.mir.getWR()); //  Eles só são passadas para o mbr no subciclo 4.
         this.logica.setNBitZBit(ula.isNBit(), ula.isZBit());
-        this.logica.gerarSaida();
-        mmux.setMPCIncrementado(incrementador.getSaida());
+        this.logica.gerarSaida();                           //Defini as úçtimas entradas da lógica, assim, decide para onde
+        mmux.setMPCIncrementado(incrementador.getSaida()); // o microprograma vai seguir no próximo ciclo.
         this.mmux.setControle(logica.isSaida());
         this.mmux.ativar();
         this.mpc.setValor(this.mmux.getSaida());
@@ -97,7 +98,7 @@ public class CPU {
         return this.mbr.getValor();
     }
 
-    public String getMar() { return this.mar.getValor(); }
+    public String getValorMar() { return this.mar.getValor(); }
 
     public String getValorMPC() { return this.mpc.getValor(); }
 
@@ -105,25 +106,8 @@ public class CPU {
 
     public String getValorMir() { return this.mir.getMic(); }
 
-    public String getValorRegistrador(int pos) throws IllegalAccessError{
-        if((pos < 0) || (15 < pos)) throw new IllegalAccessError("Posição inválida.");
+    public String getValorRegistrador(int pos) throws Exception {
+        if((pos < 0) || (15 < pos)) throw new Exception("Posição inválida.");
         return this.registradores.registradores[pos].getValor();
-    }
-
-    public void ajustarBotoesExecucao(ControllerTela2 controllerTela2) {
-        controllerTela2.execucaoEncerrada = controllerTela2.linhaAtualMacro >= controllerTela2.qtdLinhasMacro;
-
-        if(controllerTela2.execucaoEncerrada) {
-            controllerTela2.executarMicroinstrucao.setDisable(true);
-            controllerTela2.executarMacroAtual.setDisable(true);
-            controllerTela2.pausar.setDisable(true);
-            controllerTela2.valorPc.setDisable(true);
-            return;
-        }
-
-        controllerTela2.executarMicroinstrucao.setDisable(false);
-        controllerTela2.executarMacroAtual.setDisable(false);
-        controllerTela2.pausar.setDisable(false);
-        controllerTela2.valorPc.setDisable(false);
     }
 }

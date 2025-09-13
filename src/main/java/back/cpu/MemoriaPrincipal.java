@@ -2,15 +2,13 @@ package back.cpu;
 
 import back.comum.Conversao;
 import back.comum.MAX;
-
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.stream.IntStream;
 
 public class MemoriaPrincipal{
     private String[] memoria = new String[MAX.TAMMEMP];
     private LinkedList<Integer> enderecosAcessadas = new LinkedList<>(); // Aramazena os endereços acessados,
-                                                                        // para serem exibidos pela interface.
+                                                                         // para serem exibidos pela interface.
     public MemoriaPrincipal(){
         IntStream.range(0, MAX.TAMMEMP).forEach(i -> this.memoria[i] = "0000000000000000");
     }
@@ -63,14 +61,13 @@ public class MemoriaPrincipal{
 
     public String posicoesAcessadasBinario() throws Exception { //Retorna uma string em binário de todos os endereços
         StringBuilder saida = new StringBuilder(); // Acessados na memória.
-        int maiorEndereco = this.maiorEndereco();
+        int maiorEndereco = this.maiorEnderecoAcessado();
 
         String endereco;
-
-        for(Integer i : this.enderecosAcessadas) {
-            endereco = i.toString();
-            endereco = Conversao.ajustarDigitosDecimal(endereco, maiorEndereco);
-
+                                                                // Concatena [número do endereço] + [: ]
+        for(Integer i : this.enderecosAcessadas) {              // + [palavra na memória] + [palavra na memória em decimal]
+            endereco = i.toString();                            // Completa com 0 a esquerda dos números em decimal, para todas
+            endereco = Conversao.ajustarDigitosDecimal(endereco, maiorEndereco); // linhas terem o mesmo tamanho
             saida.append(endereco).append(": ").append(this.memoria[i]);
 
             String decimal = Conversao.binarioToStrDecimal(this.memoria[i], 16);
@@ -82,19 +79,9 @@ public class MemoriaPrincipal{
         return saida.toString();
     }
 
-    public String posicoesAcessadasDecimal() throws Exception { //Mesmo que o método acima, mas em decimal
-        StringBuilder saida = new StringBuilder();               // e sem o número dos endereços
-
-        for(Integer i : enderecosAcessadas) {
-            saida.append(Conversao.binarioToStrDecimal(memoria[i], 16)).append("\n");
-        }
-
-        return saida.toString();
-    }
-
-    public int maiorEndereco() {
+    public int maiorEnderecoAcessado() { // Retorna o endereço dentre os acessados com maior length.
         Integer maiorEndereco = this.enderecosAcessadas.getLast();
-        String maiorEnderecoStr =  Integer.toString(maiorEndereco);
+        String maiorEnderecoStr = Integer.toString(maiorEndereco);
         return maiorEnderecoStr.length();
     }
 }

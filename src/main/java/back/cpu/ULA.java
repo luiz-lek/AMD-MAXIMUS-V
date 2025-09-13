@@ -17,10 +17,10 @@ public class ULA {
         short c;
 
         switch (this.controle) {
-            case "00" -> c = soma(a, b);
-            case "01" -> c = andBitABit(a, b);
-            case "10" -> c = ident(a);
-            default   -> c = inv(a);
+            case "00" -> c = this.soma(a, b);
+            case "01" -> c = this.andBitABit(a, b);
+            case "11" -> c = this.inv(a);
+            default   -> c = this.ident(a);
         }
 
         this.zBit = (c == 0);
