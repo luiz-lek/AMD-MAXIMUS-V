@@ -67,7 +67,7 @@ public class ControllerTela2 {
         this.macroProgramaUsuario = macroPrograma;
         this.macroProgramaArray = this.macroProgramaFormatado.split("\\r?\\n|\\r");
         System.out.println("macroProgramaFormatado: " + Arrays.toString(macroProgramaArray));
-        this.qtdLinhasMacro = macroProgramaArray.length;
+        this.qtdLinhasMacro = macroProgramaArray.length - 1;
         this.assembler = assembler;
 
         if(this.qtdLinhasMacro >= 26) {
@@ -128,7 +128,7 @@ public class ControllerTela2 {
         this.executarTudo.setDisable(false);
     }
 
-    //Execução macro instrução
+    // Execução macro instrução
     public void executarMacro() throws Exception {
         do {
             this.executarCiclo();

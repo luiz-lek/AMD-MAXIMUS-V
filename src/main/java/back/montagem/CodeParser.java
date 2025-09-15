@@ -217,7 +217,7 @@ public class CodeParser {
         String flag;
         StringBuilder progFormatado = new StringBuilder();
 
-        for(Integer i = 0; i < progLength; i++) {
+        for(int i = 0; i < progLength; i++) {
             esquerda = new StringBuilder();
             flag = buscarChave(i);
 

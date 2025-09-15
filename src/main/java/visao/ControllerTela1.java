@@ -39,10 +39,10 @@ public class ControllerTela1 {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2.fxml"));
             this.rootTela2 = loader.load();
             ControllerTela2 controllerTela2 = loader.getController();
-            controllerTela2.setConteudo(this.macroPrograma.getText(), this.cpu, this.memoriaPrincipal, this.assembler);
             this.stageTela2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stageTela2);
-            this.scenetela2 = new Scene(rootTela2);
+            controllerTela2.setConteudo(this.macroPrograma.getText(), this.cpu, this.memoriaPrincipal, this.assembler);
+            this.scenetela2 = new Scene(this.rootTela2);
             String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
             this.scenetela2.getStylesheets().add(css);
             this.stageTela2.setScene(this.scenetela2);
@@ -77,5 +77,8 @@ public class ControllerTela1 {
         this.stageFalha.initOwner(((Node) event.getSource()).getScene().getWindow());
         this.stageFalha.initStyle(StageStyle.UNDECORATED);
         this.stageFalha.showAndWait();
+        this.cpu = new CPU();
+        this.memoriaPrincipal = new MemoriaPrincipal();
+        this.assembler = new Assembler();
     }
 }
