@@ -46,4 +46,33 @@ lodl 2
 stol 1
 jump loop
 end:
+//teste comentario
+*/
+
+/*
+loco 1000 //Endereço do início do vetor
+stod inicio_vetor
+loco 10 //Tamanho do vetor
+stod tam_vetor
+loco 1
+stod incrementador
+loco 0
+stod i //I inicial do loop
+lodd inicio_vetor
+swap
+stod sp_inicial //Armazenaa aposição do sp, para ser reajustado no final
+loop: lodd tam_vetor //Verificação de fim do loop
+subd i
+jzer end_loop //Fim verificação
+lodd inicio_vetor //Cálculo posição atual do vetor
+addd i
+swap
+lodd i
+push
+addd incrementador //Incrementa i
+stod i
+jump loop
+end_loop: lodd sp_inicial
+swap
+end:
 */

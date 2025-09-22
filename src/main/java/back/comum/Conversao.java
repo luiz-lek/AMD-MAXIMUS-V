@@ -33,7 +33,7 @@ public class Conversao {
         return Integer.toString(valorNumerico);
     }
 
-    public static String binarioToStrDecimal(String bits, int qtdBitsEsperada) throws Exception{
+    public static String binarioToStrDecimal(String bits, int qtdBitsEsperada) throws Exception {
         if(bits.length() != qtdBitsEsperada) throw new Exception("String com " + bits.length() + " bits\nQuantidade esperada: " + qtdBitsEsperada);
 
         int valorNumerico = Integer.parseInt(bits, 2);

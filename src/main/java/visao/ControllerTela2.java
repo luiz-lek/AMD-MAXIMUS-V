@@ -42,7 +42,7 @@ public class ControllerTela2 {
     @FXML
     public Rectangle highlightMacro;
     @FXML
-    private Line divisoriaMemoria;
+    private Line divisoriaMemoria, divisoriaMemoriaEndereco;
     @FXML
     private TranslateTransition translateMacro = new TranslateTransition();
     @FXML
@@ -67,8 +67,8 @@ public class ControllerTela2 {
         this.macroProgramaUsuario = macroPrograma;
         this.macroProgramaArray = this.macroProgramaFormatado.split("\\r?\\n|\\r");
         System.out.println("macroProgramaFormatado: " + Arrays.toString(macroProgramaArray));
-        this.qtdLinhasMacro = macroProgramaArray.length - 1;
         this.assembler = assembler;
+        this.qtdLinhasMacro = this.assembler.getTamProg();
 
         if(this.qtdLinhasMacro >= 26) {
             this.highlightMacro.setVisible(false);
@@ -283,6 +283,7 @@ public class ControllerTela2 {
         this.memoriaEmBinario.setText(this.memoriaPrincipal.posicoesAcessadasBinario());
         int deslocamentoBarraDivisao = this.memoriaPrincipal.maiorEnderecoAcessado();
         this.divisoriaMemoria.setTranslateX(8 * (deslocamentoBarraDivisao - 1));
+        this.divisoriaMemoriaEndereco.setTranslateX(8 * (deslocamentoBarraDivisao - 1));
     }
 
     private void atualizarMicroinstrucoes() throws IOException {
@@ -346,6 +347,7 @@ public class ControllerTela2 {
         this.ativarExecucao();
         this.execucaoEncerrada = false;
         this.linhaAtualMacro = 0;
+        this.qtdLinhasTextoMics = 1;
         this.atualizarTela();
     }
 

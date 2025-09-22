@@ -19,7 +19,7 @@
       <Rectangle fx:id="caixaRegistradores" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="139.0" layoutX="13.0" layoutY="614.0" stroke="BLACK" strokeType="INSIDE" width="298.0" />
       <TextArea fx:id="microinstrucoes" editable="false" layoutX="368.0" layoutY="48.0" prefHeight="447.0" prefWidth="264.0" />
       <Label layoutX="439.0" layoutY="28.0" text="MICROINSTRUÇÔES" />
-      <TextArea fx:id="memoriaEmBinario" editable="false" layoutX="711.0" layoutY="48.0" prefHeight="447.0" prefWidth="270.0">
+      <TextArea fx:id="memoriaEmBinario" editable="false" layoutX="711.0" layoutY="48.0" prefHeight="447.0" prefWidth="270.0" text="0000">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font></TextArea>
@@ -170,9 +170,11 @@
          </font>
       </Button>
       <Line fx:id="divisoriaMemoria" endX="100.00006103515625" endY="-22.000003814697266" layoutX="780.0" layoutY="70.0" startX="100.00006103515625" startY="425.0" strokeWidth="2.0" />
-      <Label layoutX="774.0" layoutY="28.0" text="BINÁRIO" />
+      <Label layoutX="794.0" layoutY="28.0" text="BINÁRIO" />
       <Label layoutX="900.0" layoutY="28.0" text="DECIMAL" />
       <TextField fx:id="textoLinhaAtualMacro" editable="false" layoutX="28.0" layoutY="562.0" prefHeight="26.0" prefWidth="264.0" visible="false" />
       <Label fx:id="labelLinhaAtual" layoutX="54.0" layoutY="543.0" text="LINHA ATUAL MACROPROGRAMA" visible="false" />
+      <Line fx:id="divisoriaMemoriaEndereco" endX="100.00006103515625" endY="-22.000003814697266" layoutX="638.0" layoutY="70.0" startX="100.00006103515625" startY="425.0" strokeWidth="2.0" />
+      <Label layoutX="700.0" layoutY="28.0" text="ENDEREÇO" />
    </children>
 </AnchorPane>

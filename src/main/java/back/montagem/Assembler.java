@@ -48,8 +48,10 @@ public class Assembler {
 
         for(String[] linha : programaFormatado){
             programaEmBinario = macroPraBinario(linha);
-            mem.escrever(Integer.toBinaryString(i), programaEmBinario);
-            i++;
+            if(programaEmBinario != null) {
+                mem.escrever(Integer.toBinaryString(i), programaEmBinario);
+                i++;
+            }
         }
 
         this.tamProg = i;

@@ -23,11 +23,11 @@ public class CodeParser {
 
     public String[][] parseLinhasEFlags() throws Exception{
         String[][] macroLimpo = new String[this.posLivre][];  // Converte o programa fornecido em uma matriz.
-        String[] linhaLimpa;                                 //  Cada índice dela armazena uma instrução no formato
-        int i = 0;                                          //   macroLimpo[i][0] = Mnemônico
-                                                           //    macroLimpo[i][1] = Operando
-        for(String linha : this.progFormatado) {          //     (caso não tenha operando, recebe null)
-            linhaLimpa = this.parseLinhaEFlags(linha, i);//      As linhas vazias e flags são ignoradas
+        String[] linhaLimpa;                                  // Cada índice dela armazena uma instrução no formato
+        int i = 0;                                            // macroLimpo[i][0] = Mnemônico
+                                                              // macroLimpo[i][1] = Operando
+        for(String linha : this.progFormatado) {              // (caso não tenha operando, recebe null)
+            linhaLimpa = this.parseLinhaEFlags(linha, i);     // As linhas vazias e flags são ignoradas
 
             if(linhaLimpa != null) {
                 macroLimpo[i] = linhaLimpa;
@@ -38,9 +38,7 @@ public class CodeParser {
         return Arrays.copyOf(macroLimpo, i);
     }
 
-    public int getEIncrementaPosLivre() {
-        return this.posLivre++;
-    }
+    public int getEIncrementaPosLivre() { return this.posLivre++; }
 
     public Integer getValorVariavel(String variavel) {
         String upperCase = variavel.toUpperCase();
@@ -103,7 +101,7 @@ public class CodeParser {
         return true;
     }
 
-    private boolean mnemonicoComConstante(String mnemonico) throws Exception{
+    private boolean mnemonicoComConstante(String mnemonico) throws Exception {
         for(String mn : operacoesApenasConstantes) {
             if(mn.equals(mnemonico)) return true;
         }
@@ -174,7 +172,7 @@ public class CodeParser {
         }
 
         this.progFormatado = Arrays.copyOf(this.progFormatado, j);
-        System.out.println(Arrays.toString(this.progFormatado));
+        System.out.println("Prog formatado\n" + Arrays.toString(this.progFormatado));
         this.posLivre = j;
     }
 
