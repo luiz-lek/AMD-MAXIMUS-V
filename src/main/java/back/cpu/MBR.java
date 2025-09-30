@@ -1,6 +1,6 @@
 package back.cpu;
 
-public class MBR extends Registrador{
+public class MBR extends Registrador {
     private boolean RD = false, WR = false, ativado = false;
 
     public MBR(String nome) {

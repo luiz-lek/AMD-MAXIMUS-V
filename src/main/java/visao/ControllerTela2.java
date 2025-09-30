@@ -197,6 +197,8 @@ public class ControllerTela2 {
             }
             this.textoLinhaAtualMacro.setText(this.macroProgramaArray[linhaTexto]);
         }
+
+        //this.macroprograma.selectRange(0, 33);
     }
 
     private void pularMacro(int linhaAnterior, int proxLinha) {;
