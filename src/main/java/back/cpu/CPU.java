@@ -38,11 +38,11 @@ public class CPU {
     }
 
     public void subciclo1(){
-        this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); // Passa a instrução em mem[mpc] para o mir
-                                                                   // e estabiliza suas saídas.
+        this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); //Passa a instrução em mem[mpc] para o mir
+                                                                    //e estabiliza suas saídas.
     }
 
-    public void subciclo2() throws Exception { // Manda os sinais de controle do mir para todos os componentes.
+    public void subciclo2() throws Exception { //Manda os sinais de controle do mir para todos os componentes.
         this.amux.setControle(this.mir.getAMUX());
         this.logica.setCOND(this.mir.getCOND());
         this.ula.setControle(this.mir.getALU());
@@ -60,33 +60,33 @@ public class CPU {
     }
 
     public void subciclo3() throws Exception{
-        if(this.rdIniciado) {// Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
+        if(this.rdIniciado) { //Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
             this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
             this.mbr.setRD("0");
             this.rdIniciado = false;
         }
 
-        if(this.wrIniciado) { // Mesmo que o bloco a cima, mas para escrita.
+        if(this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
             this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
             this.mbr.setWR("0");
             this.wrIniciado = false;
         }
 
         this.amux.ativar(this.mbr.getValor(), this.latA.getValor());
-        ula.ativar(this.amux.getSaida(), this.latB.getValor()); // No subciclo 3, após as entradas da ula estarem definidas,
-        this.deslocador.ativar(this.ula.getSaida());            // a ula realiza o seu cálculo.
+        ula.ativar(this.amux.getSaida(), this.latB.getValor()); //No subciclo 3, após as entradas da ula estarem definidas,
+        this.deslocador.ativar(this.ula.getSaida());            //a ula realiza o seu cálculo.
         if(mar.isAtivado()) mar.setValor(latB.getValor());
     }
 
     public void subciclo4() throws Exception {
         if(decC.isENC()) this.registradores.setValor(decC.decodificar(), deslocador.getSaida());
         if(this.mbr.isAtivado()) mbr.setValor(this.deslocador.getSaida()); //Em caso de MBR acionado, a saída do
-                                                                          // deslocador e passada para MBR.
-        this.mbr.setRD(this.mir.getRD());  // Os campos rd e wr são como laths, segundo a descriçãoo do livro do Tanenbaum.
-        this.mbr.setWR(this.mir.getWR()); //  Eles só são passadas para o mbr no subciclo 4.
+                                                                           //deslocador e passada para MBR.
+        this.mbr.setRD(this.mir.getRD());  //Os campos rd e wr são como laths, segundo a descriçãoo do livro do Tanenbaum.
+        this.mbr.setWR(this.mir.getWR());  //Eles só são passadas para o mbr no subciclo 4.
         this.logica.setNBitZBit(ula.isNBit(), ula.isZBit());
-        this.logica.gerarSaida();                           //Defini as úçtimas entradas da lógica, assim, decide para onde
-        mmux.setMPCIncrementado(incrementador.getSaida()); // o microprograma vai seguir no próximo ciclo.
+        this.logica.gerarSaida();                           //Defini as últimas entradas da lógica, assim, decide para onde
+        mmux.setMPCIncrementado(incrementador.getSaida());  //o microprograma vai seguir no próximo ciclo.
         this.mmux.setControle(logica.isSaida());
         this.mmux.ativar();
         this.mpc.setValor(this.mmux.getSaida());

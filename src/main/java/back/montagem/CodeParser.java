@@ -22,12 +22,12 @@ public class CodeParser {
     }
 
     public String[][] parseLinhasEFlags() throws Exception{
-        String[][] macroLimpo = new String[this.posLivre][];  // Converte o programa fornecido em uma matriz.
-        String[] linhaLimpa;                                  // Cada índice dela armazena uma instrução no formato
-        int i = 0;                                            // macroLimpo[i][0] = Mnemônico
-                                                              // macroLimpo[i][1] = Operando
-        for(String linha : this.progFormatado) {              // (caso não tenha operando, recebe null)
-            linhaLimpa = this.parseLinhaEFlags(linha, i);     // As linhas vazias e flags são ignoradas
+        String[][] macroLimpo = new String[this.posLivre][];  //Converte o programa fornecido em uma matriz.
+        String[] linhaLimpa;                                  //Cada índice dela armazena uma instrução no formato
+        int i = 0;                                            //macroLimpo[i][0] = Mnemônico
+                                                              //macroLimpo[i][1] = Operando
+        for(String linha : this.progFormatado) {              //(caso não tenha operando, recebe null)
+            linhaLimpa = this.parseLinhaEFlags(linha, i);     //As linhas vazias e flags são ignoradas.
 
             if(linhaLimpa != null) {
                 macroLimpo[i] = linhaLimpa;
@@ -68,13 +68,13 @@ public class CodeParser {
 
         String mnemonicoStr = mnemonico.toString();
 
-        if(linha.charAt(i) == ':') {// Caso seja uma flag
+        if(linha.charAt(i) == ':') {//Caso seja uma flag.
             this.flags.put(mnemonicoStr, numLinha);
-            return parseLinhaEFlags(linha.substring(i + 1).trim(), numLinha); // Retorna uma possível operação
-                                                                                        // existente após a flag.
+            return parseLinhaEFlags(linha.substring(i + 1).trim(), numLinha); //Retorna uma possível operação
+                                                                                        //existente após a flag.
         }
 
-        // Linha sem flag
+        //Linha sem flag.
         linhaLimpa[0] = mnemonicoStr;
 
         String operando = this.pegarOperando(linha, mnemonicoStr, i++);
@@ -92,7 +92,7 @@ public class CodeParser {
     }
 
     private boolean mnemonicoComOperando(String opcode) {
-        for(String semOperando : operacoesSemOperando) {
+        for(String semOperando : this.operacoesSemOperando) {
             if(opcode.equals(semOperando)) {
                 return false;
             }
@@ -102,7 +102,7 @@ public class CodeParser {
     }
 
     private boolean mnemonicoComConstante(String mnemonico) throws Exception {
-        for(String mn : operacoesApenasConstantes) {
+        for(String mn : this.operacoesApenasConstantes) {
             if(mn.equals(mnemonico)) return true;
         }
         return false;

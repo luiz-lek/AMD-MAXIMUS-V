@@ -47,6 +47,7 @@ public class ControllerTela1 {
             this.scenetela2.getStylesheets().add(css);
             this.stageTela2.setScene(this.scenetela2);
             this.stageTela2.centerOnScreen();
+            this.stageTela2.setResizable(true);
             this.stageTela2.show();
         } catch (Exception e) {
             this.telaFalha(event, e.getMessage());
@@ -61,6 +62,11 @@ public class ControllerTela1 {
     public void escreverProgramaMemoria() throws Exception {
         this.memoriaPrincipal = new MemoriaPrincipal();
         this.assembler.montar(this.memoriaPrincipal, macroPrograma.getText());
+        this.memoriaPrincipal.escrever("000001001110", "0000000000000001");
+        this.memoriaPrincipal.escrever("000001001111", "0000000000000010");
+        this.memoriaPrincipal.escrever("000001010000", "0000000000000011");
+        this.memoriaPrincipal.escrever("000001010001", "0000000000000100");
+        this.memoriaPrincipal.escrever("000001010010", "0000000000000101");
     }
 
     public void telaFalha(ActionEvent event, String mensagem) throws IOException {

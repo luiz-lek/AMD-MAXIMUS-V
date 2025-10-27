@@ -5,7 +5,7 @@ import back.comum.Conversao;
 public class ULA {
     private String saida = "0000000000000000";
     private boolean nBit = false, zBit = false;
-    private String controle = "00"; // "00" = soma, "01" = AND, "10" = ident, "11" = inv
+    private String controle = "00"; //"00": soma, "01": AND, "10": ident, "11": inv
 
     public void setControle(String controle) {
         this.controle = controle;

@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ControllerTela2Voltar {
-    Stage stage, stageTela2;
-    Scene scene;
+    private Stage stage, stageTela2;
+    private Scene scene;
 
     @FXML
     private Button confirmarVoltar, cancelarVoltar;

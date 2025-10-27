@@ -176,5 +176,26 @@
       <Label fx:id="labelLinhaAtual" layoutX="54.0" layoutY="543.0" text="LINHA ATUAL MACROPROGRAMA" visible="false" />
       <Line fx:id="divisoriaMemoriaEndereco" endX="100.00006103515625" endY="-22.000003814697266" layoutX="638.0" layoutY="70.0" startX="100.00006103515625" startY="425.0" strokeWidth="2.0" />
       <Label layoutX="700.0" layoutY="28.0" text="ENDEREÇO" />
+      <Rectangle fx:id="caixaTempos" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="49.0" layoutX="321.0" layoutY="555.0" stroke="BLACK" strokeType="INSIDE" width="379.0" />
+      <Label layoutX="327.0" layoutY="567.0" text="Ciclos">
+         <font>
+            <Font name="Monospaced Regular" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="ciclo" editable="false" layoutX="400.0" layoutY="566.0" prefHeight="26.0" prefWidth="87.0">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </TextField>
+      <Label layoutX="496.0" layoutY="567.0" text="Tempo(ms)">
+         <font>
+            <Font name="Monospaced Regular" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tempo" editable="false" layoutX="604.0" layoutY="566.0" prefHeight="26.0" prefWidth="87.0">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

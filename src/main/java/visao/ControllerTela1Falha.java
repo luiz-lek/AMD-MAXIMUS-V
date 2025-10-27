@@ -15,7 +15,7 @@ public class ControllerTela1Falha {
 
     @FXML
     private void confirmarFalha(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 

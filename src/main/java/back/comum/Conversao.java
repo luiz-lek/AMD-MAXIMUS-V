@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Conversao {
     public static short bitsToShort(String bits, int qtdBitsEsperada) throws IOException {
         if(bits.length() != qtdBitsEsperada) throw new IOException("String com " + bits.length() + " bits");
-        return (short) Integer.parseInt(bits, 2);
+        return (short)Integer.parseInt(bits, 2);
     }
 
     public static int binarioToInt(String bits, int qtdBitsEsperada) throws IOException {
@@ -22,7 +22,6 @@ public class Conversao {
     }
 
     public static String binarioToHexadecimal(String bits) {
-
         int valorNumerico = Integer.parseInt(bits, 2);
 
         return String.format("%#04x", valorNumerico);
@@ -44,7 +43,9 @@ public class Conversao {
         int digitosLength = digitos.length();
         StringBuilder digitosFormatado = new StringBuilder();
 
-        for(int i = digitosLength; i < qtdBitsDesejada; i++) digitosFormatado.append("0");
+        for(int i = digitosLength; i < qtdBitsDesejada; i++) {
+            digitosFormatado.append("0");
+        }
 
         digitosFormatado.append(digitos);
 

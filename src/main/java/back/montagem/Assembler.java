@@ -40,8 +40,8 @@ public class Assembler {
     public CodeParser parser = new CodeParser();
 
     public void montar(MemoriaPrincipal mem, String programa) throws Exception {
-        String[][] programaFormatado = this.parser.parse(programa); // Retira flags, linhas vazias e separa cada linha
-        String programaEmBinario = "";                              // em mnemônico e opereando
+        String[][] programaFormatado = this.parser.parse(programa); //Retira flags, linhas vazias e separa cada linha
+        String programaEmBinario = "";                              //em mnemônico e opereando.
 
 
         int i = 0;
@@ -58,21 +58,21 @@ public class Assembler {
     }
 
     public String macroPraBinario(String instrucao[]) throws Exception { //Instrução[0] contém o mnemônimo
-                                                                        //e instrucao[1] um possível operando.
+                                                                         //e instrucao[1] um possível operando.
         if(!tabela.containsKey(instrucao[0])) throw new IOException("Mnemônimo " + instrucao[0] + " inválido.");
 
         StringBuilder binario = new StringBuilder(tabela.get(instrucao[0]));
 
-        if(instrucao[1] == null) return binario.toString(); // Instrução sem operando
+        if(instrucao[1] == null) return binario.toString(); //Instrução sem operando.
 
         String binarioStr = binario.toString();
         int tamBin = binarioStr.length();
 
-        if (tamBin == 8) { // Operando com 8 bits tem limite entre 0 e 255.
+        if (tamBin == 8) { //Operando com 8 bits tem limite entre 0 e 255.
             binario.append(operandoPraBinario(instrucao[0], instrucao[1], 255, 8));
-        } else if ("LOCO".equals(instrucao[0])) { // Loco tem limite até 4095
+        } else if ("LOCO".equals(instrucao[0])) { //Loco tem limite até 4095.
             binario.append(operandoPraBinario(instrucao[0], instrucao[1], 4095, 12));
-        } else { //mnemônimo com 4 bits, sem limite no operando
+        } else { //Mnemônimo com 4 bits, sem limite no operando.
             binario.append(operandoPraBinario(instrucao[0], instrucao[1], Integer.MAX_VALUE, 12));
         }
 
@@ -93,7 +93,7 @@ public class Assembler {
                     throw new Exception("Desvio para flag \"" + operando + "\"impossível, flag inexistente.");
                 }
                 op = this.parser.variaveis.get(operando);
-                if(op == null) { //A variável ainda não existe, então aloca uma nova posição..
+                if(op == null) { //A variável ainda não existe, então aloca uma nova posição.
                     op = this.parser.getEIncrementaPosLivre();
                     this.parser.variaveis.put(operando, op);
                 }
@@ -106,7 +106,7 @@ public class Assembler {
 
         completar -= numBin.length();
 
-        for(int i = 0; i < completar; i++) numFinal.append('0'); //completa com 0 nos bits mais significativos
+        for(int i = 0; i < completar; i++) numFinal.append('0'); //Completa com 0 nos bits mais significativos.
         numFinal.append(numBin);
 
         //System.out.println(this.parser.flags.toString());

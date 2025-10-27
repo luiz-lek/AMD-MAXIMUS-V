@@ -10,8 +10,8 @@ public class Decodificador {
         this.entrada = entrada;
     }
 
-    public void setENC(String ativado) { this.ENC = !"0".equals(ativado); } // O campo ENC do mir define
-                                                                          // se há escrita na memória de rascunho.
+    public void setENC(String ativado) { this.ENC = !"0".equals(ativado); } //O campo ENC do mir define
+                                                                            //se há escrita na memória de rascunho.
 
     public String decodificar() throws Exception {
         int tam = this.entrada.length();
@@ -22,8 +22,8 @@ public class Decodificador {
 
         int entradaINT = Integer.parseInt(this.entrada, 2), i = 0;
 
-        for(; i < entradaINT; i++) decodificado.append("0"); // Põe zeros a esquerda e 1 na posição que ativa o
-                                                            //  rigistrador correto.
+        for(; i < entradaINT; i++) decodificado.append("0"); //Põe zeros a esquerda e 1 na posição que ativa o
+                                                             //rigistrador correto.
         decodificado.append("1");
         i++;
 

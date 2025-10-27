@@ -5,7 +5,7 @@ import visao.ControllerTela2;
 
 /* Thread para executar todo o programa MAC-1
    Foi criada para evitar o congelamento da tela, e consequentemente, o progrma crashar,
-   em caso de macroprograma com loop infinito. */
+   nos casos de o macroprograma conter loop infinito. */
 
 public class ExecutarPrograma implements Runnable {
     private ControllerTela2 controllerTela2;

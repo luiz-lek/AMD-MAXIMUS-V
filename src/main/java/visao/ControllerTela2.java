@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -38,7 +39,7 @@ public class ControllerTela2 {
     @FXML
     public TextArea macroprograma, microinstrucoes, memoriaEmBinario;
     @FXML
-    public TextField PC, AC, SP, IR, TIR, MIR, MBR, MAR, MPC, A, receberEnderecoMemoria, valorLidoMemoria, valorPc, textoLinhaAtualMacro;
+    public TextField PC, AC, SP, IR, TIR, MIR, MBR, MAR, MPC, A, receberEnderecoMemoria, valorLidoMemoria, valorPc, textoLinhaAtualMacro, tempo, ciclo;
     @FXML
     public Rectangle highlightMacro;
     @FXML
@@ -56,21 +57,25 @@ public class ControllerTela2 {
     public String macroProgramaFormatado, macroProgramaUsuario, textoMics = "mar := pc; rd;\n";
     public String[] macroProgramaArray;
 
-    public int qtdLinhasMacro = 0, qtdLinhasTextoMics = 1, linhaAtualMacro = 0, linhaAnteriorMacro = 0;
+    public int qtdLinhasMacro = 0, qtdLinhasTextoMics = 1, linhaAtualMacro = 0, linhaAnteriorMacro = 0, cicloAt = 0;
 
     public boolean execucaoEncerrada = false, pausarPrograma = false;
+
+    public double acTempo = 0;
 
     public Assembler assembler;
 
     public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem, Assembler assembler) throws Exception {
         this.macroProgramaFormatado = assembler.parser.progFormatado();
         this.macroProgramaUsuario = macroPrograma;
+        this.tempo.setText("0.0");
+        this.ciclo.setText("0");
         this.macroProgramaArray = this.macroProgramaFormatado.split("\\r?\\n|\\r");
         System.out.println("macroProgramaFormatado: " + Arrays.toString(macroProgramaArray));
         this.assembler = assembler;
         this.qtdLinhasMacro = this.assembler.getTamProg();
 
-        if(this.qtdLinhasMacro >= 26) {
+        if (this.qtdLinhasMacro >= 26) {
             this.highlightMacro.setVisible(false);
             this.labelLinhaAtual.setVisible(true);
             this.textoLinhaAtualMacro.setVisible(true);
@@ -91,14 +96,19 @@ public class ControllerTela2 {
     }
 
     public void executarCiclo() throws Exception {
-        if(this.execucaoEncerrada) throw new Exception("Programa já finalizado.");
+        if (this.execucaoEncerrada) throw new Exception("Programa já finalizado.");
 
+        this.cicloAt++;
+        long ini = System.nanoTime();
         this.cpu.executarCiclo();
+        long fim = System.nanoTime();
+        acTempo += (fim - ini) / 1000000.0;
+        System.out.println((fim - ini) / 1000000.0);
         this.atualizarTextoMics();
 
-        if("0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16))) {
+        if ("0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16))) {
             this.linhaAtualMacro = Conversao.binarioToInt(this.cpu.getValorRegistrador(0), 16);
-            // Pega o valor do registrador "PC" para setar a linha atual
+            //Pega o valor do registrador "PC" para setar a linha atual.
         }
 
         this.avaliarEstadoProgramaEDesativarExecucao();
@@ -113,14 +123,14 @@ public class ControllerTela2 {
     public void avaliarEstadoProgramaEDesativarExecucao() {
         this.execucaoEncerrada = this.linhaAtualMacro >= this.qtdLinhasMacro;
 
-        if(this.execucaoEncerrada) {
+        if (this.execucaoEncerrada) {
             this.desabilitarExecucao();
             this.executarTudo.setDisable(true);
         }
     }
 
     public void avaliarEstadoProgramaEAtivarExecucao() {
-        if(this.execucaoEncerrada) return;
+        if (this.execucaoEncerrada) return;
 
         this.executarMicroinstrucao.setDisable(false);
         this.executarMacroAtual.setDisable(false);
@@ -132,19 +142,19 @@ public class ControllerTela2 {
     public void executarMacro() throws Exception {
         do {
             this.executarCiclo();
-        } while(!"0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16)));
+        } while (!"0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16)));
     }
 
     @FXML
     private void executarAtePc(ActionEvent event) throws Exception {
-        if("".equals(this.valorPc.getText())) {
+        if ("".equals(this.valorPc.getText())) {
             this.telaFalha(event, "", "Digite um valor para o PC!", "");
             throw new Exception("Valor para pc vazio.");
         }
 
         int valorParada = Integer.parseInt(this.valorPc.getText());
 
-        if(valorParada > this.qtdLinhasMacro){
+        if (valorParada > this.qtdLinhasMacro) {
             this.telaFalha(event, "", "PC MAIOR QUE O PROGRAMA.", "");
             throw new Exception("PC MAIOR QUE O PROGRAMA.");
         }
@@ -152,24 +162,25 @@ public class ControllerTela2 {
 
         int valorPc = Conversao.binarioToInt(this.cpu.getValorRegistrador(0), 16);
 
-        if(valorPc == valorParada) {
+        if (valorPc == valorParada) {
             this.executarMacro();
         }
 
-        while((valorParada != this.linhaAtualMacro) && (this.linhaAtualMacro < this.qtdLinhasMacro)) {
-             try{
-                 this.executarMacro();
-             } catch(Exception e){
-                 break;
-             }
+        while ((valorParada != this.linhaAtualMacro) && (this.linhaAtualMacro < this.qtdLinhasMacro)) {
+            try {
+                this.executarMacro();
+            } catch (Exception e) {
+                break;
+            }
         }
-        
+
         this.atualizarTela();
         this.valorPc.setText("");
     }
+
     @FXML
     public void pausarExecucao(ActionEvent event) throws Exception {
-        if(!this.executarTudo.isDisable()) return;
+        if (!this.executarTudo.isDisable()) return;
 
         this.executarTudo.setDisable(false);
         this.pausarPrograma = true;
@@ -187,12 +198,14 @@ public class ControllerTela2 {
         this.atualizarMemoria();
         this.atualizarMicroinstrucoes();
         this.atualizarRegs();
+        tempo.setText(String.valueOf(acTempo));
+        ciclo.setText(String.valueOf(cicloAt));
 
-        if("0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16))) {
+        if ("0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16))) {
             this.pularMacro(this.linhaAnteriorMacro, this.linhaAtualMacro);
             int linhaTexto = linhaAtualMacro;
 
-            if(this.linhaAtualMacro >= this.qtdLinhasMacro) {
+            if (this.linhaAtualMacro >= this.qtdLinhasMacro) {
                 linhaTexto = this.qtdLinhasMacro - 1;
             }
             this.textoLinhaAtualMacro.setText(this.macroProgramaArray[linhaTexto]);
@@ -201,8 +214,9 @@ public class ControllerTela2 {
         //this.macroprograma.selectRange(0, 33);
     }
 
-    private void pularMacro(int linhaAnterior, int proxLinha) {;
-        if(proxLinha > this.qtdLinhasMacro) {
+    private void pularMacro(int linhaAnterior, int proxLinha) {
+        ;
+        if (proxLinha > this.qtdLinhasMacro) {
             proxLinha--;
         }
 
@@ -211,7 +225,7 @@ public class ControllerTela2 {
         System.out.println("Linha atual: " + linhaAnterior +
                 "\nPróxima linha: " + proxLinha);
 
-        if(this.execucaoEncerrada) {
+        if (this.execucaoEncerrada) {
             this.translateMacro.setByY(16 * (proxLinha - linhaAnterior));
             this.translateMacro.play();
             return;
@@ -244,11 +258,11 @@ public class ControllerTela2 {
 
         Integer posicaoMemoria;
 
-        try{
+        try {
             posicaoMemoria = Integer.parseInt(busca);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             posicaoMemoria = this.assembler.parser.getValorVariavel(busca);
-            if(posicaoMemoria == null) {
+            if (posicaoMemoria == null) {
                 this.telaFalha(event, "", "Endereço \" " + busca + "\" não encontrada", "");
                 return;
             }
@@ -256,7 +270,7 @@ public class ControllerTela2 {
 
         String posicaoMemoriaSTR = Integer.toBinaryString(posicaoMemoria);
 
-        try{
+        try {
             this.valorLidoMemoria.setText(memoriaPrincipal.ler(posicaoMemoriaSTR));
         } catch (Exception e) {
             this.telaFalha(event, "ENDEREÇO DEVE ESTAR", "", "ENTRE 0 E 4095!");
@@ -264,12 +278,12 @@ public class ControllerTela2 {
     }
 
     @FXML
-    private void confirmarVoltar (ActionEvent event) throws IOException {
+    private void confirmarVoltar(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2Voltar.fxml"));
         this.rootTela2Voltar = loader.load();
         ControllerTela2Voltar controllerTela2Voltar = loader.getController();
         controllerTela2Voltar.setMacroPrograma(this.macroProgramaUsuario);
-        controllerTela2Voltar.setStage2( this.stageTela2Voltar );
+        controllerTela2Voltar.setStage2(this.stageTela2Voltar);
         this.stageAtual = new Stage();
         this.sceneTela2Voltar = new Scene(this.rootTela2Voltar);
         String css = getClass().getResource("/css/StyleTela1Falha.css").toExternalForm();
@@ -295,10 +309,10 @@ public class ControllerTela2 {
     }
 
     private void atualizarTextoMics() throws Exception {
-        if(this.qtdLinhasTextoMics > MAX.MAXTAMTEXTOMICS) {
+        if (this.qtdLinhasTextoMics > MAX.MAXTAMTEXTOMICS) {
             int i;
 
-            for(i = 0; this.textoMics.charAt(i) != '\n'; i++);
+            for (i = 0; this.textoMics.charAt(i) != '\n'; i++) ;
 
             this.textoMics = this.textoMics.substring(i + 1);
             this.qtdLinhasTextoMics--;
@@ -350,10 +364,14 @@ public class ControllerTela2 {
         this.execucaoEncerrada = false;
         this.linhaAtualMacro = 0;
         this.qtdLinhasTextoMics = 1;
+        this.cicloAt = 0;
+        this.acTempo = 0;
         this.atualizarTela();
     }
 
-    public void setStageAtual (Stage stage) { this.stageTela2Voltar = stage; }
+    public void setStageAtual(Stage stage) {
+        this.stageTela2Voltar = stage;
+    }
 
     public void telaFalha(ActionEvent e, String l1, String l2, String l3) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1Falha.fxml"));
