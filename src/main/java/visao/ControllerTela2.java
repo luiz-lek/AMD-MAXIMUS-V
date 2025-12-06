@@ -154,7 +154,7 @@ public class ControllerTela2 {
 
         int valorParada = Integer.parseInt(this.valorPc.getText());
 
-        if (valorParada > this.qtdLinhasMacro) {
+        if (valorParada >= this.qtdLinhasMacro) {
             this.telaFalha(event, "", "PC MAIOR QUE O PROGRAMA.", "");
             throw new Exception("PC MAIOR QUE O PROGRAMA.");
         }
