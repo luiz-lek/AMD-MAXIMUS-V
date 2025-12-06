@@ -50,5 +50,25 @@ end:
 */
 
 /*
-
+      LOCO 8
+      STOD CONT
+      LOCO 1
+      STOD CONST1
+      LOCO 0
+      STOD OP1
+      LOCO 1
+      STOD OP2
+LOOP: LODD OP1
+      ADDD OP2
+      PUSH
+      LODD OP2
+      STOD OP1
+      LODL 0
+      STOD OP2
+      LODD CONT
+      SUBD CONST1
+      JZER END
+      STOD CONT
+      JUMP LOOP
+ END:
 */
