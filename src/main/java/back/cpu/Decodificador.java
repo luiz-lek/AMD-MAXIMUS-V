@@ -1,7 +1,5 @@
 package back.cpu;
 
-import java.io.IOException;
-
 public class Decodificador {
     public String entrada = "0000", saida = "0000000000000000";
     private boolean ENC = false;

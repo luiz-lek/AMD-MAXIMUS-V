@@ -40,9 +40,6 @@ public class CPU {
     public void subciclo1(){
         this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); //Passa a instrução em mem[mpc] para o mir
                                                                     //e estabiliza suas saídas.
-    }
-
-    public void subciclo2() throws Exception { //Manda os sinais de controle do mir para todos os componentes.
         this.amux.setControle(this.mir.getAMUX());
         this.logica.setCOND(this.mir.getCOND());
         this.ula.setControle(this.mir.getALU());
@@ -54,6 +51,9 @@ public class CPU {
         this.decB.setEntrada(this.mir.getB());
         this.decA.setEntrada(this.mir.getA());
         this.mmux.setADDR(this.mir.getADDR());
+    }
+
+    public void subciclo2() throws Exception { //Manda os sinais de controle do mir para todos os componentes.
         this.latB.setValor(this.registradores.getValor(decB.decodificar()));
         this.incrementador.incrementar(this.mpc.getValor());
         this.latA.setValor(this.registradores.getValor(decA.decodificar()));
