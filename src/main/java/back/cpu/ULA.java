@@ -12,15 +12,15 @@ public class ULA {
     }
 
     public void ativar(String A, String B) {
-        short a = (short) Integer.parseInt(A, 2);
-        short b = (short) Integer.parseInt(B, 2);
+        short a = (short)Integer.parseInt(A, 2);
+        short b = (short)Integer.parseInt(B, 2);
         short c;
 
         switch (this.controle) {
             case "00" -> c = this.soma(a, b);
             case "01" -> c = this.andBitABit(a, b);
             case "11" -> c = this.inv(a);
-            default   -> c = this.ident(a);
+            default -> c = this.ident(a);
         }
 
         this.zBit = (c == 0);
@@ -55,13 +55,5 @@ public class ULA {
 
     public boolean isZBit() {
         return this.zBit;
-    }
-
-    @Override
-    public String toString() {
-        return ("Saida: " + saida
-                + "\nnBit: " + nBit
-                + "\nzBit: " + zBit
-                + "\nControle: " + controle);
     }
 }

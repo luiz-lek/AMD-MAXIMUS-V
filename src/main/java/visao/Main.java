@@ -25,31 +25,6 @@ public class Main extends Application {
 }
 
 /*
-loco 6
-push
-loco 1
-push
-loco 0
-push
-push
-loco 1
-push
-loop: lodl 4
-subl 3
-stol 4
-jnze end
-lodl 0
-stol 2
-addl 1
-stol 0
-lodl 2
-stol 1
-jump loop
-end:
-//teste comentario
-*/
-
-/*
       LOCO 8
       STOD CONT
       LOCO 1

@@ -11,12 +11,13 @@ public class LogicaMicrosequenciamento {
         this.zBit = zBit;
     }
 
-    public void gerarSaida(){
+    public void gerarSaida() throws Exception{
         switch (this.COND) {
             case "00" -> this.saida = false;
             case "11" -> this.saida = true;
             case "01" -> this.saida = this.nBit;
-            case null, default -> this.saida = this.zBit;
+            case "10" -> this.saida = this.zBit;
+            case null, default -> throw new Exception("Controle de Logica inválido.");
         }
     }
 
