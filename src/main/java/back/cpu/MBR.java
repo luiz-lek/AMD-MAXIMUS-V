@@ -1,7 +1,7 @@
 package back.cpu;
 
 public class MBR extends Registrador {
-    private boolean RD = false, WR = false, ativado = false;
+    private boolean RD = false, WR = false, ativado = false, ready = false;
 
     public MBR(String nome) {
         super(nome);
@@ -15,19 +15,15 @@ public class MBR extends Registrador {
         this.WR = !"0".equals(WR);
     }
 
-    public void setAtivado(String ativado) {
-        this.ativado = !"0".equals(ativado);
-    }
+    public void setReady(String r) { this.ready = "1".equals(r); }
 
-    public boolean isRD() {
-        return this.RD;
-    }
+    public void setAtivado(String ativado) { this.ativado = !"0".equals(ativado); }
 
-    public boolean isWR() {
-        return this.WR;
-    }
+    public boolean isRD() { return this.RD; }
 
-    public boolean isAtivado() {
-        return this.ativado;
-    }
+    public boolean isWR() { return this.WR; }
+
+    public boolean isAtivado() { return this.ativado; }
+
+    public boolean isReady() { return this.ready; }
 }

@@ -30,11 +30,11 @@ public class ULA {
     }
 
     private short soma(short a, short b) {
-        return (short) (a + b);
+        return (short)(a + b);
     }
 
     private short andBitABit(short a, short b) {
-        return (short) (a & b);
+        return (short)(a & b);
     }
 
     private short ident(short a) {
@@ -42,7 +42,7 @@ public class ULA {
     }
 
     private short inv(short a) {
-        return (short) ~a;
+        return (short)~a;
     }
 
     public String getSaida() {

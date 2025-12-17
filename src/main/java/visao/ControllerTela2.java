@@ -309,7 +309,7 @@ public class ControllerTela2 {
     }
 
     private void atualizarTextoMics() throws Exception {
-        if (this.qtdLinhasTextoMics > MAX.MAXTAMTEXTOMICS) {
+        if (this.qtdLinhasTextoMics > MAX.TAMTEXTOMICS) {
             int i;
 
             for (i = 0; this.textoMics.charAt(i) != '\n'; i++) ;

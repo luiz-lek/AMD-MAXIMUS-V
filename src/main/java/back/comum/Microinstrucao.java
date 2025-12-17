@@ -18,7 +18,7 @@ public class Microinstrucao {
 
     public String getALU() { return this.mic.substring(FormatoMic.ALU[0], FormatoMic.ALU[1]); }
 
-    public String getSH() { return this.mic.substring(FormatoMic.SH[0], FormatoMic.SH[1]); }
+    public String getSH() { return String.valueOf(this.mic.charAt(FormatoMic.SH)); }
 
     public String getMBR() { return String.valueOf(this.mic.charAt(FormatoMic.MBR)); }
 

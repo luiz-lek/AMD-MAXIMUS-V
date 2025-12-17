@@ -2,9 +2,9 @@ package back.comum;
 
 public class FormatoMic { //Armazena os intervalos de cada campo da microinstrução
     public static final int AMUX = 0;
-    public static final int[] COND = new int[]{1, 3};
-    public static final int[] ALU = new int[]{3, 5};
-    public static final int[] SH =  new int[]{5, 7};
+    public static final int[] COND = new int[]{1, 4};
+    public static final int[] ALU = new int[]{4, 6};
+    public static final int SH = 6;
     public static final int MBR = 7;
     public static final int MAR = 8;
     public static final int RD = 9;

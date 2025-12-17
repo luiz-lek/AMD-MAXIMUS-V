@@ -1,9 +1,7 @@
 package back.cpu;
 
+import back.comum.MAX;
 import back.comum.Microinstrucao;
-import visao.ControllerTela2;
-
-import java.io.IOException;
 
 public class CPU {
     private MemoriaPrincipal memP;
@@ -26,6 +24,7 @@ public class CPU {
     private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
     private boolean rdIniciado = false, wrIniciado = false; //Simulam o atraso de 2 ciclos para leitura e escrita pela cpu na memória.
 
+    private int atraso = 0;
     public void setMemoriaPrincipal(MemoriaPrincipal memoria){
         this.memP = memoria;
     }
@@ -59,17 +58,27 @@ public class CPU {
         this.latA.setValor(this.registradores.getValor(decA.decodificar()));
     }
 
-    public void subciclo3() throws Exception{
+    public void subciclo3() throws Exception {
         if(this.rdIniciado) { //Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
-            this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
-            this.mbr.setRD("0");
-            this.rdIniciado = false;
-        }
-
-        if(this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
-            this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
-            this.mbr.setWR("0");
-            this.wrIniciado = false;
+            if(atraso >= MAX.ATRASOMEMORIA) {
+                this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
+                this.mbr.setReady("1");
+                this.rdIniciado = false;
+                atraso = 0;
+            } else {
+                atraso++;
+            }
+        } else if (this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
+            if(atraso >= MAX.ATRASOMEMORIA) {
+                this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
+                this.mbr.setReady("1");
+                this.wrIniciado = false;
+                atraso = 0;
+            } else {
+                atraso++;
+            }
+        } else {
+            this.mbr.setReady("0");
         }
 
         this.amux.ativar(this.mbr.getValor(), this.latA.getValor());
@@ -84,7 +93,7 @@ public class CPU {
                                                                            //deslocador e passada para MBR.
         this.mbr.setRD(this.mir.getRD());  //Os campos rd e wr são como laths, segundo a descriçãoo do livro do Tanenbaum.
         this.mbr.setWR(this.mir.getWR());  //Eles só são passadas para o mbr no subciclo 4.
-        this.logica.setNBitZBit(ula.isNBit(), ula.isZBit());
+        this.logica.setNBitZBit(ula.isNBit(), ula.isZBit(), mbr.isReady());
         this.logica.gerarSaida();                           //Defini as últimas entradas da lógica, assim, decide para onde
         mmux.setMPCIncrementado(incrementador.getSaida());  //o microprograma vai seguir no próximo ciclo.
         this.mmux.setControle(logica.isSaida());
