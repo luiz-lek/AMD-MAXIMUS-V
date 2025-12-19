@@ -13,17 +13,15 @@ public class MemoriaPrincipal{
         IntStream.range(0, MAX.MEMP_NUM_ENDERECOS).forEach(i -> this.memoria[i] = "0000000000000000");
     }
 
-    public String[] ler(String endereco) throws Exception {
-        String[] bloco = new String[4];
+    public String ler(String endereco) throws Exception {
+        String linha;
         short pos = Short.parseShort(endereco, 2);
 
-        for(int i = 0; i < 4; i++, pos++) {
-            validarPosicao(pos);
-            bloco[i] = this.memoria[pos];
-            this.verificaAcessos((int)pos); //Insere o endereço na lista de acessados, caso ainda n esteja
-        }
+        validarPosicao(pos);
+        linha = this.memoria[pos];
+        this.verificaAcessos((int)pos); //Insere o endereço na lista de acessados, caso ainda n esteja
 
-        return bloco;
+        return linha;
     }
 
     public void escrever(String posicao, String palavra) throws Exception {
