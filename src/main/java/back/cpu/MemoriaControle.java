@@ -41,10 +41,10 @@ public class MemoriaControle {
             new Microinstrucao("00000000000110100010001100000000"),
             new Microinstrucao("00111000110000001010000000001000"),
             new Microinstrucao("00000000000110100010001100000000"),
-            new Microinstrucao("00111000001000001010000100001011"),
+            new Microinstrucao("00111001101000001010000100001011"),
             new Microinstrucao("00011000000000000000010000101001"),
             new Microinstrucao("00000000000110100010001100000000"),
-            new Microinstrucao("00111000010000001010000000001111"), //40
+            new Microinstrucao("00111000110000001010000000001111"), //40
             new Microinstrucao("00000000000110100010001100000000"),
             new Microinstrucao("00111000110000001010000000010010"),
             new Microinstrucao("00011010000101000000010000110001"),
@@ -54,7 +54,7 @@ public class MemoriaControle {
             new Microinstrucao("00101000000000000000000100000000"),
             new Microinstrucao("00110100000100001000001100000000"),
             new Microinstrucao("00011010000101000000010000110110"),
-            new Microinstrucao("00000000000100100110001000000000"), //50
+            new Microinstrucao("00000000000100100111001000000000"), //50
             new Microinstrucao("00001001101000000010000000000000"),
             new Microinstrucao("01001000000000000000000000110100"),
             new Microinstrucao("00110100000100001000001100000000"),
@@ -63,7 +63,7 @@ public class MemoriaControle {
             new Microinstrucao("00011000000000000000010000111101"),
             new Microinstrucao("00001000110000000001000000000000"),
             new Microinstrucao("01001000000000000000000000111010"),
-            new Microinstrucao("00000000000100100110001000000000"),
+            new Microinstrucao("00000000000100100111001000000000"),
             new Microinstrucao("00111000101000000010000000001011"), //60
             new Microinstrucao("00000000110100100010011000000000"),
             new Microinstrucao("01001000000000000000000000111110"),
@@ -82,12 +82,12 @@ public class MemoriaControle {
             new Microinstrucao("00001000000110100000000100000000"),
             new Microinstrucao("00001000000100010000001000000000"),
             new Microinstrucao("00111000000100100000101000000000"),
-            new Microinstrucao("00011000000000000000010010100001"),
+            new Microinstrucao("00011000000000000000010001010001"),
             new Microinstrucao("00000100000110100011100100000000"),
             new Microinstrucao("00110000000100100010101000000000"), //80
             new Microinstrucao("00000100000110100011100100000000"),
             new Microinstrucao("00001100000110100000101000000000"),
-            new Microinstrucao("00110000000110100110101010100000"), //83
+            new Microinstrucao("00110000000110100110101001010000"), //83
     };
 
     public Microinstrucao getPos(String MPC) {

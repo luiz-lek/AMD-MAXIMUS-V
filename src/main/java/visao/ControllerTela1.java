@@ -2,7 +2,7 @@ package visao;
 
 import back.montagem.Assembler;
 import back.cpu.CPU;
-import back.cpu.MemoriaPrincipal;
+import back.memorias.MemoriaPrincipal;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,11 +62,6 @@ public class ControllerTela1 {
     public void escreverProgramaMemoria() throws Exception {
         this.memoriaPrincipal = new MemoriaPrincipal();
         this.assembler.montar(this.memoriaPrincipal, macroPrograma.getText());
-        this.memoriaPrincipal.escrever("000001001110", "0000000000000001");
-        this.memoriaPrincipal.escrever("000001001111", "0000000000000010");
-        this.memoriaPrincipal.escrever("000001010000", "0000000000000011");
-        this.memoriaPrincipal.escrever("000001010001", "0000000000000100");
-        this.memoriaPrincipal.escrever("000001010010", "0000000000000101");
     }
 
     public void telaFalha(ActionEvent event, String mensagem) throws IOException {

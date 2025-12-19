@@ -4,7 +4,7 @@ import back.comum.Conversao;
 import back.comum.MAX;
 import back.cpu.CPU;
 import back.cpu.ExecutarPrograma;
-import back.cpu.MemoriaPrincipal;
+import back.memorias.MemoriaPrincipal;
 import back.comum.MicroinstrucaoMap;
 import back.montagem.Assembler;
 import javafx.animation.PauseTransition;
@@ -309,7 +309,7 @@ public class ControllerTela2 {
     }
 
     private void atualizarTextoMics() throws Exception {
-        if (this.qtdLinhasTextoMics > MAX.TAMTEXTOMICS) {
+        if (this.qtdLinhasTextoMics > MAX.TEXTOMICS_NUM_LINHAS) {
             int i;
 
             for (i = 0; this.textoMics.charAt(i) != '\n'; i++) ;

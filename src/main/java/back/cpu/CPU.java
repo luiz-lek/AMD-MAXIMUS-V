@@ -2,6 +2,7 @@ package back.cpu;
 
 import back.comum.MAX;
 import back.comum.Microinstrucao;
+import back.memorias.MemoriaPrincipal;
 
 public class CPU {
     private MemoriaPrincipal memP;
@@ -60,7 +61,7 @@ public class CPU {
 
     public void subciclo3() throws Exception {
         if(this.rdIniciado) { //Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
-            if(atraso >= MAX.ATRASOMEMORIA) {
+            if(atraso >= MAX.ATRASO_MEMORIA) {
                 this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
                 this.mbr.setReady("1");
                 this.rdIniciado = false;
@@ -69,7 +70,7 @@ public class CPU {
                 atraso++;
             }
         } else if (this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
-            if(atraso >= MAX.ATRASOMEMORIA) {
+            if(atraso >= MAX.ATRASO_MEMORIA) {
                 this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
                 this.mbr.setReady("1");
                 this.wrIniciado = false;
