@@ -4,7 +4,9 @@ import back.comum.Conversao;
 import back.comum.MAX;
 import back.cpu.CPU;
 import back.cpu.ExecutarPrograma;
+import back.memorias.Cache;
 import back.memorias.MemoriaPrincipal;
+import back.memorias.CacheAssociativaConjunto;
 import back.comum.MicroinstrucaoMap;
 import back.montagem.Assembler;
 import javafx.animation.PauseTransition;
@@ -53,6 +55,7 @@ public class ControllerTela2 {
 
     public CPU cpu;
     public MemoriaPrincipal memoriaPrincipal;
+    public CacheAssociativaConjunto cache;
 
     public String macroProgramaFormatado, macroProgramaUsuario, textoMics = "mar := pc; rd;\n";
     public String[] macroProgramaArray;
@@ -71,7 +74,6 @@ public class ControllerTela2 {
         this.tempo.setText("0.0");
         this.ciclo.setText("0");
         this.macroProgramaArray = this.macroProgramaFormatado.split("\\r?\\n|\\r");
-        System.out.println("macroProgramaFormatado: " + Arrays.toString(macroProgramaArray));
         this.assembler = assembler;
         this.qtdLinhasMacro = this.assembler.getTamProg();
 
@@ -84,7 +86,9 @@ public class ControllerTela2 {
         this.macroprograma.setText(this.macroProgramaFormatado);
         this.cpu = cpu;
         this.memoriaPrincipal = mem;
+        this.cache = new CacheAssociativaConjunto(this.memoriaPrincipal);
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
+        this.cpu.setCache(this.cache);
         this.translateMacro.setNode(this.highlightMacro);
         this.atualizarTela();
         this.pausar.setDisable(true);
@@ -103,7 +107,7 @@ public class ControllerTela2 {
         this.cpu.executarCiclo();
         long fim = System.nanoTime();
         acTempo += (fim - ini) / 1000000.0;
-        System.out.println((fim - ini) / 1000000.0);
+//        System.out.println((fim - ini) / 1000000.0);
         this.atualizarTextoMics();
 
         if ("0".equals(Conversao.binarioToStrDecimal(this.cpu.getValorMPC(), 16))) {
@@ -222,8 +226,8 @@ public class ControllerTela2 {
 
         this.linhaAnteriorMacro = proxLinha;
 
-        System.out.println("Linha atual: " + linhaAnterior +
-                "\nPróxima linha: " + proxLinha);
+//        System.out.println("Linha atual: " + linhaAnterior +
+//                "\nPróxima linha: " + proxLinha);
 
         if (this.execucaoEncerrada) {
             this.translateMacro.setByY(16 * (proxLinha - linhaAnterior));
@@ -236,7 +240,7 @@ public class ControllerTela2 {
         this.translateMacro.setByY(16 * (proxLinha - linhaAnterior));
         this.translateMacro.play();
 
-        System.out.println("\nHighlightMacro movido.\n");
+        //System.out.println("\nHighlightMacro movido.\n");
     }
 
     @FXML
@@ -356,9 +360,11 @@ public class ControllerTela2 {
         this.assembler = new Assembler();
         this.memoriaPrincipal = new MemoriaPrincipal();
         this.cpu = new CPU();
+        this.cache = new CacheAssociativaConjunto(this.memoriaPrincipal);
         this.assembler.montar(this.memoriaPrincipal, this.macroProgramaFormatado);
         this.pularMacro(this.linhaAnteriorMacro, 0);
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
+        this.cpu.setCache(this.cache);
         this.textoMics = "mar := pc; rd;\n";
         this.ativarExecucao();
         this.execucaoEncerrada = false;

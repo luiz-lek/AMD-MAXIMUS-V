@@ -2,6 +2,8 @@ package back.cpu;
 
 import back.comum.Conversao;
 
+import java.io.IOException;
+
 public class ULA {
     private String saida = "0000000000000000";
     private boolean nBit = false, zBit = false;
@@ -11,7 +13,7 @@ public class ULA {
         this.controle = controle;
     }
 
-    public void ativar(String A, String B) {
+    public void ativar(String A, String B) throws IOException {
         short a = (short)Integer.parseInt(A, 2);
         short b = (short)Integer.parseInt(B, 2);
         short c;
@@ -26,7 +28,7 @@ public class ULA {
         this.zBit = (c == 0);
         this.nBit = (c < 0);
 
-        this.saida = Conversao.shortToString(c);
+        this.saida = Conversao.shortToString(c, 16);
     }
 
     private short soma(short a, short b) {

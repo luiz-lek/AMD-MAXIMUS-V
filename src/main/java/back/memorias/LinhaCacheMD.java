@@ -13,11 +13,16 @@ public class LinhaCacheMD {
         this.bloco = bloco;
     }
 
+    public String getTag() { return this.tag; }
+
     public boolean isBitValidade() { return this.bitValidade == '1'; }
 
-    private boolean isDirtyBit() { return this.dirtyBit == '1'; }
+    public boolean isDirtyBit() { return this.dirtyBit == '1'; }
+
+    public void setDirtyBit(char dirtyBit) { this.dirtyBit = dirtyBit; }
 
     public String getEndBloco(String offsetBloco) {
+        offsetBloco = offsetBloco.substring(10, 12);
         return switch (offsetBloco) {
             case "00" -> this.bloco[0];
             case "01" -> this.bloco[1];
@@ -25,6 +30,18 @@ public class LinhaCacheMD {
             default -> this.bloco[3];
         };
     }
+
+    public void substituirPalavraBloco(String offsetBloco, String palavra) {
+        String bits = offsetBloco.substring(10, 12);
+        int indice = Integer.parseInt(bits, 2);
+        this.bloco[indice] = palavra;
+    }
+
+    public boolean comparaTag(String tag) {
+        return this.tag.equals(tag);
+    }
+
+    public String[] getBloco() { return this.bloco; }
 
     public String getLinha() { return bitValidade + dirtyBit + tag + bloco[0] + bloco[1] + bloco[2] + bloco[3]; }
 }

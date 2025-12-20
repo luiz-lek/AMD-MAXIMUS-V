@@ -2,6 +2,8 @@ package back.cpu;
 
 import back.comum.Conversao;
 
+import java.io.IOException;
+
 public class MMUX {
     private String saida = "00000000000000000000000000000000";
     short MPCIncrementado = 0, ADDR = 0;
@@ -19,9 +21,9 @@ public class MMUX {
         this.controle = controle;
     }
 
-    public void ativar(){
+    public void ativar() throws IOException {
         short saidaSH = (this.controle) ? this.ADDR : this.MPCIncrementado;
-        this.saida = Conversao.shortToString(saidaSH);
+        this.saida = Conversao.shortToString(saidaSH, 16);
     }
 
     public String getSaida() { return saida; }

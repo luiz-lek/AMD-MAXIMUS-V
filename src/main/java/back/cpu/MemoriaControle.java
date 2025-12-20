@@ -15,7 +15,7 @@ public class MemoriaControle {
             new Microinstrucao("01001000000000000000000000001000"),
             new Microinstrucao("10111000000100010000000000000000"),
             new Microinstrucao("00001001101000000011000100000000"), //10
-            new Microinstrucao("01001000000000000000000000001011"),
+            new Microinstrucao("01001000000000000000000000001001"),
             new Microinstrucao("00111000000000000000000000000000"),
             new Microinstrucao("00011000000000000000010000010001"),
             new Microinstrucao("00001000110000000011000000000000"),

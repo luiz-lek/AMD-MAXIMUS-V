@@ -13,10 +13,10 @@ public class Conversao {
         return Integer.parseInt(bits, 2);
     }
 
-    public static String shortToString(short bits) {
+    public static String shortToString(short bits, int qtdBitsEsperada) throws IOException {
         StringBuilder bitsString = new StringBuilder(Integer.toBinaryString(bits & 0xFFFF));
 
-        while(bitsString.length() < 16) bitsString.insert(0, "0");
+        while(bitsString.length() < qtdBitsEsperada) bitsString.insert(0, "0");
 
         return bitsString.toString();
     }

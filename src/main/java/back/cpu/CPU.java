@@ -3,9 +3,11 @@ package back.cpu;
 import back.comum.MAX;
 import back.comum.Microinstrucao;
 import back.memorias.MemoriaPrincipal;
+import back.memorias.CacheAssociativaConjunto;
 
 public class CPU {
     private MemoriaPrincipal memP;
+    private CacheAssociativaConjunto cache;
     private final MemoriaControle memC =  new MemoriaControle();
     public Registradores registradores = new Registradores();
     private MAR mar = new MAR("MAR");
@@ -29,6 +31,8 @@ public class CPU {
     public void setMemoriaPrincipal(MemoriaPrincipal memoria){
         this.memP = memoria;
     }
+
+    public void setCache(CacheAssociativaConjunto cache) { this.cache = cache; }
 
     public void executarCiclo() throws Exception {
         this.subciclo1();
@@ -62,16 +66,17 @@ public class CPU {
     public void subciclo3() throws Exception {
         if(this.rdIniciado) { //Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
             if(atraso >= MAX.ATRASO_MEMORIA) {
-                this.mbr.setValor(this.memP.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
+                String palavraLida = this.cache.lerEndereco(this.mar.getValor());
+                this.mbr.setValor(this.cache.lerEndereco(this.mar.getValor()));// o valor lido é passado para o MBR.
                 this.mbr.setReady("1");
                 this.rdIniciado = false;
                 atraso = 0;
             } else {
                 atraso++;
             }
-        } else if (this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
+        } else if(this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
             if(atraso >= MAX.ATRASO_MEMORIA) {
-                this.memP.escrever(this.mar.getValor(), this.mbr.getValor());
+                this.cache.escrever(this.mar.getValor(), this.mbr.getValor());
                 this.mbr.setReady("1");
                 this.wrIniciado = false;
                 atraso = 0;
@@ -100,8 +105,27 @@ public class CPU {
         this.mmux.setControle(logica.isSaida());
         this.mmux.ativar();
         this.mpc.setValor(this.mmux.getSaida());
-        if(this.mbr.isRD()) this.rdIniciado = true;
-        if(this.mbr.isWR()) this.wrIniciado = true;
+
+        if(this.mbr.isRD()) {
+            String palavraLida = this.cache.lerEndereco(this.mar.getValor());
+            if(palavraLida != null) {
+                this.mbr.setValor(this.cache.lerEndereco(this.mar.getValor()));// o valor lido é passado para o MBR.
+                atraso = MAX.ATRASO_MEMORIA;
+            } else {
+                atraso = 0;
+            }
+            this.rdIniciado = true;
+        }
+
+        if(this.mbr.isWR()) {
+            boolean palavraEscrita = this.cache.escrever(this.mar.getValor(), this.getValorMbr());
+            if(palavraEscrita) {
+                atraso = MAX.ATRASO_MEMORIA;
+            } else {
+                atraso = 0;
+            }
+            this.wrIniciado = true;
+        }
     }
 
     public String getValorMbr() {
