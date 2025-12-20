@@ -18,7 +18,7 @@ public class CacheAssociativaConjunto extends Cache {
     }
 
     public String lerEndereco(String endereco) throws Exception {
-        int linhaLeitura = getOffsetCacheEndereco(endereco);
+        int linhaLeitura = linhaDeEscritaCache(endereco);
         String tag = getTagEndereco(endereco);
 
         for(int i = 0; i < 2; i++) {
@@ -27,18 +27,16 @@ public class CacheAssociativaConjunto extends Cache {
                 return linha.getEndBloco(endereco); //Cache hit
             }
             if(!linha.isBitValidade()) {
-                linha.substituirLinha(tag, this.lerBlocoMP(endereco));
+                linha.substituir(tag, this.lerBlocoMP(endereco));
                 return null;
             }
         }
-
-
 
         int pos = linhaASubstituir();
         LinhaCacheMD linha = this.cache[linhaLeitura][pos];
 
         if(linha.isDirtyBit()) this.escreverBlocoMP(endereco, linha.getBloco());
-        linha.substituirLinha(tag, this.lerBlocoMP(endereco));
+        linha.substituir(tag, this.lerBlocoMP(endereco));
         this.substituirLinha = !this.substituirLinha;
 
         return null; //Cache miss
@@ -47,22 +45,14 @@ public class CacheAssociativaConjunto extends Cache {
     }
 
     public boolean escrever(String endereco, String dado) throws Exception {
-        int linhaEscrita = getOffsetCacheEndereco(endereco);
+        int linhaEscrita = linhaDeEscritaCache(endereco);
         String tag = getTagEndereco(endereco);
 
         for(int i = 0; i < 2; i++) {
             LinhaCacheMD linha = this.cache[linhaEscrita][i];
             if(linha.isBitValidade() && linha.comparaTag(tag)) {
-                System.out.println("Antes");
-                for(int j = 0; j < 4; j++) {
-                    System.out.println(linha.getBloco()[j]);
-                }
-                System.out.println("\n\nDepois");
                 if(!linha.isDirtyBit()) linha.setDirtyBit('1');
                 linha.substituirPalavraBloco(endereco, dado);
-                for(int j = 0; j < 4; j++) {
-                    System.out.println(linha.getBloco()[j]);
-                }
                 System.out.println("\n\n");
                 return true;
             }
@@ -70,17 +60,19 @@ public class CacheAssociativaConjunto extends Cache {
             if(!linha.isBitValidade()) {
                 String[] bloco = lerBlocoMP(endereco);
                 System.out.println("Bloco: " + Conversao.binarioToInt(endereco, 12));
-                linha.substituirLinha(tag, bloco);
+                linha.substituir(tag, bloco);
+                linha.substituirPalavraBloco(endereco, dado);
                 return false;
             }
         }
 
         int pos = linhaASubstituir();
         LinhaCacheMD linha = this.cache[linhaEscrita][pos];
-        String[] bloco = linha.getBloco();
+        String[] bloco = lerBlocoMP(endereco);
 
         if(linha.isDirtyBit()) this.escreverBlocoMP(endereco, bloco);
-        linha.substituirLinha(tag, this.lerBlocoMP(endereco));
+        linha.substituir(tag, bloco);
+        linha.substituirPalavraBloco(endereco, dado);
         this.substituirLinha = !this.substituirLinha;
 
         return false;
@@ -88,7 +80,7 @@ public class CacheAssociativaConjunto extends Cache {
 
     private int linhaASubstituir()  { return this.substituirLinha ? 1 : 0;}
 
-    private int getOffsetCacheEndereco(String endereco) throws Exception {
+    private int linhaDeEscritaCache(String endereco) throws Exception {
        String offset = endereco.substring(5, 10);
        return Conversao.binarioToInt(offset, 5);
     }

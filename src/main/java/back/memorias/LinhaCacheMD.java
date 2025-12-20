@@ -6,7 +6,7 @@ public class LinhaCacheMD {
     private String tag = "00000";
     private String[] bloco = new String[]{"0000000000000000", "0000000000000000", "0000000000000000", "0000000000000000"};
 
-    public void substituirLinha(String tag, String[] bloco) {
+    public void substituir(String tag, String[] bloco) {
         this.bitValidade = '1';
         this.dirtyBit = '0';
         this.tag = tag;
