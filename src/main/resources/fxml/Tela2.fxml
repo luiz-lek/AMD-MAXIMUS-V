@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="767.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerTela2">
+<AnchorPane id="mostrarCache" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="767.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerTela2">
    <children>
       <Rectangle fx:id="caixaExecutarAtePc" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="49.0" layoutX="862.0" layoutY="614.0" stroke="BLACK" strokeType="INSIDE" width="126.0" />
       <Rectangle fx:id="caixaBuscarMemoria" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="73.0" layoutX="710.0" layoutY="680.0" stroke="BLACK" strokeType="INSIDE" width="278.0" />
@@ -197,5 +197,10 @@
             <Font size="12.0" />
          </font>
       </TextField>
+      <Button id="mostrarCache" fx:id="mostrarCache" layoutX="789.0" layoutY="502.0" mnemonicParsing="false" onAction="#exibirCache" prefHeight="22.0" prefWidth="109.0" text="Mostrar cache">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

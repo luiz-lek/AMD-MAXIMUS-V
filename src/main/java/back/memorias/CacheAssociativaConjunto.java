@@ -2,6 +2,8 @@ package back.memorias;
 import back.comum.MAX;
 import back.comum.Conversao;
 
+import java.io.IOException;
+
 public class CacheAssociativaConjunto extends Cache {
     private LinhaCacheMD[][] cache = new LinhaCacheMD[MAX.CACHE_AC_NUM_LIHAS][2];
     private boolean substituirLinha = true;
@@ -119,5 +121,34 @@ public class CacheAssociativaConjunto extends Cache {
             pos++;
             endereco = Conversao.shortToString(pos, 12);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for(short i = 0; i < 31; i++) {
+            try {
+                String endereco = Conversao.shortToString(i, 5);
+                sb.append(endereco).append("      ");
+                sb.append(cache[i][0].getLinha());
+                sb.append("         ");
+                sb.append(cache[i][1].getLinha()).append('\n');
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+            String endereco = Conversao.shortToString((short)31, 5);
+            sb.append(endereco).append("      ");
+            sb.append(cache[31][0].getLinha());
+            sb.append("         ");
+            sb.append(cache[31][1].getLinha());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sb.toString();
     }
 }

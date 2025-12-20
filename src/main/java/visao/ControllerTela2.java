@@ -4,7 +4,6 @@ import back.comum.Conversao;
 import back.comum.MAX;
 import back.cpu.CPU;
 import back.cpu.ExecutarPrograma;
-import back.memorias.Cache;
 import back.memorias.MemoriaPrincipal;
 import back.memorias.CacheAssociativaConjunto;
 import back.comum.MicroinstrucaoMap;
@@ -29,15 +28,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class ControllerTela2 {
-    Parent rootTela2Voltar, rootFalha;
-    Stage stageAtual, stageTela2Voltar, stageFalha;
-    Scene sceneTela2Voltar, sceneFalha;
+    Parent rootTela2Voltar, rootFalha, rootCache;
+    Stage stageAtual, stageTela2Voltar, stageFalha, stageCache;
+    Scene sceneTela2Voltar, sceneFalha, sceneCache ;
 
     @FXML
-    public Button voltarTela1, executarMicroinstrucao, executarMacroAtual, reiniciar, executarTudo, pausar;
+    public Button voltarTela1, executarMicroinstrucao, executarMacroAtual, reiniciar, executarTudo, pausar, mostarCache;
     @FXML
     public TextArea macroprograma, microinstrucoes, memoriaEmBinario;
     @FXML
@@ -378,6 +376,27 @@ public class ControllerTela2 {
     public void setStageAtual(Stage stage) {
         this.stageTela2Voltar = stage;
     }
+
+    @FXML
+    private void exibirCache(ActionEvent event) throws IOException, Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TelaCacheAC.fxml"));
+        this.rootCache = loader.load();
+        ControllerTelaCacheAC controllerTelaCacheAC = loader.getController();
+        //controllerTelaCache.setMacroPrograma(this.macroProgramaUsuario);
+        controllerTelaCacheAC.setStage(this.stageCache);
+        this.stageAtual = new Stage();
+        this.sceneCache = new Scene(this.rootCache);
+        String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
+        this.sceneCache.getStylesheets().add(css);
+        this.stageAtual.setScene(this.sceneCache);
+        this.stageAtual.initModality(Modality.APPLICATION_MODAL);
+        this.stageAtual.initOwner(((Node) event.getSource()).getScene().getWindow());
+        this.stageAtual.initStyle(StageStyle.UTILITY);
+        this.stageAtual.setTitle("CACHE ASSOCIATIVA POR CONJUNTO");
+        controllerTelaCacheAC.setTextoCache(cache.toString());
+        this.stageAtual.showAndWait();
+    }
+
 
     public void telaFalha(ActionEvent e, String l1, String l2, String l3) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1Falha.fxml"));

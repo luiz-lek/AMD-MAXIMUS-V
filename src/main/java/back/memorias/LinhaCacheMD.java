@@ -43,5 +43,6 @@ public class LinhaCacheMD {
 
     public String[] getBloco() { return this.bloco; }
 
-    public String getLinha() { return bitValidade + dirtyBit + tag + bloco[0] + bloco[1] + bloco[2] + bloco[3]; }
+    public String getLinha() { return bitValidade + "       " + dirtyBit + "       " + tag
+            + "     " + bloco[0] + "     " + bloco[1] + "     " + bloco[2] + "     " +  bloco[3]; }
 }

@@ -25,6 +25,7 @@ public class ControllerTela1 {
     private TextArea macroPrograma;
     @FXML
     private Button gravarNaMemoria, confirmarFalha;
+
     private CPU cpu;
     private MemoriaPrincipal memoriaPrincipal;
     private Assembler assembler;
