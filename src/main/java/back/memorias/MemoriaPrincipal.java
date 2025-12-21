@@ -1,16 +1,16 @@
 package back.memorias;
 
 import back.comum.Conversao;
-import back.comum.MAX;
+import back.comum.CONSTS;
 import java.util.LinkedList;
 import java.util.stream.IntStream;
 
 public class MemoriaPrincipal{
-    private String[] memoria = new String[MAX.MEMP_NUM_ENDERECOS];
+    private String[] memoria = new String[CONSTS.MEMP_NUM_ENDERECOS];
     private LinkedList<Integer> enderecosAcessadas = new LinkedList<>(); //Aramazena os endereços acessados,
                                                                          //para serem exibidos pela interface.
     public MemoriaPrincipal(){
-        IntStream.range(0, MAX.MEMP_NUM_ENDERECOS).forEach(i -> this.memoria[i] = "0000000000000000");
+        IntStream.range(0, CONSTS.MEMP_NUM_ENDERECOS).forEach(i -> this.memoria[i] = "0000000000000000");
     }
 
     public String ler(String endereco) throws Exception {
@@ -34,7 +34,7 @@ public class MemoriaPrincipal{
     }
 
     private void validarPosicao(short pos) throws Exception {
-        if((pos < 0) || (pos >= MAX.MEMP_NUM_ENDERECOS)) throw new Exception("Posição " + pos + " da memória inválida.");
+        if((pos < 0) || (pos >= CONSTS.MEMP_NUM_ENDERECOS)) throw new Exception("Posição " + pos + " da memória inválida.");
     }
 
     private void verificaAcessos(int pos) {
@@ -43,7 +43,7 @@ public class MemoriaPrincipal{
     }
 
     private void validarPalavra(String palavra) throws Exception {
-        if(palavra.length() != MAX.MEMP_TAM_PAL) throw new Exception("Tamanho de palavra inválido.");
+        if(palavra.length() != CONSTS.MEMP_TAM_PAL) throw new Exception("Tamanho de palavra inválido.");
     }
 
     public void inserirOrdenadoPosAcessadas(int pos) {

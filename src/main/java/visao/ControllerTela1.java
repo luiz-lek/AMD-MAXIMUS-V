@@ -1,5 +1,6 @@
 package visao;
 
+import back.comum.CONSTS;
 import back.memorias.*;
 import back.montagem.Assembler;
 import back.cpu.CPU;
@@ -45,6 +46,7 @@ public class ControllerTela1 implements Initializable {
 
     @FXML
     private void carregarPrograma(ActionEvent event) throws Exception {
+        String pathTelaCache;
         try {
             this.assembler = new Assembler();
             this.escreverProgramaMemoria();
@@ -52,10 +54,19 @@ public class ControllerTela1 implements Initializable {
             Cache cache;
 
             switch (op) {
-                case "Associtaiva" -> cache = new CacheAssociativaConjunto(memoriaPrincipal);
-//                case "Mapeamento direto" -> cache = new CacheMapeamentoDireto(memoriaPrincipal);
-                case "Associtiva por conjunto" -> cache = new CacheAssociativaConjunto(memoriaPrincipal);
-                default ->cache = new SemCache(memoriaPrincipal);
+//                case "Associtaiva" -> cache = new CacheAssociativaConjunto(memoriaPrincipal);
+                case "Mapeamento direto" -> {
+                    cache = new CacheMapeamentoDireto(memoriaPrincipal);
+                    pathTelaCache = CONSTS.PATH_TELA_CACHE_MD;
+                }
+                case "Associtiva por conjunto" -> {
+                    cache = new CacheAssociativaConjunto(memoriaPrincipal);
+                    pathTelaCache = CONSTS.PATH_TELA_CACHE_AC;
+                }
+                default ->{
+                    cache = new SemCache(memoriaPrincipal);
+                    pathTelaCache = CONSTS.PATH_TELA_CACHE_AC;
+                }
             }
 
             this.cpu = new CPU();
@@ -65,7 +76,7 @@ public class ControllerTela1 implements Initializable {
             ControllerTela2 controllerTela2 = loader.getController();
             this.stageTela2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stageTela2);
-            controllerTela2.setConteudo(this.macroPrograma.getText(), this.cpu, this.memoriaPrincipal, this.assembler, cache);
+            controllerTela2.setConteudo(this.macroPrograma.getText(), this.cpu, this.memoriaPrincipal, this.assembler, cache, pathTelaCache);
             this.scenetela2 = new Scene(this.rootTela2);
             String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
             this.scenetela2.getStylesheets().add(css);

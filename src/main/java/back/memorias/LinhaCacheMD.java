@@ -3,8 +3,14 @@ package back.memorias;
 public class LinhaCacheMD {
     private char bitValidade = '0';
     private char dirtyBit = '0';
-    private String tag = "00000";
+    private String tag;
     private String[] bloco = new String[]{"0000000000000000", "0000000000000000", "0000000000000000", "0000000000000000"};
+
+    public LinhaCacheMD(int tamTag) {
+       String tag = "";
+       for (int i = 0; i < tamTag; i++) tag += "0";
+       this.tag = tag;
+    }
 
     public void substituir(String tag, String[] bloco) {
         this.bitValidade = '1';

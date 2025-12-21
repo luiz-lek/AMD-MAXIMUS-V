@@ -1,10 +1,9 @@
 package back.cpu;
 
-import back.comum.MAX;
+import back.comum.CONSTS;
 import back.comum.Microinstrucao;
 import back.memorias.Cache;
 import back.memorias.MemoriaPrincipal;
-import back.memorias.CacheAssociativaConjunto;
 
 public class CPU {
     private MemoriaPrincipal memP;
@@ -66,7 +65,7 @@ public class CPU {
 
     public void subciclo3() throws Exception {
         if(this.rdIniciado) { //Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
-            if(atraso >= MAX.ATRASO_MEMORIA) {
+            if(atraso >= CONSTS.ATRASO_MEMORIA) {
                 String palavraLida = this.cache.ler(this.mar.getValor());
                 this.mbr.setValor(this.cache.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
                 this.mbr.setReady("1");
@@ -76,7 +75,7 @@ public class CPU {
                 atraso++;
             }
         } else if(this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
-            if(atraso >= MAX.ATRASO_MEMORIA) {
+            if(atraso >= CONSTS.ATRASO_MEMORIA) {
                 this.cache.escrever(this.mar.getValor(), this.mbr.getValor());
                 this.mbr.setReady("1");
                 this.wrIniciado = false;
@@ -111,7 +110,7 @@ public class CPU {
             String palavraLida = this.cache.ler(this.mar.getValor());
             if(palavraLida != null) {
                 this.mbr.setValor(this.cache.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
-                atraso = MAX.ATRASO_MEMORIA;
+                atraso = CONSTS.ATRASO_MEMORIA;
             } else {
                 atraso = 0;
             }
@@ -121,7 +120,7 @@ public class CPU {
         if(this.mbr.isWR()) {
             boolean palavraEscrita = this.cache.escrever(this.mar.getValor(), this.getValorMbr());
             if(palavraEscrita) {
-                atraso = MAX.ATRASO_MEMORIA;
+                atraso = CONSTS.ATRASO_MEMORIA;
             } else {
                 atraso = 0;
             }

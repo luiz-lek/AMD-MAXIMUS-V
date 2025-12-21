@@ -1,7 +1,7 @@
 package visao;
 
 import back.comum.Conversao;
-import back.comum.MAX;
+import back.comum.CONSTS;
 import back.cpu.CPU;
 import back.cpu.ExecutarPrograma;
 import back.memorias.Cache;
@@ -33,7 +33,8 @@ import java.io.IOException;
 public class ControllerTela2 {
     Parent rootTela2Voltar, rootFalha, rootCache;
     Stage stageAtual, stageTela2Voltar, stageFalha, stageCache;
-    Scene sceneTela2Voltar, sceneFalha, sceneCache ;
+    Scene sceneTela2Voltar, sceneFalha, sceneCache;
+    private String fxmlTelaCache;
 
     @FXML
     public Button voltarTela1, executarMicroinstrucao, executarMacroAtual, reiniciar, executarTudo, pausar, mostarCache;
@@ -56,7 +57,7 @@ public class ControllerTela2 {
     public MemoriaPrincipal memoriaPrincipal;
     public Cache cache;
 
-    public String macroProgramaFormatado, macroProgramaUsuario, textoMics = "mar := pc; rd;\n";
+    public String macroProgramaFormatado, macroProgramaUsuario, textoMics = "mar := pc; rd;\n", pathTelaCache;
     public String[] macroProgramaArray;
 
     public int qtdLinhasMacro = 0, qtdLinhasTextoMics = 1, linhaAtualMacro = 0, linhaAnteriorMacro = 0, cicloAt = 0;
@@ -67,7 +68,7 @@ public class ControllerTela2 {
 
     public Assembler assembler;
 
-    public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem, Assembler assembler, Cache cache) throws Exception {
+    public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem, Assembler assembler, Cache cache, String pathTelaCache) throws Exception {
         this.macroProgramaFormatado = assembler.parser.progFormatado();
         this.macroProgramaUsuario = macroPrograma;
         this.tempo.setText("0.0");
@@ -90,6 +91,7 @@ public class ControllerTela2 {
         this.cpu.setCache(cache);
         this.translateMacro.setNode(this.highlightMacro);
         this.atualizarTela();
+        this.pathTelaCache = pathTelaCache;
         this.pausar.setDisable(true);
     }
 
@@ -312,7 +314,7 @@ public class ControllerTela2 {
     }
 
     private void atualizarTextoMics() throws Exception {
-        if (this.qtdLinhasTextoMics > MAX.TEXTOMICS_NUM_LINHAS) {
+        if (this.qtdLinhasTextoMics > CONSTS.TEXTOMICS_NUM_LINHAS) {
             int i;
 
             for (i = 0; this.textoMics.charAt(i) != '\n'; i++) ;
@@ -380,7 +382,7 @@ public class ControllerTela2 {
 
     @FXML
     private void exibirCache(ActionEvent event) throws IOException, Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TelaCacheAC.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.pathTelaCache));
         this.rootCache = loader.load();
         ControllerTelaCaches controllerTelaCacheAC = loader.getController();
         //controllerTelaCache.setMacroPrograma(this.macroProgramaUsuario);
@@ -393,7 +395,7 @@ public class ControllerTela2 {
         this.stageAtual.initModality(Modality.APPLICATION_MODAL);
         this.stageAtual.initOwner(((Node) event.getSource()).getScene().getWindow());
         this.stageAtual.initStyle(StageStyle.UTILITY);
-        this.stageAtual.setTitle("CACHE ASSOCIATIVA POR CONJUNTO");
+        this.stageAtual.setTitle("CACHE");
         controllerTelaCacheAC.setTextoCache(cache.toString());
         this.stageAtual.showAndWait();
     }

@@ -1,20 +1,20 @@
 package back.memorias;
-import back.comum.MAX;
+import back.comum.CONSTS;
 import back.comum.Conversao;
 
 import java.io.IOException;
 
 public class CacheAssociativaConjunto implements Cache {
     public MemoriaPrincipal memoriaPrincipal;
-    private LinhaCacheMD[][] cache = new LinhaCacheMD[MAX.CACHE_AC_NUM_LIHAS][2];
+    private LinhaCacheMD[][] cache = new LinhaCacheMD[CONSTS.CACHE_AC_NUM_LIHAS][2];
     private int substituirLinha = 0;
 
     public CacheAssociativaConjunto(MemoriaPrincipal memoriaPrincipal) {
         this.memoriaPrincipal = memoriaPrincipal;
 
-        for(int i = 0; i < MAX.CACHE_AC_NUM_LIHAS; i++){
-            cache[i][0] = new LinhaCacheMD();
-            cache[i][1] = new LinhaCacheMD();
+        for(int i = 0; i < CONSTS.CACHE_AC_NUM_LIHAS; i++){
+            cache[i][0] = new LinhaCacheMD(5);
+            cache[i][1] = new LinhaCacheMD(5);
         }
     }
 
