@@ -15,6 +15,40 @@ AnchorPane {
     -fx-border-color: black;
 }
 
+.choice-box {
+    -fx-background-color: #1f1f1f;
+    -fx-text-fill: #01e2f2;
+    -fx-prompt-text-fill: #48638C;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: black;
+}
+
+.choice-box > .label {
+    -fx-text-fill: #00ffff;
+}
+
+.choice-box > .open-button > .arrow {
+    -fx-background-color: #00ffff;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #363636;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: white;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #00ffff;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: black;
+}
+
 .text-area .scroll-pane .viewport {
     -fx-background-color: #1f1f1f;
     -fx-background-radius: 10;

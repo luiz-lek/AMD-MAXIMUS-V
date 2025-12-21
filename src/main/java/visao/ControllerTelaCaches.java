@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-public class ControllerTelaCacheAC {
+public class ControllerTelaCaches {
     @FXML
     private Stage stage;
 

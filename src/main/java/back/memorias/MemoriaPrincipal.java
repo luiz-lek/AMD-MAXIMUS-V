@@ -87,4 +87,32 @@ public class MemoriaPrincipal{
         String maiorEnderecoStr = Integer.toString(maiorEndereco);
         return maiorEnderecoStr.length();
     }
+
+    public String[] lerBloco(String endereco) throws Exception {
+        endereco = endereco.substring(0, 10);
+        endereco += "00";
+
+        String[] bloco = new String[4];
+        short pos = Short.parseShort(endereco, 2);
+
+        for(int i = 0; i < 4; i++) {
+            bloco[i] = this.ler(endereco);
+            endereco = Conversao.shortToString(++pos, 12);
+        }
+
+        return bloco;
+    }
+
+    public void escreverBloco(String endereco, String[] bloco) throws Exception {
+        endereco = endereco.substring(0, 10);
+        endereco += "00";
+
+        short pos = Short.parseShort(endereco, 2);
+
+        for(int i = 0; i < 4; i++, pos++) {
+            this.escrever(endereco, bloco[i]);
+            pos++;
+            endereco = Conversao.shortToString(pos, 12);
+        }
+    }
 }

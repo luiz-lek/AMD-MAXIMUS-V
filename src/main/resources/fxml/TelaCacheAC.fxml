@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="501.0" prefWidth="1254.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerTelaCacheAC">
+<AnchorPane prefHeight="501.0" prefWidth="1254.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerTelaCaches">
     <TextArea id="tabela" fx:id="tabela" editable="false" layoutX="8.0" layoutY="71.0" prefHeight="422.0" prefWidth="1197.0" text="&#10;">
         <font>
           <Font size="11.0" />

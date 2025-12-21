@@ -2,12 +2,13 @@ package back.cpu;
 
 import back.comum.MAX;
 import back.comum.Microinstrucao;
+import back.memorias.Cache;
 import back.memorias.MemoriaPrincipal;
 import back.memorias.CacheAssociativaConjunto;
 
 public class CPU {
     private MemoriaPrincipal memP;
-    private CacheAssociativaConjunto cache;
+    private Cache cache;
     private final MemoriaControle memC =  new MemoriaControle();
     public Registradores registradores = new Registradores();
     private MAR mar = new MAR("MAR");
@@ -32,7 +33,7 @@ public class CPU {
         this.memP = memoria;
     }
 
-    public void setCache(CacheAssociativaConjunto cache) { this.cache = cache; }
+    public void setCache(Cache cache) { this.cache = cache; }
 
     public void executarCiclo() throws Exception {
         this.subciclo1();
@@ -66,8 +67,8 @@ public class CPU {
     public void subciclo3() throws Exception {
         if(this.rdIniciado) { //Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
             if(atraso >= MAX.ATRASO_MEMORIA) {
-                String palavraLida = this.cache.lerEndereco(this.mar.getValor());
-                this.mbr.setValor(this.cache.lerEndereco(this.mar.getValor()));// o valor lido é passado para o MBR.
+                String palavraLida = this.cache.ler(this.mar.getValor());
+                this.mbr.setValor(this.cache.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
                 this.mbr.setReady("1");
                 this.rdIniciado = false;
                 atraso = 0;
@@ -107,9 +108,9 @@ public class CPU {
         this.mpc.setValor(this.mmux.getSaida());
 
         if(this.mbr.isRD()) {
-            String palavraLida = this.cache.lerEndereco(this.mar.getValor());
+            String palavraLida = this.cache.ler(this.mar.getValor());
             if(palavraLida != null) {
-                this.mbr.setValor(this.cache.lerEndereco(this.mar.getValor()));// o valor lido é passado para o MBR.
+                this.mbr.setValor(this.cache.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
                 atraso = MAX.ATRASO_MEMORIA;
             } else {
                 atraso = 0;

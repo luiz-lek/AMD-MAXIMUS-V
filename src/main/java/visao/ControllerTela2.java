@@ -4,6 +4,7 @@ import back.comum.Conversao;
 import back.comum.MAX;
 import back.cpu.CPU;
 import back.cpu.ExecutarPrograma;
+import back.memorias.Cache;
 import back.memorias.MemoriaPrincipal;
 import back.memorias.CacheAssociativaConjunto;
 import back.comum.MicroinstrucaoMap;
@@ -53,7 +54,7 @@ public class ControllerTela2 {
 
     public CPU cpu;
     public MemoriaPrincipal memoriaPrincipal;
-    public CacheAssociativaConjunto cache;
+    public Cache cache;
 
     public String macroProgramaFormatado, macroProgramaUsuario, textoMics = "mar := pc; rd;\n";
     public String[] macroProgramaArray;
@@ -66,7 +67,7 @@ public class ControllerTela2 {
 
     public Assembler assembler;
 
-    public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem, Assembler assembler) throws Exception {
+    public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem, Assembler assembler, Cache cache) throws Exception {
         this.macroProgramaFormatado = assembler.parser.progFormatado();
         this.macroProgramaUsuario = macroPrograma;
         this.tempo.setText("0.0");
@@ -84,9 +85,9 @@ public class ControllerTela2 {
         this.macroprograma.setText(this.macroProgramaFormatado);
         this.cpu = cpu;
         this.memoriaPrincipal = mem;
-        this.cache = new CacheAssociativaConjunto(this.memoriaPrincipal);
+        this.cache = cache;
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
-        this.cpu.setCache(this.cache);
+        this.cpu.setCache(cache);
         this.translateMacro.setNode(this.highlightMacro);
         this.atualizarTela();
         this.pausar.setDisable(true);
@@ -381,7 +382,7 @@ public class ControllerTela2 {
     private void exibirCache(ActionEvent event) throws IOException, Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TelaCacheAC.fxml"));
         this.rootCache = loader.load();
-        ControllerTelaCacheAC controllerTelaCacheAC = loader.getController();
+        ControllerTelaCaches controllerTelaCacheAC = loader.getController();
         //controllerTelaCache.setMacroPrograma(this.macroProgramaUsuario);
         controllerTelaCacheAC.setStage(this.stageCache);
         this.stageAtual = new Stage();

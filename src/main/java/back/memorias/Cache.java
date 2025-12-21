@@ -1,5 +1,6 @@
 package back.memorias;
 
-public class Cache {
-    protected MemoriaPrincipal memoriaPrincipal;
+public interface Cache {
+    public boolean escrever(String endereco, String dado) throws Exception;
+    public String ler(String endereco) throws Exception;
 }
