@@ -42,4 +42,6 @@ public class ControllerCacheAss implements ControllerCache {
         this.bloco2.setCellValueFactory( new PropertyValueFactory<>("bloco2") );
         this.bloco3.setCellValueFactory( new PropertyValueFactory<>("bloco3") );
     }
+
+    public void atualizarTabela() { this.tabela.refresh(); }
 }

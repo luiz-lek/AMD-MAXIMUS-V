@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="523.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerCacheAss">
+   <children>
+      <TableView id="tabela" fx:id="tabela" layoutX="23.0" layoutY="78.0" prefHeight="402.0" prefWidth="988.0">
+         <columns>
+            <TableColumn id="linha" fx:id="linha" prefWidth="93.60000610351562" text="Linha" />
+            <TableColumn id="validade" fx:id="validade" minWidth="0.0" prefWidth="27.199966430664062" text="V" />
+            <TableColumn id="modificacao" fx:id="modificacao" minWidth="0.0" prefWidth="28.0" text="M" />
+            <TableColumn id="numBloco" fx:id="numBloco" prefWidth="120.0" text="Num. Bloco" />
+            <TableColumn id="bloco0" fx:id="bloco0" prefWidth="173.5999755859375" text="0" />
+            <TableColumn id="bloco1" fx:id="bloco1" prefWidth="173.5999755859375" text="1" />
+            <TableColumn id="bloco2" fx:id="bloco2" prefWidth="173.5999755859375" text="2" />
+            <TableColumn id="bloco3" fx:id="bloco3" prefWidth="173.5999755859375" text="3" />
+         </columns>
+      </TableView>
+      <Label layoutX="617.0" layoutY="51.0" text="BLOCO" />
+      <Label layoutX="24.0" layoutY="43.0" text="V: VALIDADE">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="24.0" layoutY="53.0" prefHeight="6.0" prefWidth="84.0" text="M: MODIFICAÇÃO">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

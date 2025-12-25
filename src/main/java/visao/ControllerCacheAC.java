@@ -73,4 +73,6 @@ public class ControllerCacheAC implements ControllerCache {
 
         this.numBloco.setText("BLOCO " + numBloco);
     }
+
+    public void atualizarTabela() { this.tabela.refresh(); }
 }

@@ -53,6 +53,7 @@ public class ControllerTela2 {
     private PauseTransition pause = new PauseTransition(Duration.millis(400));
     @FXML
     private Label labelLinhaAtual;
+    private ControllerCache controllerCache;
 
     public CPU cpu;
     public MemoriaPrincipal memoriaPrincipal;
@@ -237,7 +238,9 @@ public class ControllerTela2 {
             this.textoLinhaAtualMacro.setText(this.macroProgramaArray[linhaTexto]);
         }
 
-        //this.macroprograma.selectRange(0, 33);
+        if((this.stageAtual != null) && (this.stageAtual.isShowing())) {
+            controllerCache.atualizarTabela();
+        }
     }
 
     private void pularMacro(int linhaAnterior, int proxLinha) {
@@ -405,23 +408,26 @@ public class ControllerTela2 {
     private void exibirCache(ActionEvent event) throws IOException, Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.pathTelaCache));
         this.rootCache = loader.load();
-        ControllerCache controllerCache = loader.getController();
+        this.controllerCache = loader.getController();
 
-        controllerCache.setStage(this.stageCache);
-        controllerCache.setCache(cache);
+        this.controllerCache.setStage(this.stageCache);
+        this.controllerCache.setCache(cache);
+
         this.stageAtual = new Stage();
-
         this.sceneCache = new Scene(this.rootCache);
+
         String css = getClass().getResource(PATH_CSS_TELA2).toExternalForm();
         this.sceneCache.getStylesheets().add(css);
 
         this.stageAtual.setScene(this.sceneCache);
 
-        this.stageAtual.initModality(Modality.APPLICATION_MODAL);
-        this.stageAtual.initOwner(((Node) event.getSource()).getScene().getWindow());
-        this.stageAtual.initStyle(StageStyle.UTILITY);
+        this.stageAtual.initModality(Modality.NONE);
+
+        this.stageAtual.initStyle(StageStyle.DECORATED);
+
         this.stageAtual.setTitle("CACHE " + cache.getTipoCache());
-        this.stageAtual.showAndWait();
+
+        this.stageAtual.show();
     }
 
 
