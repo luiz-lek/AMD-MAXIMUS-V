@@ -1,8 +1,10 @@
 package back.memorias;
 
+import back.cpu.MBR;
+
 public interface Cache {
-    public boolean escrever(String endereco, String dado) throws Exception;
-    public String ler(String endereco) throws Exception;
-    @Override
+    public void escrever(String endereco, MBR mbr) throws Exception;
+    public void ler(String endereco, MBR mbr) throws Exception;
+    public int size();
     public String toString();
 }

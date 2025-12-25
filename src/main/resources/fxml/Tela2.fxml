@@ -187,12 +187,12 @@
             <Font size="12.0" />
          </font>
       </TextField>
-      <Label layoutX="496.0" layoutY="567.0" text="Tempo(ms)">
+      <Label layoutX="515.0" layoutY="566.0" text="Tempo(ms)">
          <font>
             <Font name="Monospaced Regular" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="tempo" editable="false" layoutX="604.0" layoutY="566.0" prefHeight="26.0" prefWidth="87.0">
+      <TextField fx:id="tempo" editable="false" layoutX="624.0" layoutY="566.0" prefHeight="26.0" prefWidth="46.0">
          <font>
             <Font size="12.0" />
          </font>

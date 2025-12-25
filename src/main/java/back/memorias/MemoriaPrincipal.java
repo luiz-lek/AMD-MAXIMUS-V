@@ -73,7 +73,7 @@ public class MemoriaPrincipal{
             endereco = Conversao.ajustarDigitosDecimal(endereco, maiorEndereco); //linhas terem o mesmo tamanho
             saida.append(endereco).append(": ").append(this.memoria[i]);
 
-            String decimal = Conversao.binarioToStrDecimal(this.memoria[i], 16);
+            String decimal = Conversao.binarioToStrDecimal(this.memoria[i], CONSTS.MEMP_TAM_PAL);
             decimal = Conversao.ajustarDigitosDecimal(decimal, 5);
 
             saida.append("   ").append(decimal).append("\n");

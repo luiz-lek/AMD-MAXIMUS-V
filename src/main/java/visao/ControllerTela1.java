@@ -52,20 +52,29 @@ public class ControllerTela1 implements Initializable {
             this.escreverProgramaMemoria();
             String op = escolhaCache.getValue();
             Cache cache;
+            boolean semCache = false;
+            int tempAccCache = 0;
 
             switch (op) {
-//                case "Associtaiva" -> cache = new CacheAssociativaConjunto(memoriaPrincipal);
+                case "Associativa" -> {
+                    pathTelaCache = CONSTS.PATH_TELA_CACHE_ASS;
+                    cache = new CacheAssociativa(memoriaPrincipal);
+                    tempAccCache = 4;
+                }
                 case "Mapeamento direto" -> {
                     cache = new CacheMapeamentoDireto(memoriaPrincipal);
                     pathTelaCache = CONSTS.PATH_TELA_CACHE_MD;
+                    tempAccCache = 1;
                 }
                 case "Associtiva por conjunto" -> {
                     cache = new CacheAssociativaConjunto(memoriaPrincipal);
                     pathTelaCache = CONSTS.PATH_TELA_CACHE_AC;
+                    tempAccCache = 2;
                 }
                 default ->{
                     cache = new SemCache(memoriaPrincipal);
-                    pathTelaCache = CONSTS.PATH_TELA_CACHE_AC;
+                    pathTelaCache = null;
+                    semCache = true;
                 }
             }
 
@@ -76,7 +85,7 @@ public class ControllerTela1 implements Initializable {
             ControllerTela2 controllerTela2 = loader.getController();
             this.stageTela2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stageTela2);
-            controllerTela2.setConteudo(this.macroPrograma.getText(), this.cpu, this.memoriaPrincipal, this.assembler, cache, pathTelaCache);
+            controllerTela2.setConteudo(this.macroPrograma.getText(), this.cpu, this.memoriaPrincipal, this.assembler, cache, pathTelaCache, semCache);
             this.scenetela2 = new Scene(this.rootTela2);
             String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
             this.scenetela2.getStylesheets().add(css);

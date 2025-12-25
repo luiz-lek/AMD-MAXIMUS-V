@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="496.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerCacheAC">
+   <children>
+      <TableView id="tabela" fx:id="tabela" layoutX="149.0" layoutY="64.0" prefHeight="338.0" prefWidth="752.0">
+         <columns>
+            <TableColumn id="linha" fx:id="linha" prefWidth="62.40003204345703" text="Linha" />
+            <TableColumn id="validade" fx:id="validade" minWidth="8.79998779296875" prefWidth="29.600067138671875" text="V" />
+            <TableColumn id="modificacao" fx:id="modificacao" minWidth="0.0" prefWidth="31.199951171875" text="M" />
+            <TableColumn id="tag" fx:id="tag" prefWidth="59.20001220703125" text="TAG" />
+            <TableColumn id="bloco0" fx:id="bloco0" prefWidth="134.39996337890625" text="0" />
+            <TableColumn id="bloco1" fx:id="bloco1" prefWidth="134.4000244140625" text="1" />
+            <TableColumn id="bloco2" fx:id="bloco2" prefWidth="136.0" text="2" />
+            <TableColumn id="bloco3" fx:id="bloco3" prefWidth="135.199951171875" text="3" />
+         </columns>
+      </TableView>
+      <Label id="numBloco" fx:id="numBloco" layoutX="562.0" layoutY="37.0" text="BLOCO 0" />
+      <Label layoutX="24.0" layoutY="23.0" text="V: VALIDADE">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="24.0" layoutY="33.0" text="M: MODIFICAÇÃO">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <ChoiceBox id="escolhaBloco" fx:id="escolhaBloco" layoutX="30.0" layoutY="169.0" prefHeight="26.0" prefWidth="45.0" />
+      <Label layoutX="29.0" layoutY="151.0" text="MOSTRAR BLOCO" />
+      <Button id="trocarBloco" fx:id="trocarBloco" layoutX="90.0" layoutY="169.0" mnemonicParsing="false" onAction="#trocarBlocoTabela" prefHeight="26.0" prefWidth="46.0" text="TROCAR">
+         <font>
+            <Font size="8.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

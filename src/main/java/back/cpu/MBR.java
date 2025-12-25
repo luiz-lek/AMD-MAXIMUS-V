@@ -15,7 +15,7 @@ public class MBR extends Registrador {
         this.WR = !"0".equals(WR);
     }
 
-    public void setReady(String r) { this.ready = "1".equals(r); }
+    public void setReady(char r) { this.ready = ('1' == r); }
 
     public void setAtivado(String ativado) { this.ativado = !"0".equals(ativado); }
 

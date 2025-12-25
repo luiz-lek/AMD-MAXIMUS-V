@@ -1,90 +1,136 @@
 package back.memorias;
 import back.comum.CONSTS;
 import back.comum.Conversao;
+import back.cpu.MBR;
 
 import java.io.IOException;
 
 public class CacheMapeamentoDireto implements Cache {
     public MemoriaPrincipal memoriaPrincipal;
-    private LinhaCacheMD[] cache = new LinhaCacheMD[CONSTS.CACHE_MD_NUM_LIHAS];
+    public LinhaCacheMD[] cache = new LinhaCacheMD[CONSTS.CACHE_MD_NUM_LIHAS];
     private int substituirLinha = 0;
 
-    public CacheMapeamentoDireto(MemoriaPrincipal memoriaPrincipal) {
+    private int tamTag;
+    private int tamIndice;
+    private int tamBloco;
+    private int tamEnderecoBloco;
+
+    private boolean rd = false, wr = false;
+    private int tempoResposta = CONSTS.ATRASO_MEMORIA + 1;
+    private int acAtraso = 0;
+
+    public CacheMapeamentoDireto(MemoriaPrincipal memoriaPrincipal) throws IOException {
         this.memoriaPrincipal = memoriaPrincipal;
 
-        for(int i = 0; i < CONSTS.CACHE_MD_NUM_LIHAS; i++){
-            cache[i] = new LinhaCacheMD(4);
+        this.tamBloco = (int)(Math.log(CONSTS.MEMP_TAM_BLOCO) / Math.log(2));
+        this.tamEnderecoBloco = (int)(Math.log(CONSTS.MEMP_NUM_ENDERECOS) / Math.log(2)) - this.tamBloco;
+        this.tamIndice = (int)(Math.log(CONSTS.CACHE_MD_NUM_LIHAS) / Math.log(2));
+        this.tamTag = this.tamEnderecoBloco - this.tamIndice;
+
+        for(short i = 0; i < CONSTS.CACHE_MD_NUM_LIHAS; i++){
+            cache[i] = new LinhaCacheMD(this.tamTag, i);
         }
     }
 
     @Override
-    public String ler(String endereco) throws Exception {
+    public void ler(String endereco, MBR mbr) throws Exception {
         int linhaLeitura = extrairlinhaDeEscritaCache(endereco);
         String tag = extrairTag(endereco);
-
         LinhaCacheMD linha = this.cache[linhaLeitura];
-        if(linha.isBitValidade() && linha.comparaTag(tag)) {
-            return linha.getEndBloco(endereco); //Cache hit
+
+        if(this.rd) {
+            if(this.acAtraso < this.tempoResposta) {
+                this.acAtraso++; //Não altera nada, apenas incrementa os ciclos de atraso;
+                return;
+            }
+
+            String[] bloco;
+            if (linha.isDirtyBit()) {
+                bloco = linha.getBloco();
+                this.memoriaPrincipal.escreverBloco(endereco, bloco);
+            }
+            bloco = memoriaPrincipal.lerBloco(endereco);
+            linha.substituir(tag, bloco);
+
+            this.rd = false;
+            this.acAtraso = 0;
+
+            String dado = linha.getEndBloco(endereco);
+            mbr.setValor(dado);
+            mbr.setReady('1');
+            return;
         }
 
-        if(linha.isDirtyBit()) this.memoriaPrincipal.escreverBloco(endereco, linha.getBloco());
-        linha.substituir(tag, this.memoriaPrincipal.lerBloco(endereco));
+        if(linha.isBitValidade() && linha.comparaTag(tag)) {
+            String dado = linha.getEndBloco(endereco);
+            mbr.setValor(dado);
+            mbr.setReady('1');//Cache hit
+            return;
+        }
 
-        return null; //Cache miss
-        //O cache miss é disparado, mas, para fins de simplicidade, ela já pega o dado da MP para disponibilizar na próxima vez
-        //que a cpu tentar acessar o endereço, depois de 100 ciclos.
+        this.rd = true;
+        mbr.setReady('0'); //Cache miss
     }
 
     @Override
-    public boolean escrever(String endereco, String dado) throws Exception {
+    public void escrever(String endereco, MBR mbr) throws Exception {
         int linhaEscrita = extrairlinhaDeEscritaCache(endereco);
         String tag = extrairTag(endereco);
         LinhaCacheMD linha = this.cache[linhaEscrita];
 
-        if(linha.isBitValidade() && linha.comparaTag(tag)) {
-            if(!linha.isDirtyBit()) linha.setDirtyBit('1');
+        if(this.wr) {
+            if(this.acAtraso < this.tempoResposta) {
+                this.acAtraso++;
+                return;
+            }
+
+            String[] bloco;
+            if(linha.isDirtyBit()) {
+                bloco = linha.getBloco();
+                this.memoriaPrincipal.escreverBloco(endereco, bloco);
+            }
+
+            bloco = this.memoriaPrincipal.lerBloco(endereco);
+            linha.substituir(tag, bloco);
+
+            String dado = mbr.getValor();
             linha.substituirPalavraBloco(endereco, dado);
-            return true; // Cache hit
+
+            this.wr = false;
+            this.acAtraso = 0;
+
+            mbr.setReady('1');
+            return;
         }
 
-        String[] bloco = this.memoriaPrincipal.lerBloco(endereco);
+        if(linha.isBitValidade() && linha.comparaTag(tag)) {
+            if(!linha.isDirtyBit()) linha.setDirtyBit();
+            String dado = mbr.getValor();
+            linha.substituirPalavraBloco(endereco, dado);
+            mbr.setReady('1'); //Cache hit
+            return;
+        }
 
-        if(linha.isDirtyBit()) this.memoriaPrincipal.escreverBloco(endereco, bloco);
-        linha.substituir(tag, bloco);
-        linha.substituirPalavraBloco(endereco, dado);
+//        String[] bloco = this.memoriaPrincipal.lerBloco(endereco);
+//        if(linha.isDirtyBit()) this.memoriaPrincipal.escreverBloco(endereco, bloco);
+//        linha.substituir(tag, bloco);
+//        linha.substituirPalavraBloco(endereco, dado);
 
-        return false; // Cache miss
+        this.wr = true;
+        mbr.setReady('0'); //Cache miss
     }
 
     private int extrairlinhaDeEscritaCache(String endereco) throws Exception {
-        String offset = endereco.substring(4, 10);
-        return Conversao.binarioToInt(offset, 6);
+        String offset = endereco.substring(this.tamTag, this.tamEnderecoBloco);
+        return Conversao.binarioToInt(offset, this.tamIndice);
     }
 
-    private String extrairTag(String endereco) { return endereco.substring(0, 4); }
+    private String extrairTag(String endereco) { return endereco.substring(0, this.tamTag); }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for(short i = 0; i < 63; i++) {
-            try {
-                String endereco = Conversao.shortToString(i, 6);
-                sb.append(endereco).append("     ");
-                sb.append(cache[i].getLinha()).append('\n');
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        try {
-            String endereco = Conversao.shortToString((short)63, 6);
-            sb.append(endereco).append("     ");
-            sb.append(cache[63].getLinha());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return sb.toString();
+    public LinhaCacheMD getLinha(int pos) throws Exception {
+        if(pos < 0 || pos >= CONSTS.CACHE_MD_NUM_LIHAS) throw new Exception("Posição na cache inválida.");
+        return this.cache[pos];
     }
+
+    public int size() { return CONSTS.CACHE_MD_NUM_LIHAS; }
 }

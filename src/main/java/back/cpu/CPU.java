@@ -25,9 +25,9 @@ public class CPU {
     private Decodificador decB = new Decodificador();
     private Decodificador decC = new Decodificador();
     private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
-    private boolean rdIniciado = false, wrIniciado = false; //Simulam o atraso de 2 ciclos para leitura e escrita pela cpu na memória.
 
-    private int atraso = 0;
+    private boolean rdIniciado = false, wrIniciado = false;
+
     public void setMemoriaPrincipal(MemoriaPrincipal memoria){
         this.memP = memoria;
     }
@@ -65,26 +65,11 @@ public class CPU {
 
     public void subciclo3() throws Exception {
         if(this.rdIniciado) { //Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
-            if(atraso >= CONSTS.ATRASO_MEMORIA) {
-                String palavraLida = this.cache.ler(this.mar.getValor());
-                this.mbr.setValor(this.cache.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
-                this.mbr.setReady("1");
-                this.rdIniciado = false;
-                atraso = 0;
-            } else {
-                atraso++;
-            }
+            this.cache.ler(this.getValorMar(), this.mbr);
+            if(this.mbr.isReady()) this.rdIniciado = false;
         } else if(this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
-            if(atraso >= CONSTS.ATRASO_MEMORIA) {
-                this.cache.escrever(this.mar.getValor(), this.mbr.getValor());
-                this.mbr.setReady("1");
-                this.wrIniciado = false;
-                atraso = 0;
-            } else {
-                atraso++;
-            }
-        } else {
-            this.mbr.setReady("0");
+            this.cache.escrever(this.getValorMar(), this.mbr);
+            if(this.mbr.isReady()) this.wrIniciado = false;
         }
 
         this.amux.ativar(this.mbr.getValor(), this.latA.getValor());
@@ -107,23 +92,10 @@ public class CPU {
         this.mpc.setValor(this.mmux.getSaida());
 
         if(this.mbr.isRD()) {
-            String palavraLida = this.cache.ler(this.mar.getValor());
-            if(palavraLida != null) {
-                this.mbr.setValor(this.cache.ler(this.mar.getValor()));// o valor lido é passado para o MBR.
-                atraso = CONSTS.ATRASO_MEMORIA;
-            } else {
-                atraso = 0;
-            }
             this.rdIniciado = true;
         }
 
         if(this.mbr.isWR()) {
-            boolean palavraEscrita = this.cache.escrever(this.mar.getValor(), this.getValorMbr());
-            if(palavraEscrita) {
-                atraso = CONSTS.ATRASO_MEMORIA;
-            } else {
-                atraso = 0;
-            }
             this.wrIniciado = true;
         }
     }

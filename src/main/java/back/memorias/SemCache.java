@@ -1,33 +1,67 @@
 package back.memorias;
 
+import back.comum.CONSTS;
+import back.cpu.MBR;
+
 public class SemCache implements Cache {
     private MemoriaPrincipal memoriaPrincipal;
-    private boolean isLendo, isEscrevendo;
+    private boolean rd = false, wr = false;
+
+    private int tempoResposta = CONSTS.ATRASO_MEMORIA;
+    private int acAtraso = 0;
 
     public SemCache(MemoriaPrincipal memoriaPrincipal) { this.memoriaPrincipal = memoriaPrincipal; }
 
-    public String ler(String endereco) throws Exception {
-        boolean temp = isLendo;
-        isLendo = !isLendo;
+    public void ler(String endereco, MBR mbr) throws Exception {
+        if(this.rd) {
+            if(acAtraso < CONSTS.ATRASO_MEMORIA) {
+                acAtraso++;
+                return;
+            }
+            String dado = this.memoriaPrincipal.ler(endereco);
+            mbr.setValor(dado);
+            mbr.setReady('1');
 
-        if(temp) {
-            String bloco = memoriaPrincipal.ler(endereco);
-            return bloco;
+            this.rd = false;
+            this.acAtraso = 0;
+
+            return;
         }
 
-        return null;
+        this.rd = true;
+        this.acAtraso = 0;
+
+        mbr.setReady('0');
     }
 
 
-    public boolean escrever(String endereco, String dado) throws Exception {
-        boolean temp = isEscrevendo;
-        isEscrevendo = !isEscrevendo;
+    public void escrever(String endereco, MBR mbr) throws Exception {
+        if(this.wr) {
+            if(acAtraso < CONSTS.ATRASO_MEMORIA) {
+                acAtraso++;
+                return;
+            }
+            String dado = mbr.getValor();
+            this.memoriaPrincipal.escrever(endereco, dado);
+            mbr.setValor(dado);
+            mbr.setReady('1');
 
-        if(temp) {
-            memoriaPrincipal.escrever(endereco, dado);
-            return false;
+            this.wr = false;
+            this.acAtraso = 0;
+
+            return;
         }
 
-        return true;
+        this.wr = true;
+        this.acAtraso = 0;
+
+        mbr.setReady('0');
+    }
+
+    public int size() { return 0; }
+
+    @Override
+    public String toString() {
+        return "";
     }
 }
