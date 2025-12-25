@@ -1,6 +1,6 @@
 package visao;
 
-import back.comum.CONSTS;
+import static back.comum.Constantes.*;
 import back.memorias.*;
 import back.montagem.Assembler;
 import back.cpu.CPU;
@@ -46,52 +46,41 @@ public class ControllerTela1 implements Initializable {
 
     @FXML
     private void carregarPrograma(ActionEvent event) throws Exception {
-        String pathTelaCache;
+        String tipoCache;
         try {
             this.assembler = new Assembler();
             this.escreverProgramaMemoria();
             String op = escolhaCache.getValue();
             Cache cache;
-            boolean semCache = false;
-            int tempAccCache = 0;
 
             switch (op) {
-                case "Associativa" -> {
-                    pathTelaCache = CONSTS.PATH_TELA_CACHE_ASS;
-                    cache = new CacheAssociativa(memoriaPrincipal);
-                    tempAccCache = 4;
-                }
-                case "Mapeamento direto" -> {
-                    cache = new CacheMapeamentoDireto(memoriaPrincipal);
-                    pathTelaCache = CONSTS.PATH_TELA_CACHE_MD;
-                    tempAccCache = 1;
-                }
-                case "Associtiva por conjunto" -> {
-                    cache = new CacheAssociativaConjunto(memoriaPrincipal);
-                    pathTelaCache = CONSTS.PATH_TELA_CACHE_AC;
-                    tempAccCache = 2;
-                }
-                default ->{
-                    cache = new SemCache(memoriaPrincipal);
-                    pathTelaCache = null;
-                    semCache = true;
-                }
+                case "Associativa" -> tipoCache = CACHE_TIPO_ASS;
+                case "Mapeamento direto" -> tipoCache = CACHE_TIPO_MD;
+                case "Associtiva por conjunto" -> tipoCache = CACHE_TIPO_AC;
+                default -> tipoCache = CACHE_TIPO_SEM_CACHE;
             }
 
-            this.cpu = new CPU();
+            cache = CacheFactory.criarCache(tipoCache, memoriaPrincipal);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2.fxml"));
+            this.cpu = new CPU();
+            ComponentesTela2 comp = new ComponentesTela2(this.cpu, this.memoriaPrincipal, this.assembler, cache);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH_TELA2));
             this.rootTela2 = loader.load();
             ControllerTela2 controllerTela2 = loader.getController();
+
             this.stageTela2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
             controllerTela2.setStageAtual(this.stageTela2);
-            controllerTela2.setConteudo(this.macroPrograma.getText(), this.cpu, this.memoriaPrincipal, this.assembler, cache, pathTelaCache, semCache);
+
             this.scenetela2 = new Scene(this.rootTela2);
-            String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
+            String css = getClass().getResource(PATH_CSS_TELA2).toExternalForm();
             this.scenetela2.getStylesheets().add(css);
             this.stageTela2.setScene(this.scenetela2);
+
             this.stageTela2.centerOnScreen();
             this.stageTela2.setResizable(true);
+
+            controllerTela2.setConteudo(this.macroPrograma.getText(), comp);
             this.stageTela2.show();
         } catch (Exception e) {
             this.telaFalha(event, e.getMessage());
@@ -109,13 +98,13 @@ public class ControllerTela1 implements Initializable {
     }
 
     public void telaFalha(ActionEvent event, String mensagem) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1Falha.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH_TELA1_FALHA));
         this.rootFalha = loader.load();
         ControllerTela1Falha controllerTela1Falha = loader.getController();
         controllerTela1Falha.setTextoAlerta(mensagem, "", "Digite novamente.");
         this.stageFalha = new Stage();
         this.sceneFalha = new Scene(this.rootFalha);
-        String css = getClass().getResource("/css/StyleTela1Falha.css").toExternalForm();
+        String css = getClass().getResource(PATH_CSS_TELA1).toExternalForm();
         this.sceneFalha.getStylesheets().add(css);
         this.stageFalha.setScene(this.sceneFalha);
         this.stageFalha.initModality(Modality.APPLICATION_MODAL);

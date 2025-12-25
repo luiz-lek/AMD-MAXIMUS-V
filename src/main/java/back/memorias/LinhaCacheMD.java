@@ -1,6 +1,5 @@
 package back.memorias;
 
-import back.comum.CONSTS;
 import back.comum.Conversao;
 
 import java.io.IOException;

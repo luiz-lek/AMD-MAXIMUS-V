@@ -1,6 +1,5 @@
 package back.cpu;
 
-import back.comum.CONSTS;
 import back.comum.Microinstrucao;
 import back.memorias.Cache;
 import back.memorias.MemoriaPrincipal;

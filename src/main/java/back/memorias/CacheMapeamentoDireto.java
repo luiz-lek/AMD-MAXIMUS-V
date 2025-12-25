@@ -1,35 +1,39 @@
 package back.memorias;
-import back.comum.CONSTS;
-import back.comum.Conversao;
+import static back.comum.Constantes.*;
+import static back.comum.Conversao.*;
 import back.cpu.MBR;
 
 import java.io.IOException;
 
 public class CacheMapeamentoDireto implements Cache {
     public MemoriaPrincipal memoriaPrincipal;
-    public LinhaCacheMD[] cache = new LinhaCacheMD[CONSTS.CACHE_MD_NUM_LIHAS];
-    private int substituirLinha = 0;
+    public LinhaCacheMD[] cache = new LinhaCacheMD[CACHE_MD_NUM_LINHAS];
 
+    private int substituirLinha = 0;
     private int tamTag;
     private int tamIndice;
     private int tamBloco;
     private int tamEnderecoBloco;
-
-    private boolean rd = false, wr = false;
-    private int tempoResposta = CONSTS.ATRASO_MEMORIA + 1;
+    private int tempoResposta = ATRASO_MEMORIA + CACHE_MD_TA;
     private int acAtraso = 0;
 
-    public CacheMapeamentoDireto(MemoriaPrincipal memoriaPrincipal) throws IOException {
+    private boolean rd = false, wr = false;
+
+    private String tipoCache;
+
+    public CacheMapeamentoDireto(MemoriaPrincipal memoriaPrincipal, String tipoCache) throws IOException {
         this.memoriaPrincipal = memoriaPrincipal;
 
-        this.tamBloco = (int)(Math.log(CONSTS.MEMP_TAM_BLOCO) / Math.log(2));
-        this.tamEnderecoBloco = (int)(Math.log(CONSTS.MEMP_NUM_ENDERECOS) / Math.log(2)) - this.tamBloco;
-        this.tamIndice = (int)(Math.log(CONSTS.CACHE_MD_NUM_LIHAS) / Math.log(2));
+        this.tamBloco = (int)(Math.log(MEMP_TAM_BLOCO) / Math.log(2));
+        this.tamEnderecoBloco = (int)(Math.log(MEMP_NUM_ENDERECOS) / Math.log(2)) - this.tamBloco;
+        this.tamIndice = (int)(Math.log(CACHE_MD_NUM_LINHAS) / Math.log(2));
         this.tamTag = this.tamEnderecoBloco - this.tamIndice;
 
-        for(short i = 0; i < CONSTS.CACHE_MD_NUM_LIHAS; i++){
+        for(short i = 0; i < CACHE_MD_NUM_LINHAS; i++){
             cache[i] = new LinhaCacheMD(this.tamTag, i);
         }
+
+        this.tipoCache = tipoCache;
     }
 
     @Override
@@ -122,15 +126,17 @@ public class CacheMapeamentoDireto implements Cache {
 
     private int extrairlinhaDeEscritaCache(String endereco) throws Exception {
         String offset = endereco.substring(this.tamTag, this.tamEnderecoBloco);
-        return Conversao.binarioToInt(offset, this.tamIndice);
+        return binarioToInt(offset, this.tamIndice);
     }
 
     private String extrairTag(String endereco) { return endereco.substring(0, this.tamTag); }
 
     public LinhaCacheMD getLinha(int pos) throws Exception {
-        if(pos < 0 || pos >= CONSTS.CACHE_MD_NUM_LIHAS) throw new Exception("Posição na cache inválida.");
+        if(pos < 0 || pos >= CACHE_MD_NUM_LINHAS) throw new Exception("Posição na cache inválida.");
         return this.cache[pos];
     }
 
-    public int size() { return CONSTS.CACHE_MD_NUM_LIHAS; }
+    public int size() { return CACHE_MD_NUM_LINHAS; }
+
+    public String getTipoCache() { return this.tipoCache; }
 }

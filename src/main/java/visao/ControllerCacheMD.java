@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class ControllerCacheMD {
+public class ControllerCacheMD implements ControllerCache {
     private Stage stage;
     private CacheMapeamentoDireto cache;
     @FXML

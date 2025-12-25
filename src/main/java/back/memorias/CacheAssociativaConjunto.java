@@ -1,5 +1,5 @@
 package back.memorias;
-import back.comum.CONSTS;
+import static back.comum.Constantes.*;
 import back.comum.Conversao;
 import back.cpu.MBR;
 
@@ -7,30 +7,34 @@ import java.io.IOException;
 
 public class CacheAssociativaConjunto implements Cache {
     public MemoriaPrincipal memoriaPrincipal;
-    public LinhaCacheMD[][] cache = new LinhaCacheMD[CONSTS.CACHE_AC_NUM_LIHAS][CONSTS.CACHE_AC_TAM_CONJUNTO];
+    public LinhaCacheMD[][] cache = new LinhaCacheMD[CACHE_AC_NUM_LIHAS][CACHE_AC_TAM_CONJUNTO];
     private int acSubstituicao = 0;
     private int blocoSubstituir = 0;
     private int tamTag;
     private int tamIndice;
     private int tamBloco;
     private int tamEnderecoBloco;
-    private int tempoResposta = CONSTS.ATRASO_MEMORIA + 2;
+    private int tempoResposta = ATRASO_MEMORIA + CACHE_AC_TA;
     private int acAtraso = 0;
 
     private boolean rd = false, wr = false;
 
-    public CacheAssociativaConjunto(MemoriaPrincipal memoriaPrincipal) throws IOException {
-        this.tamBloco = (int)(Math.log(CONSTS.MEMP_TAM_BLOCO) / Math.log(2));
-        this.tamEnderecoBloco = (int)(Math.log(CONSTS.MEMP_NUM_ENDERECOS) / Math.log(2)) - this.tamBloco;
-        this.tamIndice = (int)(Math.log(CONSTS.CACHE_AC_NUM_LIHAS) / Math.log(2));
+    private String tipoCache;
+
+    public CacheAssociativaConjunto(MemoriaPrincipal memoriaPrincipal, String tipoCache) throws IOException {
+        this.tamBloco = (int)(Math.log(MEMP_TAM_BLOCO) / Math.log(2));
+        this.tamEnderecoBloco = (int)(Math.log(MEMP_NUM_ENDERECOS) / Math.log(2)) - this.tamBloco;
+        this.tamIndice = (int)(Math.log(CACHE_AC_NUM_LIHAS) / Math.log(2));
         this.tamTag = this.tamEnderecoBloco - this.tamIndice;
         this.memoriaPrincipal = memoriaPrincipal;
 
-        for(short i = 0; i < CONSTS.CACHE_AC_NUM_LIHAS; i++){
-            for(int j = 0; j < CONSTS.CACHE_AC_TAM_CONJUNTO; j++) {
+        for(short i = 0; i < CACHE_AC_NUM_LIHAS; i++){
+            for(int j = 0; j < CACHE_AC_TAM_CONJUNTO; j++) {
                 cache[i][j] = new LinhaCacheMD(this.tamTag, i);
             }
         }
+
+        this.tipoCache = tipoCache;
     }
 
     @Override
@@ -52,7 +56,7 @@ public class CacheAssociativaConjunto implements Cache {
         }
 
         int i;
-        for(i = 0; i < CONSTS.CACHE_AC_TAM_CONJUNTO; i++) {
+        for(i = 0; i < CACHE_AC_TAM_CONJUNTO; i++) {
             LinhaCacheMD linha = conjunto[i];
             if(!linha.isBitValidade()) {
                 this.blocoSubstituir = i;
@@ -66,7 +70,7 @@ public class CacheAssociativaConjunto implements Cache {
             }
         }
 
-        if(i >= CONSTS.CACHE_AC_TAM_CONJUNTO) {
+        if(i >= CACHE_AC_TAM_CONJUNTO) {
             this.blocoSubstituir = definiEIncrementaBlocoASubstituir();
         }
 
@@ -107,7 +111,7 @@ public class CacheAssociativaConjunto implements Cache {
         }
 
         int i;
-        for(i = 0; i < CONSTS.CACHE_AC_TAM_CONJUNTO; i++) {
+        for(i = 0; i < CACHE_AC_TAM_CONJUNTO; i++) {
             LinhaCacheMD linha = conjunto[i];
             if(!linha.isBitValidade()) {
                 this.blocoSubstituir = i;
@@ -122,7 +126,7 @@ public class CacheAssociativaConjunto implements Cache {
             }
         }
 
-        if(i >= CONSTS.CACHE_AC_TAM_CONJUNTO) this.blocoSubstituir = definiEIncrementaBlocoASubstituir();
+        if(i >= CACHE_AC_TAM_CONJUNTO) this.blocoSubstituir = definiEIncrementaBlocoASubstituir();
 
         this.wr = true;
         mbr.setReady('0'); //Cache miss
@@ -138,7 +142,7 @@ public class CacheAssociativaConjunto implements Cache {
         linha.substituirPalavraBloco(endereco, dado);
     }
 
-    private int definiEIncrementaBlocoASubstituir()  { return this.acSubstituicao++ % CONSTS.CACHE_AC_TAM_CONJUNTO;} // Defini o bloco da linha q
+    private int definiEIncrementaBlocoASubstituir()  { return this.acSubstituicao++ % CACHE_AC_TAM_CONJUNTO;} // Defini o bloco da linha q
                                                                                            // deve sersubstituido, simulando a política de
                                                                                            // substituição random.
     private int extrairIndiceCache(String endereco) throws Exception {
@@ -148,7 +152,9 @@ public class CacheAssociativaConjunto implements Cache {
 
     private String extrairTag(String endereco) { return endereco.substring(0, tamTag); }
 
-    public int size() { return CONSTS.CACHE_AC_NUM_LIHAS; }
+    public int size() { return CACHE_AC_NUM_LIHAS; }
 
     public LinhaCacheMD[] getLinha(int indice) { return this.cache[indice]; }
+
+    public String getTipoCache() { return this.tipoCache; }
 }

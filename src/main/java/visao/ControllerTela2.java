@@ -1,12 +1,12 @@
 package visao;
 
 import back.comum.Conversao;
-import back.comum.CONSTS;
+import back.comum.Constantes;
 import back.cpu.CPU;
 import back.cpu.ExecutarPrograma;
 import back.memorias.Cache;
+import back.memorias.CacheFactory;
 import back.memorias.MemoriaPrincipal;
-import back.memorias.CacheAssociativaConjunto;
 import back.comum.MicroinstrucaoMap;
 import back.montagem.Assembler;
 import javafx.animation.PauseTransition;
@@ -28,6 +28,7 @@ import javafx.stage.StageStyle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import static back.comum.Constantes.*;
 import java.io.IOException;
 
 public class ControllerTela2 {
@@ -68,13 +69,13 @@ public class ControllerTela2 {
 
     public Assembler assembler;
 
-    public void setConteudo(String macroPrograma, CPU cpu, MemoriaPrincipal mem, Assembler assembler, Cache cache, String pathTelaCache, boolean semCache) throws Exception {
-        this.macroProgramaFormatado = assembler.parser.progFormatado();
-        this.macroProgramaUsuario = macroPrograma;
+    public void setConteudo(String macroPrograma, ComponentesTela2 componentes) throws Exception {
+        this.assembler = componentes.assembler;
+        this.setMacroPrograma(macroPrograma);
+
         this.tempo.setText("0.0");
         this.ciclo.setText("0");
-        this.macroProgramaArray = this.macroProgramaFormatado.split("\\r?\\n|\\r");
-        this.assembler = assembler;
+
         this.qtdLinhasMacro = this.assembler.getTamProg();
 
         if (this.qtdLinhasMacro >= 26) {
@@ -84,19 +85,35 @@ public class ControllerTela2 {
         }
 
         this.macroprograma.setText(this.macroProgramaFormatado);
-        this.cpu = cpu;
-        this.memoriaPrincipal = mem;
-        this.cache = cache;
+        this.cpu = componentes.cpu;
+        this.memoriaPrincipal = componentes.memoriaPrincipal;
+        this.cache = componentes.cache;
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
-        this.cpu.setCache(cache);
+        this.cpu.setCache(this.cache);
         this.translateMacro.setNode(this.highlightMacro);
         this.atualizarTela();
-        this.pathTelaCache = pathTelaCache;
         this.pausar.setDisable(true);
-        if(semCache) {
+        String tipoCache = cache.getTipoCache();
+        if(tipoCache.equals(Constantes.CACHE_TIPO_SEM_CACHE)) {
             this.mostrarCache.setDisable(true);
             this.mostrarCache.setText("Sem cache");
         }
+        this.resolvePathTelaCache(tipoCache);
+    }
+
+    public void resolvePathTelaCache(String tipoCache) {
+        switch(tipoCache) {
+            case CACHE_TIPO_ASS -> this.pathTelaCache = PATH_TELA_CACHE_ASS;
+            case CACHE_TIPO_MD ->  this.pathTelaCache = PATH_TELA_CACHE_MD;
+            case CACHE_TIPO_AC ->  this.pathTelaCache = PATH_TELA_CACHE_AC;
+            default -> this.pathTelaCache = null;
+        }
+    }
+
+    public void setMacroPrograma(String macroPrograma) {
+        this.macroProgramaFormatado = this.assembler.parser.progFormatado();
+        this.macroProgramaUsuario = macroPrograma;
+        this.macroProgramaArray = this.macroProgramaFormatado.split("\\r?\\n|\\r");
     }
 
     public void executarMicEAtualizar(ActionEvent e) throws Exception {
@@ -288,14 +305,14 @@ public class ControllerTela2 {
 
     @FXML
     private void confirmarVoltar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela2Voltar.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH_TELA2_VOLTAR));
         this.rootTela2Voltar = loader.load();
         ControllerTela2Voltar controllerTela2Voltar = loader.getController();
         controllerTela2Voltar.setMacroPrograma(this.macroProgramaUsuario);
         controllerTela2Voltar.setStage2(this.stageTela2Voltar);
         this.stageAtual = new Stage();
         this.sceneTela2Voltar = new Scene(this.rootTela2Voltar);
-        String css = getClass().getResource("/css/StyleTela1Falha.css").toExternalForm();
+        String css = getClass().getResource(PATH_CSS_TELA1FALHA).toExternalForm();
         this.sceneTela2Voltar.getStylesheets().add(css);
         this.stageAtual.setScene(this.sceneTela2Voltar);
         this.stageAtual.initModality(Modality.APPLICATION_MODAL);
@@ -318,7 +335,7 @@ public class ControllerTela2 {
     }
 
     private void atualizarTextoMics() throws Exception {
-        if (this.qtdLinhasTextoMics > CONSTS.TEXTOMICS_NUM_LINHAS) {
+        if (this.qtdLinhasTextoMics > Constantes.TEXTOMICS_NUM_LINHAS) {
             int i;
 
             for (i = 0; this.textoMics.charAt(i) != '\n'; i++) ;
@@ -365,7 +382,7 @@ public class ControllerTela2 {
         this.assembler = new Assembler();
         this.memoriaPrincipal = new MemoriaPrincipal();
         this.cpu = new CPU();
-        this.cache = new CacheAssociativaConjunto(this.memoriaPrincipal);
+        this.cache = CacheFactory.criarCache(this.cache.getTipoCache(), this.memoriaPrincipal);
         this.assembler.montar(this.memoriaPrincipal, this.macroProgramaFormatado);
         this.pularMacro(this.linhaAnteriorMacro, 0);
         this.cpu.setMemoriaPrincipal(this.memoriaPrincipal);
@@ -388,46 +405,34 @@ public class ControllerTela2 {
     private void exibirCache(ActionEvent event) throws IOException, Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.pathTelaCache));
         this.rootCache = loader.load();
-        switch (this.pathTelaCache) {
-            case(CONSTS.PATH_TELA_CACHE_MD) -> {
-                ControllerCacheMD controllerCache = loader.getController();
-                controllerCache.setStage(this.stageCache);
-                controllerCache.setCache(cache);
-            }
-            case(CONSTS.PATH_TELA_CACHE_AC) -> {
-                ControllerCacheAC controllerCache = loader.getController();
-                controllerCache.setStage(this.stageCache);
-                controllerCache.setCache(cache);
-            }
-            case(CONSTS.PATH_TELA_CACHE_ASS) -> {
-                ControllerCacheAss controllerCache = loader.getController();
-                controllerCache.setStage(this.stageCache);
-                controllerCache.setCache(cache);
-            }
-            default -> { return; }
-        }
+        ControllerCache controllerCache = loader.getController();
 
+        controllerCache.setStage(this.stageCache);
+        controllerCache.setCache(cache);
         this.stageAtual = new Stage();
+
         this.sceneCache = new Scene(this.rootCache);
-        String css = getClass().getResource("/css/StyleTela2.css").toExternalForm();
+        String css = getClass().getResource(PATH_CSS_TELA2).toExternalForm();
         this.sceneCache.getStylesheets().add(css);
+
         this.stageAtual.setScene(this.sceneCache);
+
         this.stageAtual.initModality(Modality.APPLICATION_MODAL);
         this.stageAtual.initOwner(((Node) event.getSource()).getScene().getWindow());
         this.stageAtual.initStyle(StageStyle.UTILITY);
-        this.stageAtual.setTitle("CACHE");
+        this.stageAtual.setTitle("CACHE " + cache.getTipoCache());
         this.stageAtual.showAndWait();
     }
 
 
     public void telaFalha(ActionEvent e, String l1, String l2, String l3) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tela1Falha.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH_TELA1_FALHA));
         this.rootFalha = loader.load();
         ControllerTela1Falha controllerTela1Falha = loader.getController();
         controllerTela1Falha.setTextoAlerta(l1, l2, l3);
         this.stageFalha = new Stage();
         this.sceneFalha = new Scene(this.rootFalha);
-        String css = getClass().getResource("/css/StyleTela1Falha.css").toExternalForm();
+        String css = getClass().getResource(PATH_CSS_TELA1FALHA).toExternalForm();
         this.sceneFalha.getStylesheets().add(css);
         this.stageFalha.setScene(this.sceneFalha);
         this.stageFalha.initModality(Modality.APPLICATION_MODAL);

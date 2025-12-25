@@ -11,7 +11,7 @@ public class LinhaCacheASS {
     private String[] bloco = new String[]{"0000000000000000", "0000000000000000", "0000000000000000", "0000000000000000"};
     private String indBloco;
 
-    public LinhaCacheASS(short indice) throws IOException {
+    public LinhaCacheASS(short indice, int tamNumBloco) throws IOException {
         this.indBloco = Conversao.shortToString(indice, 6);
     }
 

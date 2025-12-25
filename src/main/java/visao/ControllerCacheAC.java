@@ -1,6 +1,6 @@
 package visao;
 
-import back.comum.CONSTS;
+import back.comum.Constantes;
 import back.memorias.Cache;
 import back.memorias.CacheAssociativaConjunto;
 import back.memorias.LinhaCacheMD;
@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class ControllerCacheAC {
+public class ControllerCacheAC implements ControllerCache {
     private Stage stage;
     private CacheAssociativaConjunto cache;
     @FXML
@@ -54,7 +54,7 @@ public class ControllerCacheAC {
         this.bloco2.setCellValueFactory( new PropertyValueFactory<>("bloco2") );
         this.bloco3.setCellValueFactory( new PropertyValueFactory<>("bloco3") );
 
-        for(int i = 0; i < CONSTS.CACHE_AC_TAM_CONJUNTO; i++) {
+        for(int i = 0; i < Constantes.CACHE_AC_TAM_CONJUNTO; i++) {
             String numBloco = Integer.toString(i);
             escolhaBloco.getItems().add(numBloco);
         }
