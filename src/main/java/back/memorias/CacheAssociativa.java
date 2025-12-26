@@ -26,7 +26,7 @@ public class CacheAssociativa implements Cache {
         this.tamEndBloco = (int)(Math.log(MEMP_TAM_BLOCO) / Math.log(2));
         this.tamBloco = (int)(Math.log(MEMP_NUM_ENDERECOS) / Math.log(2)) - this.tamEndBloco;
 
-        for (short i = 0; i < CACHE_ASS_NUM_LINHAS; i++) {
+        for(short i = 0; i < CACHE_ASS_NUM_LINHAS; i++) {
             cache[i] = new LinhaCacheASS(i, this.tamBloco);
         }
 
@@ -46,7 +46,10 @@ public class CacheAssociativa implements Cache {
 
             String[] bloco = this.memoriaPrincipal.lerBloco(endereco);
             linha = this.cache[linhaSubstituir];
-            if(linha.isDirtyBit()) this.memoriaPrincipal.escreverBloco(endereco, bloco);
+            if(linha.isDirtyBit()) {
+                String enderecoSubs = linha.reconstruirEndereco();
+                this.memoriaPrincipal.escreverBloco(enderecoSubs, bloco);
+            }
             linha.substituir(numBloco, bloco);
 
             String dado = linha.getEndBloco(endereco);

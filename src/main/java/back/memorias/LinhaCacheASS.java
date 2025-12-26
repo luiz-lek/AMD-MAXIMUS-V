@@ -26,7 +26,9 @@ public class LinhaCacheASS {
 
     public char getBitValidade() { return this.bitValidade; }
 
-    public String getEndereco() { return this.indBloco; }
+    public String getIndice() { return this.indBloco; }
+
+    public String reconstruirEndereco() { return numBloco + "00"; }
 
     public boolean isValidade() { return this.bitValidade == '1'; }
 

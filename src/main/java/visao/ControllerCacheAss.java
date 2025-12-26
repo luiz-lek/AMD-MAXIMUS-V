@@ -33,7 +33,7 @@ public class ControllerCacheAss implements ControllerCache {
             this.tabela.getItems().add(this.cache.getLinha(i));
         }
 
-        this.linha.setCellValueFactory( new PropertyValueFactory<>("endereco") );
+        this.linha.setCellValueFactory( new PropertyValueFactory<>("indice") );
         this.validade.setCellValueFactory( new PropertyValueFactory<>("bitValidade") );
         this.modificacao.setCellValueFactory( new PropertyValueFactory<>("dirtyBit") );
         this.numBloco.setCellValueFactory( new PropertyValueFactory<>("numBloco") );

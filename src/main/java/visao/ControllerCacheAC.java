@@ -45,7 +45,7 @@ public class ControllerCacheAC implements ControllerCache {
             this.tabela.getItems().add(linha[0]);
         }
 
-        this.linha.setCellValueFactory( new PropertyValueFactory<>("endereco") );
+        this.linha.setCellValueFactory( new PropertyValueFactory<>("indice") );
         this.validade.setCellValueFactory( new PropertyValueFactory<>("bitValidade") );
         this.modificacao.setCellValueFactory( new PropertyValueFactory<>("dirtyBit") );
         this.tag.setCellValueFactory( new PropertyValueFactory<>("tag") );
@@ -66,7 +66,7 @@ public class ControllerCacheAC implements ControllerCache {
         this.tabela.getItems().clear();
         int numBloco = Integer.parseInt(escolhaBloco.getValue());
 
-        for(int i = 0; i < tam; i++) {
+        for(int i = 0; i < this.tam; i++) {
             LinhaCacheMD[] linha = this.cache.getLinha(i);
             this.tabela.getItems().add(linha[numBloco]);
         }

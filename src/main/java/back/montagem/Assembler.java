@@ -38,7 +38,7 @@ public class Assembler {
     private int tamProg;
     public CodeParser parser = new CodeParser();
 
-    public void montar(MemoriaPrincipal mem, String programa) throws Exception {
+    public void montar(MemoriaPrincipal mem, String programa) throws IOException {
         String[][] programaFormatado = this.parser.parse(programa); //Retira flags, linhas vazias e separa cada linha
         String programaEmBinario = "";                              //em mnemônico e opereando.
 
@@ -56,8 +56,7 @@ public class Assembler {
         this.tamProg = i;
     }
 
-    public String macroPraBinario(String instrucao[]) throws Exception { //Instrução[0] contém o mnemônimo
-                                                                         //e instrucao[1] um possível operando.
+    public String macroPraBinario(String instrucao[]) throws IOException { //Instrução[0] contém o mnemônimo e instrucao[1] um possível operando.
         if(!tabela.containsKey(instrucao[0])) throw new IOException("Mnemônimo " + instrucao[0] + " inválido.");
 
         StringBuilder binario = new StringBuilder(tabela.get(instrucao[0]));
@@ -78,7 +77,7 @@ public class Assembler {
         return binario.toString();
     }
 
-    public String operandoPraBinario(String operacao, String operando, int limite, int completar) throws Exception {
+    public String operandoPraBinario(String operacao, String operando, int limite, int completar) throws IOException {
         StringBuilder numFinal = new StringBuilder();
         String numBin;
         Integer op;
@@ -86,14 +85,14 @@ public class Assembler {
         try { //Caso seja uma constante.
             op = Integer.parseInt(operando);
         } catch (NumberFormatException e) { //É uma flag, variável, ou jump inválido(com uma flag inexistente).
-            op = this.parser.flags.get(operando);
+            op = this.parser.labels.get(operando);
             if(op == null) { //Não encontrou flag, então verifica se a operaçao é do tipo jump.
                 if(parser.verificarOpercaoDeDesvio(operacao)) { //Verifica se é um jump inválido.
-                    throw new Exception("Desvio para flag \"" + operando + "\"impossível, flag inexistente.");
+                    throw new IOException("Desvio para flag \"" + operando + "\"impossível, flag inexistente.");
                 }
                 op = this.parser.variaveis.get(operando);
                 if(op == null) { //A variável ainda não existe, então aloca uma nova posição.
-                    op = this.parser.getEIncrementaPosLivre();
+                    op = this.parser.getEIncrementaEnderecoLivre();
                     this.parser.variaveis.put(operando, op);
                 }
             }
@@ -108,8 +107,6 @@ public class Assembler {
         for(int i = 0; i < completar; i++) numFinal.append('0'); //Completa com 0 nos bits mais significativos.
         numFinal.append(numBin);
 
-        //System.out.println(this.parser.flags.toString());
-        //System.out.println(this.parser.variaveis.toString());
         return numFinal.toString();
     }
 

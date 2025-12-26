@@ -12,7 +12,7 @@ public final class Constantes {
     //Dimensões das caches
     //TA: tempo de acesso
     public static final int CACHE_AC_NUM_LIHAS = 32;
-    public static final int CACHE_AC_TAM_CONJUNTO = 10;
+    public static final int CACHE_AC_TAM_CONJUNTO = 2;
     public static final int CACHE_AC_TA = 2;
 
     public static final int CACHE_MD_NUM_LINHAS = 64;

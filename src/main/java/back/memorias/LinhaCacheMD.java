@@ -5,7 +5,7 @@ import back.comum.Conversao;
 import java.io.IOException;
 
 public class LinhaCacheMD {
-    private String endereco;
+    private String indice;
     private char bitValidade = '0';
     private char dirtyBit = '0';
     private String tag;
@@ -13,9 +13,9 @@ public class LinhaCacheMD {
 
     public LinhaCacheMD(int tamTag, short indice) throws IOException {
        String tag = "";
-       for (int i = 0; i < tamTag; i++) tag += "0";
+       for(int i = 0; i < tamTag; i++) tag += "0";
        this.tag = tag;
-       this.endereco = Conversao.shortToString(indice, 10 - tamTag);
+       this.indice = Conversao.shortToString(indice, 10 - tamTag);
     }
 
     public void substituir(String tag, String[] bloco) {
@@ -27,7 +27,7 @@ public class LinhaCacheMD {
 
     public char getBitValidade() { return bitValidade; }
 
-    public String getEndereco() { return endereco; }
+    public String getIndice() { return indice; }
 
     public char getDirtyBit() { return dirtyBit; }
 
@@ -39,7 +39,7 @@ public class LinhaCacheMD {
 
     public void setDirtyBit() { this.dirtyBit = '1'; }
 
-    public String getEndBloco(String offsetBloco) {
+    public String getDadoBloco(String offsetBloco) {
         offsetBloco = offsetBloco.substring(10, 12);
         return switch (offsetBloco) {
             case "00" -> this.bloco[0];
@@ -49,8 +49,8 @@ public class LinhaCacheMD {
         };
     }
 
-    public void substituirPalavraBloco(String offsetBloco, String palavra) {
-        String bits = offsetBloco.substring(10, 12);
+    public void substituirPalavraBloco(String endereco, String palavra) {
+        String bits = endereco.substring(10, 12);
         int indice = Integer.parseInt(bits, 2);
         this.bloco[indice] = palavra;
     }
@@ -68,6 +68,11 @@ public class LinhaCacheMD {
     public String getBloco2() { return this.bloco[2]; }
 
     public String getBloco3() { return this.bloco[3]; }
+
+    public String reconstruirEndereco() {
+        String end = tag + indice + "00";
+        return end;
+    }
 
     public String getLinha() { return bitValidade + "       " + dirtyBit + "       " + tag
             + "     " + bloco[0] + "     " + bloco[1] + "     " + bloco[2] + "     " +  bloco[3];

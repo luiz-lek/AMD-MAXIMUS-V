@@ -2,6 +2,8 @@ package back.memorias;
 
 import back.comum.Conversao;
 import back.comum.Constantes;
+
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.stream.IntStream;
 
@@ -13,28 +15,35 @@ public class MemoriaPrincipal{
         IntStream.range(0, Constantes.MEMP_NUM_ENDERECOS).forEach(i -> this.memoria[i] = "0000000000000000");
     }
 
-    public String ler(String endereco) throws Exception {
-        String linha;
-        short pos = Short.parseShort(endereco, 2);
+    public String ler(String endereco) throws IOException {
+        try{
+            String linha;
+            short pos = Short.parseShort(endereco, 2);
 
-        validarPosicao(pos);
-        linha = this.memoria[pos];
-        this.verificaAcessos((int)pos); //Insere o endereço na lista de acessados, caso ainda n esteja
+            validarPosicao(pos);
+            linha = this.memoria[pos];
+            this.verificaAcessos(pos); //Insere o endereço na lista de acessados, caso ainda n esteja
+            return linha;
+        } catch(NumberFormatException e){
+            throw new IOException("Posição de leitura inválida.");
+        }
 
-        return linha;
     }
 
-    public void escrever(String posicao, String palavra) throws Exception {
-        short pos = Short.parseShort(posicao, 2);
-        validarPosicao(pos);
-        validarPalavra(palavra);
-        this.memoria[pos] = palavra;
-
-        this.verificaAcessos((int)pos); //Insere o endereço na lista de acessados, caso ainda n esteja
+    public void escrever(String posicao, String palavra) throws IOException {
+        try{
+            short pos = Short.parseShort(posicao, 2);
+            validarPosicao(pos);
+            validarPalavra(palavra);
+            this.memoria[pos] = palavra;
+            this.verificaAcessos((int)pos); //Insere o endereço na lista de acessados, caso ainda n esteja
+        } catch(NumberFormatException e){
+            throw new IOException();
+        }
     }
 
-    private void validarPosicao(short pos) throws Exception {
-        if((pos < 0) || (pos >= Constantes.MEMP_NUM_ENDERECOS)) throw new Exception("Posição " + pos + " da memória inválida.");
+    private void validarPosicao(short pos) throws IOException {
+        if((pos < 0) || (pos >= Constantes.MEMP_NUM_ENDERECOS)) throw new IOException("Posição " + pos + " da memória inválida.");
     }
 
     private void verificaAcessos(int pos) {
@@ -42,8 +51,8 @@ public class MemoriaPrincipal{
         this.inserirOrdenadoPosAcessadas(pos);
     }
 
-    private void validarPalavra(String palavra) throws Exception {
-        if(palavra.length() != Constantes.MEMP_TAM_PAL) throw new Exception("Tamanho de palavra inválido.");
+    private void validarPalavra(String palavra) throws IOException {
+        if(palavra.length() != Constantes.MEMP_TAM_PAL) throw new IOException("Tamanho de palavra inválido.");
     }
 
     public void inserirOrdenadoPosAcessadas(int pos) {

@@ -38,7 +38,7 @@ public class CacheMapeamentoDireto implements Cache {
 
     @Override
     public void ler(String endereco, MBR mbr) throws Exception {
-        int linhaLeitura = extrairlinhaDeEscritaCache(endereco);
+        int linhaLeitura = extrairIndiceCache(endereco);
         String tag = extrairTag(endereco);
         LinhaCacheMD linha = this.cache[linhaLeitura];
 
@@ -50,8 +50,9 @@ public class CacheMapeamentoDireto implements Cache {
 
             String[] bloco;
             if (linha.isDirtyBit()) {
+                String endSubs = linha.reconstruirEndereco();
                 bloco = linha.getBloco();
-                this.memoriaPrincipal.escreverBloco(endereco, bloco);
+                this.memoriaPrincipal.escreverBloco(endSubs, bloco);
             }
             bloco = memoriaPrincipal.lerBloco(endereco);
             linha.substituir(tag, bloco);
@@ -59,14 +60,14 @@ public class CacheMapeamentoDireto implements Cache {
             this.rd = false;
             this.acAtraso = 0;
 
-            String dado = linha.getEndBloco(endereco);
+            String dado = linha.getDadoBloco(endereco);
             mbr.setValor(dado);
             mbr.setReady('1');
             return;
         }
 
         if(linha.isBitValidade() && linha.comparaTag(tag)) {
-            String dado = linha.getEndBloco(endereco);
+            String dado = linha.getDadoBloco(endereco);
             mbr.setValor(dado);
             mbr.setReady('1');//Cache hit
             return;
@@ -78,7 +79,7 @@ public class CacheMapeamentoDireto implements Cache {
 
     @Override
     public void escrever(String endereco, MBR mbr) throws Exception {
-        int linhaEscrita = extrairlinhaDeEscritaCache(endereco);
+        int linhaEscrita = extrairIndiceCache(endereco);
         String tag = extrairTag(endereco);
         LinhaCacheMD linha = this.cache[linhaEscrita];
 
@@ -90,8 +91,9 @@ public class CacheMapeamentoDireto implements Cache {
 
             String[] bloco;
             if(linha.isDirtyBit()) {
+                String endSubs = linha.reconstruirEndereco();
                 bloco = linha.getBloco();
-                this.memoriaPrincipal.escreverBloco(endereco, bloco);
+                this.memoriaPrincipal.escreverBloco(endSubs, bloco);
             }
 
             bloco = this.memoriaPrincipal.lerBloco(endereco);
@@ -115,16 +117,11 @@ public class CacheMapeamentoDireto implements Cache {
             return;
         }
 
-//        String[] bloco = this.memoriaPrincipal.lerBloco(endereco);
-//        if(linha.isDirtyBit()) this.memoriaPrincipal.escreverBloco(endereco, bloco);
-//        linha.substituir(tag, bloco);
-//        linha.substituirPalavraBloco(endereco, dado);
-
         this.wr = true;
         mbr.setReady('0'); //Cache miss
     }
 
-    private int extrairlinhaDeEscritaCache(String endereco) throws Exception {
+    private int extrairIndiceCache(String endereco) throws Exception {
         String offset = endereco.substring(this.tamTag, this.tamEnderecoBloco);
         return binarioToInt(offset, this.tamIndice);
     }

@@ -1,11 +1,12 @@
 package back.montagem;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CodeParser {
-    public Map<String, Integer> flags = new HashMap<>();
+    public Map<String, Integer> labels = new HashMap<>();
     public Map<String, Integer> variaveis = new HashMap<>();
 
     public String[] operacoesSemOperando = new String[] {"PSHI", "POPI", "PUSH", "POP", "RETN", "SWAP"};
@@ -16,12 +17,13 @@ public class CodeParser {
 
     private boolean pulouLinha;
 
-    public String[][] parse(String macroPrograma) throws Exception {
+    public String[][] parse(String macroPrograma) throws IOException {
+        if(macroPrograma == null) throw new IOException("Porograma vazio.\n");
         this.formatarPrograma(macroPrograma);
         return this.parseLinhasEFlags();
     }
 
-    public String[][] parseLinhasEFlags() throws Exception{
+    public String[][] parseLinhasEFlags() throws IOException {
         String[][] macroLimpo = new String[this.posLivre][];  //Converte o programa fornecido em uma matriz.
         String[] linhaLimpa;                                  //Cada índice dela armazena uma instrução no formato
         int i = 0;                                            //macroLimpo[i][0] = Mnemônico
@@ -38,7 +40,7 @@ public class CodeParser {
         return Arrays.copyOf(macroLimpo, i);
     }
 
-    public int getEIncrementaPosLivre() { return this.posLivre++; }
+    public int getEIncrementaEnderecoLivre() { return this.posLivre++; }
 
     public Integer getValorVariavel(String variavel) {
         String upperCase = variavel.toUpperCase();
@@ -46,12 +48,12 @@ public class CodeParser {
         return this.variaveis.get(upperCase);
     }
 
-    public String[] parseLinhaEFlags(String linha, int numLinha) throws Exception {
+    public String[] parseLinhaEFlags(String linha, int numLinha) throws IOException {
         if(linha.isEmpty()) return null;
 
         int linhaLength = linha.length();
 
-        String[] linhaLimpa = new String[2];
+        String[] linhaFormatada = new String[2];
         StringBuilder mnemonico = new StringBuilder();
         int i;
 
@@ -60,35 +62,35 @@ public class CodeParser {
             mnemonico.append(linha.charAt(i));
         }
 
-        if(i == linhaLength) { // Operação sem operando
-            linhaLimpa[0] = linha;
-            linhaLimpa[1] = null;
-            return linhaLimpa;
+        if(i == linhaLength) { //Operação sem operando
+            linhaFormatada[0] = linha;
+            linhaFormatada[1] = null;
+            return linhaFormatada;
         }
 
         String mnemonicoStr = mnemonico.toString();
 
-        if(linha.charAt(i) == ':') {//Caso seja uma flag.
-            this.flags.put(mnemonicoStr, numLinha);
-            return parseLinhaEFlags(linha.substring(i + 1).trim(), numLinha); //Retorna uma possível operação
-                                                                                        //existente após a flag.
-        }
+        if(linha.charAt(i) == ':') { //Caso seja um label.
+            this.labels.put(mnemonicoStr, numLinha);
+            String linhaAposLabel = linha.substring(i+1);
+            return parseLinhaEFlags(linhaAposLabel, numLinha); //Retorna uma possível operação
+        }                                                                               //existente após o label
 
         //Linha sem flag.
-        linhaLimpa[0] = mnemonicoStr;
+        linhaFormatada[0] = mnemonicoStr;
 
-        String operando = this.pegarOperando(linha, mnemonicoStr, i++);
+        String operando = this.extrairOperando(linha, mnemonicoStr, i);
 
         try { // Verifica se a operação deve trabalhar com constante ou variável.
             int operandoInt = Integer.parseInt(operando);
-        } catch(Exception e) {
+        } catch(NumberFormatException e) {
             if(this.mnemonicoComConstante(mnemonicoStr)){
-                throw new Exception("\"" + mnemonicoStr + "\" " + "deve receber uma constante.");
+                throw new IOException("\"" + mnemonicoStr + "\" " + "deve receber uma constante.");
             }
         }
 
-        linhaLimpa[1] = operando;
-        return linhaLimpa;
+        linhaFormatada[1] = operando;
+        return linhaFormatada;
     }
 
     private boolean mnemonicoComOperando(String opcode) {
@@ -101,14 +103,14 @@ public class CodeParser {
         return true;
     }
 
-    private boolean mnemonicoComConstante(String mnemonico) throws Exception {
+    private boolean mnemonicoComConstante(String mnemonico) {
         for(String mn : this.operacoesApenasConstantes) {
             if(mn.equals(mnemonico)) return true;
         }
         return false;
     }
 
-    public String pegarOperando(String operacao, String opcode, int j) throws Exception {
+    public String extrairOperando(String operacao, String opcode, int j) throws IOException {
         j++;
         StringBuilder operando = new StringBuilder();
         int operacaoLength = operacao.length();
@@ -116,7 +118,7 @@ public class CodeParser {
 
         for (; j < operacaoLength; j++) {
             c = operacao.charAt(j);
-            if (c == ' ' || c == '#') break;
+            if(c == ' ' || c == '#') break;
             operando.append(operacao.charAt(j));
         }
 
@@ -127,7 +129,7 @@ public class CodeParser {
         }
 
         if(!operandoSTR.isEmpty()) {
-            throw new Exception("Operação não pode conter operando");
+            throw new IOException("Operação não pode conter operando");
         }
 
         return null;
@@ -140,7 +142,7 @@ public class CodeParser {
     public int maiorLarguraFlag() {
         int maior = 0;
 
-        for (String flag : this.flags.keySet()) {
+        for (String flag : this.labels.keySet()) {
             int length = flag.length();
             if(length > maior) maior = length;
         }
@@ -148,7 +150,7 @@ public class CodeParser {
         return maior;
     }
 
-    public void formatarPrograma(String programa) throws Exception {
+    public void formatarPrograma(String programa) {
         String[] macroArray = programa.split("\\r?\\n");
         int tamProg = macroArray.length;
         this.progFormatado = new String[tamProg];
@@ -172,38 +174,36 @@ public class CodeParser {
         }
 
         this.progFormatado = Arrays.copyOf(this.progFormatado, j);
-        System.out.println("Prog formatado\n" + Arrays.toString(this.progFormatado));
         this.posLivre = j;
     }
 
-    private String formatarLinha(String[] macroArray, int i, int tamProg) throws Exception {
+    private String formatarLinha(String[] macroArray, int i, int tamProg) {
         if(macroArray[i].isBlank()) return null;
 
         String linha = macroArray[i].toUpperCase().trim();
         StringBuilder formatarFlag;
 
-        boolean temFlag = false;
+        boolean temLabel = false;
 
         int linhaLength = linha.length();
         int j = 0;
 
         for(j = 0; j < linhaLength; j++) {
             if(linha.charAt(j) == ':') {
-                temFlag = true;
-                this.flags.put(linha.substring(0, j), i);
+                temLabel = true;
+                this.labels.put(linha.substring(0, j), i);
                 j++;
                 break;
             }
         }
 
-        if((temFlag) && (j >= linhaLength) && ((i+1) < tamProg)){
+        if((temLabel) && (j >= linhaLength) && ((i+1) < tamProg)){
             formatarFlag = new StringBuilder(linha);
             formatarFlag.append(' ').append(macroArray[i + 1]);
             this.pulouLinha = true;
             linha = formatarFlag.toString();
         }
 
-        System.out.println("Linha formatada: " + linha.toUpperCase());
         return linha.toUpperCase();
     }
 
@@ -234,8 +234,8 @@ public class CodeParser {
     }
 
     private String buscarChave(int valor) {
-        for(String chave : this.flags.keySet()) {
-            if(this.flags.get(chave) == valor) {
+        for(String chave : this.labels.keySet()) {
+            if(this.labels.get(chave) == valor) {
                 return chave;
             }
         }
