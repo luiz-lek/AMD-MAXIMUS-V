@@ -72,7 +72,7 @@ public class CodeParser {
 
         if(linha.charAt(i) == ':') { //Caso seja um label.
             this.labels.put(mnemonicoStr, numLinha);
-            String linhaAposLabel = linha.substring(i+1);
+            String linhaAposLabel = linha.substring(i+1).trim();
             return parseLinhaEFlags(linhaAposLabel, numLinha); //Retorna uma possível operação
         }                                                                               //existente após o label
 
