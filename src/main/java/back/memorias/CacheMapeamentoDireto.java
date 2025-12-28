@@ -16,6 +16,10 @@ public class CacheMapeamentoDireto implements Cache {
     private int tamEnderecoBloco;
     private int tempoResposta = ATRASO_MEMORIA + CACHE_MD_TA;
     private int acAtraso = 0;
+    private int linhaModificada = -1;
+    private int linhaSubstituida = -1;
+    private int linhaHit = -1;
+    private int linhaSubsEMod = -1;
 
     private boolean rd = false, wr = false;
 
@@ -57,6 +61,8 @@ public class CacheMapeamentoDireto implements Cache {
             bloco = memoriaPrincipal.lerBloco(endereco);
             linha.substituir(tag, bloco);
 
+            this.definiLinhaAlterada(1, linhaLeitura);
+
             this.rd = false;
             this.acAtraso = 0;
 
@@ -68,6 +74,9 @@ public class CacheMapeamentoDireto implements Cache {
 
         if(linha.isBitValidade() && linha.comparaTag(tag)) {
             String dado = linha.getDadoBloco(endereco);
+
+            this.definiLinhaAlterada(2, linhaLeitura);
+
             mbr.setValor(dado);
             mbr.setReady('1');//Cache hit
             return;
@@ -101,6 +110,9 @@ public class CacheMapeamentoDireto implements Cache {
 
             String dado = mbr.getValor();
             linha.substituirPalavraBloco(endereco, dado);
+            linha.setDirtyBit();
+
+            this.definiLinhaAlterada(3, linhaEscrita);
 
             this.wr = false;
             this.acAtraso = 0;
@@ -113,6 +125,9 @@ public class CacheMapeamentoDireto implements Cache {
             if(!linha.isDirtyBit()) linha.setDirtyBit();
             String dado = mbr.getValor();
             linha.substituirPalavraBloco(endereco, dado);
+
+            this.definiLinhaAlterada(0, linhaEscrita);
+
             mbr.setReady('1'); //Cache hit
             return;
         }
@@ -120,6 +135,43 @@ public class CacheMapeamentoDireto implements Cache {
         this.wr = true;
         mbr.setReady('0'); //Cache miss
     }
+
+    public void definiLinhaAlterada(int op, int numLinha) {
+        switch (op) {
+            case 0 -> {
+                this.linhaModificada = numLinha;
+                this.linhaSubstituida = -1;
+                this.linhaHit = -1;
+                this.linhaSubsEMod = -1;
+            }
+            case 1 -> {
+                this.linhaSubstituida = numLinha;
+                this.linhaModificada = -1;
+                this.linhaHit = -1;
+                this.linhaSubsEMod = -1;
+            }
+            case 2 -> {
+                this.linhaHit = numLinha;
+                this.linhaModificada = -1;
+                this.linhaSubstituida = -1;
+                this.linhaSubsEMod = -1;
+            }
+            default -> {
+                this.linhaSubsEMod = numLinha;
+                this.linhaHit = -1;
+                this.linhaModificada = -1;
+                this.linhaSubstituida = -1;
+            }
+        }
+    }
+
+    public int getLinhaModificada() { return this.linhaModificada; }
+
+    public int getLinhaSubstituida() {  return this.linhaSubstituida; }
+
+    public int getLinhaHit() {  return this.linhaHit; }
+
+    public int getLinhaSubsEMod() { return this.linhaSubsEMod; }
 
     private int extrairIndiceCache(String endereco) throws Exception {
         String offset = endereco.substring(this.tamTag, this.tamEnderecoBloco);

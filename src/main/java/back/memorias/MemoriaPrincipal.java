@@ -27,7 +27,6 @@ public class MemoriaPrincipal{
         } catch(NumberFormatException e){
             throw new IOException("Posição de leitura inválida.");
         }
-
     }
 
     public void escrever(String posicao, String palavra) throws IOException {

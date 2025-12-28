@@ -15,6 +15,9 @@ public class CacheAssociativa implements Cache {
     private int tamEndBloco;
     private int tempoResposta = ATRASO_MEMORIA + CACHE_ASS_TA;
     private int acAtraso = 0;
+    private int linhaModificada;
+    private int linhaSubstituida;
+    private int linhaHit;
 
     private String tipoCache;
 
@@ -135,6 +138,12 @@ public class CacheAssociativa implements Cache {
         this.wr = true;
         mbr.setReady('0'); //Cache miss
     }
+
+    public int getLinhaModificada() { return this.linhaModificada; }
+
+    public int getLinhaSubstituida() {  return this.linhaSubstituida; }
+
+    public int getLinhaHit() {  return this.linhaHit; }
 
     @Override
     public String getTipoCache() { return this.tipoCache; }

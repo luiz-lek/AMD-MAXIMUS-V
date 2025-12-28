@@ -4,11 +4,12 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="431.0" prefWidth="789.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerCacheMD">
    <children>
-      <TableView id="tabela" fx:id="tabela" layoutX="27.0" layoutY="64.0" prefHeight="338.0" prefWidth="734.0">
+      <TableView id="tabela" fx:id="tabela" layoutX="27.0" layoutY="54.0" prefHeight="338.0" prefWidth="734.0">
         <columns>
           <TableColumn id="linha" fx:id="linha" prefWidth="62.40003204345703" text="Linha" />
           <TableColumn id="validade" fx:id="validade" minWidth="8.79998779296875" prefWidth="29.600067138671875" text="V" />
@@ -20,16 +21,40 @@
             <TableColumn id="bloco3" fx:id="bloco3" prefWidth="132.800048828125" text="3" />
         </columns>
       </TableView>
-      <Label layoutX="446.0" layoutY="37.0" text="BLOCO" />
-      <Label layoutX="27.0" layoutY="28.0" text="V: VALIDADE">
+      <Label layoutX="446.0" layoutY="27.0" text="BLOCO" />
+      <Label layoutX="27.0" layoutY="30.0" text="V: VALIDADE">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Label layoutX="27.0" layoutY="38.0" text="M: MODIFICAÇÃO">
+      <Label layoutX="27.0" layoutY="40.0" text="M: MODIFICAÇÃO">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
+      <Rectangle id="hit" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" layoutX="655.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+      <Label layoutX="590.0" layoutY="17.0" text="HIT">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Rectangle id="mod" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" layoutX="655.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+      <Label layoutX="590.0" layoutY="30.0" text="Modificaçaao">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Rectangle id="subs" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" layoutX="744.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+      <Label layoutX="677.0" layoutY="14.0" text="Substituição">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="677.0" layoutY="29.0" text="Subs. e mod.">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Rectangle id="subsEMod" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" layoutX="744.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
    </children>
 </AnchorPane>

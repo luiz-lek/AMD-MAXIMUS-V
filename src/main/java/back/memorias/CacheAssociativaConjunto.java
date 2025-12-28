@@ -16,6 +16,9 @@ public class CacheAssociativaConjunto implements Cache {
     private int qtdBitsEnderecoBloco;
     private int tempoResposta = ATRASO_MEMORIA + CACHE_AC_TA;
     private int acAtraso = 0;
+    private int linhaModificada;
+    private int linhaSubstituida;
+    private int linhaHit;
 
     private boolean rd = false, wr = false;
 
@@ -154,6 +157,12 @@ public class CacheAssociativaConjunto implements Cache {
         linha.substituir(tag, bloco);
         linha.substituirPalavraBloco(endereco, dado);
     }
+
+    public int getLinhaModificada() { return this.linhaModificada; }
+
+    public int getLinhaSubstituida() {  return this.linhaSubstituida; }
+
+    public int getLinhaHit() {  return this.linhaHit; }
 
     private int definiEIncrementaBlocoASubstituir()  { return this.acSubstituicao++ % CACHE_AC_TAM_CONJUNTO;} // Defini o bloco da linha q
                                                                                            // deve sersubstituido, simulando a política de

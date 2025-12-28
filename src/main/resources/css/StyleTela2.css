@@ -69,7 +69,7 @@ AnchorPane {
 .scroll-bar:vertical .decrement-button,
 .scroll-bar:horizontal .increment-button,
 .scroll-bar:horizontal .decrement-button{
-    -fx-background-color: #1f1f1f;
+    -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-background-radius: 5em;
 }
@@ -79,6 +79,10 @@ AnchorPane {
 .scroll-bar:horizontal .increment-arrow,
 .scroll-bar:horizontal .decrement-arrow {
     -fx-background-color: #01e2f2;
+}
+
+.scroll-bar {
+    -fx-background-color: #111111;
 }
 
 .scroll-pane .track-background {
@@ -109,6 +113,10 @@ AnchorPane {
 .table-view {
     -fx-background-color: #1a1a1a;
     -fx-border-color: #1a1a1a;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: #1a1a1a;
 }
 
 .table-row-cell {
@@ -200,4 +208,50 @@ AnchorPane {
 
 .choice-box .menu-item:focused > .label {
     -fx-text-fill: black;
+}
+
+.linha-hit {
+    -fx-background-color: #CCFFCC;
+}
+.linha-hit .table-cell {
+    -fx-text-fill: #000000;
+}
+
+.linha-modificada {
+    -fx-background-color: #F0E68C;
+}
+.linha-modificada .table-cell {
+    -fx-text-fill: #000000;
+}
+
+.linha-substituida {
+    -fx-background-color: #F08080;
+}
+
+.linha-substituida .table-cell {
+    -fx-text-fill: #000000;
+}
+
+.linha-subsemod {
+    -fx-background-color: #F4A460;
+}
+
+.linha-subsemod .table-cell {
+    -fx-text-fill: #000000;
+}
+
+#hit {
+    -fx-fill: #CCFFCC;
+}
+
+#mod {
+    -fx-fill: #F0E68C;
+}
+
+#subs {
+    -fx-fill: #F08080;
+}
+
+#subsEMod {
+    -fx-fill: #F4A460;
 }

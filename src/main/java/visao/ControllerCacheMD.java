@@ -25,6 +25,11 @@ public class ControllerCacheMD implements ControllerCache {
     @FXML
     private TableColumn<LinhaCacheMD,String> bloco0, bloco1, bloco2, bloco3;
 
+    private int linhaModificada = -1;
+    private int linhaSubstituida = -1;
+    private int linhaHit = -1;
+    private int linhaSubsEMod = -1;
+
     public void setStage(Stage stage) { this.stage  = stage; }
 
     public void setCache(Cache cache) throws Exception {
@@ -43,7 +48,40 @@ public class ControllerCacheMD implements ControllerCache {
         this.bloco1.setCellValueFactory( new PropertyValueFactory<>("bloco1") );
         this.bloco2.setCellValueFactory( new PropertyValueFactory<>("bloco2") );
         this.bloco3.setCellValueFactory( new PropertyValueFactory<>("bloco3") );
+
+        this.tabela.setRowFactory(tv -> new javafx.scene.control.TableRow<LinhaCacheMD>() {
+            @Override
+            protected void updateItem(LinhaCacheMD item, boolean empty) {
+                super.updateItem(item, empty);
+
+                getStyleClass().removeAll("linha-hit", "linha-modificada", "linha-substituida", "linha-subsemod");
+                if (item == null || empty) {
+                    setStyle("");
+                } else {
+                    int index = getIndex();
+
+                    if (index == linhaHit) {
+                        getStyleClass().add("linha-hit");
+                    } else if (index == linhaModificada) {
+                        getStyleClass().add("linha-modificada");
+                    } else if (index == linhaSubstituida) {
+                        getStyleClass().add("linha-substituida");
+                    } else if (index == linhaSubsEMod) {
+                        getStyleClass().add("linha-subsemod");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
     }
 
-    public void atualizarTabela() { this.tabela.refresh(); }
+    public void atualizarTabela() {
+        this.linhaHit = this.cache.getLinhaHit();
+        this.linhaModificada = this.cache.getLinhaModificada();
+        this.linhaSubstituida = this.cache.getLinhaSubstituida();
+        this.linhaSubsEMod = this.cache.getLinhaSubsEMod();
+
+        this.tabela.refresh();
+    }
 }
