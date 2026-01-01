@@ -11,9 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,14 +22,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ControllerTela1 implements Initializable {
-    Stage stageTela2, stageFalha;
-    Scene scenetela2, sceneFalha;
-    Parent rootTela2, rootFalha;
+    Stage stageSimulacao, stageFalha;
+    Scene sceneSimulacao, sceneFalha;
+    Parent rootSimulacao, rootFalha;
 
     @FXML
     private TextArea macroPrograma;
-    @FXML
-    private Button gravarNaMemoria, confirmarFalha;
     @FXML
     private ChoiceBox<String> escolhaCache;
 
@@ -63,25 +61,25 @@ public class ControllerTela1 implements Initializable {
             cache = CacheFactory.criarCache(tipoCache, memoriaPrincipal);
 
             this.cpu = new CPU();
-            ComponentesTela2 comp = new ComponentesTela2(this.cpu, this.memoriaPrincipal, this.assembler, cache);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH_TELA2));
-            this.rootTela2 = loader.load();
-            ControllerTela2 controllerTela2 = loader.getController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH_TELA_SIMULACAO));
+            this.rootSimulacao = loader.load();
+            ControllerSimulacao controllerSimulacao = loader.getController();
 
-            this.stageTela2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            controllerTela2.setStageAtual(this.stageTela2);
+            this.stageSimulacao = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            controllerSimulacao.setStage(this.stageSimulacao);
 
-            this.scenetela2 = new Scene(this.rootTela2);
-            String css = getClass().getResource(PATH_CSS_TELA2).toExternalForm();
-            this.scenetela2.getStylesheets().add(css);
-            this.stageTela2.setScene(this.scenetela2);
+            this.sceneSimulacao = new Scene(this.rootSimulacao);
+            String css = getClass().getResource(PATH_CSS_SIMULACAO).toExternalForm();
+            this.sceneSimulacao.getStylesheets().add(css);
+            this.sceneSimulacao.setFill(Color.web("#111111"));
+            this.stageSimulacao.setScene(this.sceneSimulacao);
 
-            this.stageTela2.centerOnScreen();
-            this.stageTela2.setResizable(true);
+            this.stageSimulacao.centerOnScreen();
+            this.stageSimulacao.setResizable(true);
 
-            controllerTela2.setConteudo(this.macroPrograma.getText(), comp);
-            this.stageTela2.show();
+//            controllerSimulacao.setConteudo(this.macroPrograma.getText(), comp);
+            this.stageSimulacao.show();
         } catch (Exception e) {
             this.telaFalha(event, e.getMessage());
         }

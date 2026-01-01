@@ -12,7 +12,7 @@ public class LogicaMicrosequenciamento {
         this.ready = ready;
     }
 
-    public void gerarSaida() throws Exception{
+    public void gerarSaida() throws Exception {
         switch (this.COND) {
             case "000" -> this.saida = false;
             case "011" -> this.saida = true;

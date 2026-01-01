@@ -30,13 +30,13 @@ public final class Constantes {
     //Path das telas da simulação
     public static final String PATH_TELA1 = "/fxml/Tela1.fxml";
     public static final String PATH_TELA1_FALHA = "/fxml/Tela1Falha.fxml";
-    public static final String PATH_TELA2 = "/fxml/Tela2.fxml";
+    public static final String PATH_TELA_SIMULACAO = "/fxml/Simulacao.fxml";
     public static final String PATH_TELA2_VOLTAR = "/fxml/Tela2Voltar.fxml";
 
     //Css telas
     public static final String PATH_CSS_TELA1 = "/css/StyleTela1.css";
     public static final String PATH_CSS_TELA1FALHA = "/css/StyleTela1Falha.css";
-    public static final String PATH_CSS_TELA2 = "/css/StyleTela2.css";
+    public static final String PATH_CSS_SIMULACAO = "/css/StyleSimulacao.css";
 
     //Nome das caches
     public static final String CACHE_TIPO_ASS = "ASSOCIATIVA";
