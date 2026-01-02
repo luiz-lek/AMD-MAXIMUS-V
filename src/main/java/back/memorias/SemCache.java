@@ -67,4 +67,6 @@ public class SemCache implements Cache {
 
     @Override
     public String getTipoCache() { return this.tipoCache; }
+
+    public MemoriaPrincipal getMemP() { return this.memoriaPrincipal; }
 }

@@ -188,4 +188,6 @@ public class CacheMapeamentoDireto implements Cache {
     public int size() { return CACHE_MD_NUM_LINHAS; }
 
     public String getTipoCache() { return this.tipoCache; }
+
+    public MemoriaPrincipal getMemP() { return this.memoriaPrincipal; }
 }

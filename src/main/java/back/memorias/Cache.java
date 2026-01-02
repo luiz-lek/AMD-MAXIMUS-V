@@ -7,4 +7,5 @@ public interface Cache {
     void ler(String endereco, MBR mbr) throws Exception;
     int size();
     String getTipoCache();
+    MemoriaPrincipal getMemP();
 }

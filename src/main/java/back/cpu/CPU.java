@@ -5,14 +5,13 @@ import back.memorias.Cache;
 import back.memorias.MemoriaPrincipal;
 
 public class CPU {
-    private MemoriaPrincipal memP;
     private Cache cache;
     private final MemoriaControle memC =  new MemoriaControle();
     public Registradores registradores = new Registradores();
     private MAR mar = new MAR("MAR");
     private MBR mbr = new MBR("MBR");
     private Registrador mpc = new Registrador("MPC");
-    private Microinstrucao mir = new Microinstrucao("00000000000000000000000000000000");
+    public Microinstrucao mir = new Microinstrucao("00000000000000000000000000000000");
     private Latch latA = new Latch("A");
     private Latch latB = new Latch("B");
     private AMUX amux = new AMUX();
@@ -26,10 +25,7 @@ public class CPU {
     private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
 
     private boolean rdIniciado = false, wrIniciado = false;
-
-    public void setMemoriaPrincipal(MemoriaPrincipal memoria){
-        this.memP = memoria;
-    }
+    private int ultSubcicloExe = 0;
 
     public void setCache(Cache cache) { this.cache = cache; }
 
@@ -38,6 +34,15 @@ public class CPU {
         this.subciclo2();
         this.subciclo3();
         this.subciclo4();
+    }
+
+    public void executarSubciclo() throws Exception {
+         switch(this.ultSubcicloExe) {
+            case(1) -> this.subciclo2();
+            case(2) -> this.subciclo3();
+            case(3) -> this.subciclo4();
+            default -> this.subciclo1();
+        };
     }
 
     public void subciclo1(){
@@ -54,12 +59,16 @@ public class CPU {
         this.decB.setEntrada(this.mir.getB());
         this.decA.setEntrada(this.mir.getA());
         this.mmux.setADDR(this.mir.getADDR());
+
+        this.ultSubcicloExe = 1;
     }
 
     public void subciclo2() throws Exception { //Manda os sinais de controle do mir para todos os componentes.
         this.latB.setValor(this.registradores.getValor(decB.decodificar()));
         this.incrementador.incrementar(this.mpc.getValor());
         this.latA.setValor(this.registradores.getValor(decA.decodificar()));
+
+        this.ultSubcicloExe = 2;
     }
 
     public void subciclo3() throws Exception {
@@ -75,6 +84,8 @@ public class CPU {
         ula.ativar(this.amux.getSaida(), this.latB.getValor()); //No subciclo 3, após as entradas da ula estarem definidas,
         this.deslocador.ativar(this.ula.getSaida());            //a ula realiza o seu cálculo.
         if(mar.isAtivado()) mar.setValor(latB.getValor());
+
+        this.ultSubcicloExe = 3;
     }
 
     public void subciclo4() throws Exception {
@@ -97,11 +108,11 @@ public class CPU {
         if(this.mbr.isWR()) {
             this.wrIniciado = true;
         }
+
+        this.ultSubcicloExe = 4;
     }
 
-    public String getValorMbr() {
-        return this.mbr.getValor();
-    }
+    public String getValorMbr() { return this.mbr.getValor(); }
 
     public String getValorMar() { return this.mar.getValor(); }
 
@@ -110,6 +121,12 @@ public class CPU {
     public String getValorMpc() { return mpc.getValor(); }
 
     public String getValorMir() { return this.mir.getMic(); }
+
+    public String getValorUla() { return this.ula.getSaida(); }
+
+    public String getValorAmux() { return this.amux.getSaida(); }
+
+    public int getUltSubcicloExe() { return this.ultSubcicloExe; }
 
     public String getValorRegistrador(int pos) throws Exception {
         if((pos < 0) || (15 < pos)) throw new Exception("Posição inválida.");

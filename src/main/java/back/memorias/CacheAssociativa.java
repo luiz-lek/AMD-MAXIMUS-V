@@ -163,4 +163,6 @@ public class CacheAssociativa implements Cache {
     public LinhaCacheASS getLinha(int pos) {
         return cache[pos];
     }
+
+    public MemoriaPrincipal getMemP() { return this.memoriaPrincipal; }
 }

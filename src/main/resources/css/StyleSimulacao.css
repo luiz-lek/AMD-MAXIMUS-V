@@ -124,7 +124,6 @@ AnchorPane {
 }
 
 .barramento {
-    -fx-fill: rgba(0, 255, 127, 0.4);
     -fx-stroke: #363636;
     -fx-stroke-width: 2px;
 }
@@ -135,8 +134,20 @@ AnchorPane {
 }
 
 .linha-mir {
-    -fx-stroke: rgba(0, 255, 127, 0.4);
+    -fx-stroke: #363636;
     -fx-stroke-width: 4px;
+}
+
+.subciclo {
+    -fx-stroke: #363636;
+    -fx-stroke-width: 4px;
+    -fx-stroke-dash-array: 8 8;
+}
+
+
+.ativo, .sempre-ativo {
+    -fx-stroke: #01e2f2;
+    -fx-effect: dropshadow(gaussian, #01e2f2, 10, 0.6, 0, 0);
 }
 
 #pane {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
@@ -8,49 +9,49 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="pane" prefHeight="842.0" prefWidth="1377.0" styleClass="rectangle" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerSimulacao">
+<AnchorPane id="pane" fx:id="pane" prefHeight="842.0" prefWidth="1377.0" styleClass="rectangle" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerSimulacao">
    <children>
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="46.0" layoutX="910.0" layoutY="425.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="242.0" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="41.0" layoutX="305.0" layoutY="323.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="103.0" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="41.0" layoutX="434.0" layoutY="324.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="103.0" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="157.0" layoutX="142.0" layoutY="145.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="137.0" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="46.0" layoutX="53.0" layoutY="406.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="103.0" />
-      <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="46.0" layoutX="23.0" layoutY="360.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="103.0" />
+      <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="46.0" layoutX="3.0" layoutY="360.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="103.0" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="47.0" layoutX="286.0" layoutY="474.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="103.0" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="46.0" layoutX="758.0" layoutY="524.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="526.0" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="68.0" layoutX="571.0" layoutY="546.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="137.0" />
       <Polygon fill="DODGERBLUE" layoutX="312.0" layoutY="622.0" points="9.20001220703125, -47.0, 66.4000244140625, -47.0, 78.4000244140625, -25.0, 131.20001220703125, -25.0, 140.0, -47.0, 197.20001220703125, -47.0, 169.60003662109375, 25.39996337890625, 41.60003662109375, 25.39996337890625" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" />
-      <Label layoutX="148.0" layoutY="149.0" text=" PC">
+      <Label layoutX="148.0" layoutY="149.0" text=" PC:">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="149.0" layoutY="164.0" text=" SP">
+      <Label layoutX="149.0" layoutY="164.0" text=" SP:">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="149.0" layoutY="179.0" text=" IR">
+      <Label layoutX="149.0" layoutY="179.0" text=" IR:">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="148.0" layoutY="193.0" text="TIR">
+      <Label layoutX="148.0" layoutY="193.0" text="TIR:">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="147.0" layoutY="208.0" text="  0: 0000000000000000">
+      <Label layoutX="147.0" layoutY="208.0" text="  0:">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="147.0" layoutY="223.0" text=" +1: 0000000000000001">
+      <Label layoutX="147.0" layoutY="223.0" text=" +1:">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="147.0" layoutY="237.0" text=" -1: 1111111111111111">
+      <Label layoutX="147.0" layoutY="237.0" text=" -1: ">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
@@ -65,30 +66,30 @@
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="148.0" layoutY="278.0" text="  A">
+      <Label layoutX="148.0" layoutY="278.0" text="  A:">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label id="latchA" layoutX="310.0" layoutY="345.0" text="0000000000000000">
+      <Label id="latchA" fx:id="saidaLatchA" layoutX="310.0" layoutY="345.0" text="0000000000000000">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
       <Label layoutX="334.0" layoutY="326.0" text="Latch A" />
       <Label layoutX="463.0" layoutY="327.0" text="Latch B" />
-      <Label id="latchA" layoutX="439.0" layoutY="347.0" text="0000000000000000">
+      <Label id="latchA" fx:id="saidaLatchB" layoutX="440.0" layoutY="345.0" text="0000000000000000">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Label id="latchA" layoutX="371.0" layoutY="620.0" text="0000000000000000">
+      <Label id="latchA" fx:id="saidaUla" layoutX="371.0" layoutY="620.0" text="0000000000000000">
          <font>
             <Font name="Monospaced Regular" size="11.0" />
          </font>
       </Label>
       <Label layoutX="405.0" layoutY="600.0" text="ULA" />
-      <Label id="latchA" layoutX="521.0" layoutY="557.0" text="NBit: 0">
+      <Label id="latchA" layoutX="515.0" layoutY="567.0" text="NBit:">
          <font>
             <Font size="10.0" />
          </font>
@@ -99,31 +100,63 @@
             <String fx:value="forma-ula" />
          </styleClass>
       </Rectangle>
-      <Label id="latchA" layoutX="522.0" layoutY="568.0" text="ZBit: 0">
+      <Label id="latchA" layoutX="516.0" layoutY="606.0" text="ZBit:">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
       <Label layoutX="382.0" layoutY="696.0" text="Deslocador" />
-      <Label layoutX="367.0" layoutY="714.0" text="0000000000000000">
+      <Label fx:id="saidaDeslocador" layoutX="367.0" layoutY="714.0" text="0000000000000000">
          <font>
             <Font name="Monospaced Regular" size="10.0" />
          </font>
       </Label>
-      <Label id="latchA" layoutX="292.0" layoutY="497.0" text="0000000000000000">
+      <Label id="latchA" fx:id="saidaAmux" layoutX="292.0" layoutY="497.0" text="0000000000000000">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
       <Label layoutX="318.0" layoutY="481.0" text="AMUX" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="68.0" layoutX="346.0" layoutY="162.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="18.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="279.0" layoutY="162.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="46.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="107.0" layoutX="476.0" layoutY="198.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="18.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="278.0" layoutY="228.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="178.0" />
-      <Polygon fill="DODGERBLUE" layoutX="325.0" layoutY="212.0" points="-0.79998779296875, -26.800003051757812, 21.0, -41.59999084472656, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
-      <Polygon fill="DODGERBLUE" layoutX="341.0" layoutY="358.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
-      <Polygon fill="DODGERBLUE" layoutX="456.0" layoutY="278.0" points="-0.79998779296875, -26.800003051757812, 21.0, -41.59999084472656, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
-      <Polygon fill="DODGERBLUE" layoutX="470.0" layoutY="360.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="68.0" layoutX="346.0" layoutY="162.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-a" />
+         </styleClass></Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="279.0" layoutY="162.0" stroke="BLACK" strokeType="INSIDE" width="46.0">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-a" />
+         </styleClass></Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="107.0" layoutX="476.0" layoutY="198.0" stroke="BLACK" strokeType="INSIDE" width="18.0">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-b" />
+         </styleClass></Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="278.0" layoutY="228.0" stroke="BLACK" strokeType="INSIDE" width="178.0">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-b" />
+         </styleClass></Rectangle>
+      <Polygon fill="DODGERBLUE" layoutX="325.0" layoutY="212.0" points="-0.79998779296875, -26.800003051757812, 21.0, -41.59999084472656, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-a" />
+         </styleClass></Polygon>
+      <Polygon fill="DODGERBLUE" layoutX="341.0" layoutY="358.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-a" />
+         </styleClass></Polygon>
+      <Polygon fill="DODGERBLUE" layoutX="456.0" layoutY="278.0" points="-0.79998779296875, -26.800003051757812, 21.0, -41.59999084472656, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-b" />
+         </styleClass></Polygon>
+      <Polygon fill="DODGERBLUE" layoutX="470.0" layoutY="360.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-b" />
+         </styleClass></Polygon>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="58.0" layoutX="346.0" layoutY="245.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="18.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="91.0" layoutX="346.0" layoutY="363.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="18.0" />
       <Polygon fill="DODGERBLUE" layoutX="340.0" layoutY="509.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
@@ -133,21 +166,29 @@
       <Polygon fill="DODGERBLUE" layoutX="339.0" layoutY="610.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="24.0" layoutX="410.0" layoutY="647.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="18.0" />
       <Polygon fill="DODGERBLUE" layoutX="404.0" layoutY="727.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
-      <Label id="latchA" layoutX="29.0" layoutY="381.0" text="0000000000000000">
+      <Label id="latchA" fx:id="saidaMar" layoutX="9.0" layoutY="381.0" text="0000000000000000">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Label layoutX="61.0" layoutY="360.0" text="MAR" />
+      <Label layoutX="41.0" layoutY="360.0" text="MAR" />
       <Label id="latchA" layoutX="60.0" layoutY="451.0">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="363.0" layoutY="376.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="116.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="150.0" layoutY="376.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="197.0" />
-      <Polygon fill="DODGERBLUE" layoutX="152.0" layoutY="426.0" points="-0.79998779296875, -26.800003051757812, -26.000015258789062, -42.399993896484375, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
-      <Label id="latchA" layoutX="59.0" layoutY="427.0" text="0000000000000000">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="363.0" layoutY="376.0" stroke="BLACK" strokeType="INSIDE" width="116.0">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-b" />
+         </styleClass></Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="129.0" layoutY="376.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="218.0" />
+      <Polygon fill="DODGERBLUE" layoutX="131.0" layoutY="426.0" points="-0.79998779296875, -26.800003051757812, -26.000015258789062, -42.399993896484375, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE">
+         <styleClass>
+            <String fx:value="barramento" />
+            <String fx:value="barramento-b" />
+         </styleClass></Polygon>
+      <Label id="latchA" fx:id="saidaMbr" layoutX="59.0" layoutY="427.0" text="0000000000000000">
          <font>
             <Font size="10.0" />
          </font>
@@ -165,7 +206,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="95.0" layoutY="755.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="315.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="297.0" layoutX="80.0" layoutY="476.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="18.0" />
       <Polygon fill="DODGERBLUE" layoutX="75.0" layoutY="534.0" points="14.199996948242188, -80.79998779296875, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
-      <Label id="latchA" layoutX="613.0" layoutY="587.0" text="Saída: 0" />
+      <Label id="latchA" fx:id="saidaLogicaMicro" layoutX="633.0" layoutY="591.0" text="0" />
       <Label layoutX="617.0" layoutY="553.0" text="Lógica" />
       <Label layoutX="767.0" layoutY="529.0" text="AMUX" />
       <Label layoutX="815.0" layoutY="528.0" text="COND" />
@@ -175,66 +216,66 @@
       <Label layoutX="958.0" layoutY="528.0" text="MAR" />
       <Label layoutX="996.0" layoutY="528.0" text="RD" />
       <Label layoutX="1021.0" layoutY="528.0" text="WR" />
-      <Label layoutX="782.0" layoutY="548.0" text="0">
+      <Label fx:id="amux" layoutX="782.0" layoutY="548.0" text="0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="822.0" layoutY="548.0" text="000">
+      <Label fx:id="cond" layoutX="822.0" layoutY="548.0" text="000">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="866.0" layoutY="548.0" text="00">
+      <Label fx:id="alu" layoutX="866.0" layoutY="548.0" text="00">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="900.0" layoutY="548.0" text="0">
+      <Label fx:id="deslocador" layoutX="900.0" layoutY="548.0" text="0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="932.0" layoutY="548.0" text="0">
+      <Label fx:id="mbr" layoutX="932.0" layoutY="548.0" text="0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="968.0" layoutY="548.0" text="0">
+      <Label fx:id="mar" layoutX="968.0" layoutY="548.0" text="0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="1001.0" layoutY="548.0" text="0">
+      <Label fx:id="read" layoutX="1001.0" layoutY="548.0" text="0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="1027.0" layoutY="548.0" text="0">
+      <Label fx:id="write" layoutX="1027.0" layoutY="548.0" text="0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
       <Label layoutX="1051.0" layoutY="528.0" text="ENC" />
-      <Label layoutX="1060.0" layoutY="548.0" text="0">
+      <Label fx:id="enc" layoutX="1060.0" layoutY="548.0" text="0">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
       <Label layoutX="1099.0" layoutY="528.0" text="C" />
-      <Label layoutX="1087.0" layoutY="548.0" text="0000">
+      <Label fx:id="c" layoutX="1087.0" layoutY="548.0" text="0000">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
       <Label layoutX="1143.0" layoutY="528.0" text="B" />
-      <Label layoutX="1131.0" layoutY="548.0" text="0000">
+      <Label fx:id="b" layoutX="1131.0" layoutY="548.0" text="0000">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
       </Label>
       <Label layoutX="1183.0" layoutY="527.0" text="A" />
-      <Label layoutX="1171.0" layoutY="547.0" text="0000">
+      <Label fx:id="a" layoutX="1171.0" layoutY="547.0" text="0000">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
@@ -251,7 +292,7 @@
       <Line endX="53.20001220703125" endY="133.0" layoutX="1072.0" layoutY="436.0" startX="53.20001220703125" startY="89.0" styleClass="divisao-mir" />
       <Line endX="53.20001220703125" endY="133.0" layoutX="1114.0" layoutY="436.0" startX="53.20001220703125" startY="89.0" styleClass="divisao-mir" />
       <Label layoutX="1224.0" layoutY="527.0" text="ADDR" />
-      <Label layoutX="1212.0" layoutY="547.0" text="00000000">
+      <Label fx:id="addr" layoutX="1212.0" layoutY="547.0" text="00000000">
          <font>
             <Font name="Monospaced Regular" size="13.0" />
          </font>
@@ -265,7 +306,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="1023.0" layoutY="470.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="18.0" />
       <Polygon fill="DODGERBLUE" layoutX="1017.0" layoutY="560.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="994.0" layoutY="279.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="85.0" />
-      <Label id="latchA" layoutX="1012.0" layoutY="296.0" text="00000000">
+      <Label id="latchA" fx:id="saidaMmux" layoutX="1012.0" layoutY="296.0" text="00000000">
          <font>
             <Font size="10.0" />
          </font>
@@ -283,7 +324,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="39.0" layoutX="1004.0" layoutY="221.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="18.0" />
       <Polygon fill="DODGERBLUE" layoutX="998.0" layoutY="315.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="706.0" layoutY="-7.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="93.0" />
-      <Label id="latchA" layoutX="716.0" layoutY="11.0" text="0000000000000000">
+      <Label id="latchA" fx:id="saidaDecoderC" layoutX="716.0" layoutY="11.0" text="0000000000000000">
          <font>
             <Font size="8.0" />
          </font>
@@ -294,7 +335,7 @@
          </font>
       </Label>
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="706.0" layoutY="38.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="93.0" />
-      <Label id="latchA" layoutX="716.0" layoutY="56.0" text="0000000000000000">
+      <Label id="latchA" fx:id="saidaDecoderB" layoutX="716.0" layoutY="56.0" text="0000000000000000">
          <font>
             <Font size="8.0" />
          </font>
@@ -305,7 +346,7 @@
          </font>
       </Label>
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="706.0" layoutY="82.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="93.0" />
-      <Label id="latchA" layoutX="716.0" layoutY="99.0" text="0000000000000000">
+      <Label id="latchA" fx:id="saidaDecoderA" layoutX="716.0" layoutY="99.0" text="0000000000000000">
          <font>
             <Font size="8.0" />
          </font>
@@ -320,13 +361,13 @@
       <Polygon fill="DODGERBLUE" layoutX="1045.0" layoutY="314.0" points="14.0, -35.000003814697266, 29.20001220703125, -56.60000228881836, -0.79998779296875, -56.60000228881836" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="18.0" layoutX="1068.0" layoutY="220.0" stroke="BLACK" strokeType="INSIDE" styleClass="barramento" width="168.0" />
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="992.0" layoutY="352.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="85.0" />
-      <Label id="latchA" layoutX="1010.0" layoutY="369.0" text="00000000">
+      <Label id="latchA" fx:id="saidaMpc" layoutX="1010.0" layoutY="369.0" text="00000000">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
       <Rectangle id="boxReg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="819.0" layoutY="353.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="106.0" />
-      <Label id="latchA" layoutX="851.0" layoutY="369.0" text="00000000">
+      <Label id="latchA" fx:id="saidaIncrementador" layoutX="851.0" layoutY="369.0" text="00000000">
          <font>
             <Font size="10.0" />
          </font>
@@ -339,39 +380,480 @@
       <Label layoutX="999.0" layoutY="159.0" text="2" />
       <Label layoutX="999.0" layoutY="181.0" text="1" />
       <Label layoutX="1021.0" layoutY="353.0" text="MPC" />
-      <Line endX="-0.39996337890625" endY="36.0" layoutX="786.0" layoutY="488.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="402.0" layoutY="487.0" startX="76.0" startY="10.5" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="509.0" layoutY="486.0" startX="276.60003662109375" startY="14.39996337890625" styleClass="linha-mir" />
-      <Line endX="-0.6070556640625" endY="25.05352783203125" layoutX="833.0" layoutY="558.0" startX="-0.6070556640625" startY="12.0" styleClass="linha-mir" />
-      <Line endX="-11.0" endY="13.55352783203125" layoutX="719.0" layoutY="569.0" startX="112.8929443359375" startY="13.55352783203125" styleClass="linha-mir" />
-      <Line endX="0.70001220703125" endY="76.0" layoutX="871.0" layoutY="557.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="811.0" layoutY="1.0" startX="539.2000732421875" startY="10.499996185302734" styleClass="linha-mir" />
-      <Line endX="0.30706787109375" endY="157.0" layoutX="903.0" layoutY="558.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="486.0" layoutY="704.0" startX="417.30706787109375" startY="11.5" styleClass="linha-mir" />
-      <Line endX="0.3070526123046875" endY="315.0" layoutX="105.0" layoutY="440.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="0.3070526123046875" endY="302.199951171875" layoutX="105.0" layoutY="489.0" startX="0.3070526123046875" startY="284.5999755859375" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="119.0" layoutY="782.0" startX="816.8070678710938" startY="10.5" styleClass="linha-mir" />
-      <Line endX="0.30706787109375" endY="235.0" layoutX="935.0" layoutY="557.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="0.3070564270019531" endY="413.39996337890625" layoutX="36.0" layoutY="393.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="49.0" layoutY="796.0" startX="923.8070678710938" startY="10.5" styleClass="linha-mir" />
-      <Line endX="0.30706787109375" endY="249.0" layoutX="972.0" layoutY="557.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="0.3070526123046875" endY="380.0" layoutX="69.0" layoutY="440.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="82.0" layoutY="810.0" startX="921.8070678710938" startY="10.5" styleClass="linha-mir" />
-      <Line endX="0.30706787109375" endY="262.0" layoutX="1004.0" layoutY="558.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="0.3070564270019531" endY="390.79998779296875" layoutX="58.0" layoutY="438.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="71.0" layoutY="819.0" startX="960.01416015625" startY="10.70703125" styleClass="linha-mir" />
-      <Line endX="0.3070068359375" endY="271.0" layoutX="1030.0" layoutY="558.0" startX="0.30706787109375" startY="13.1070556640625" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="501.0" layoutY="623.0" startX="370.20001220703125" startY="10.5" styleClass="linha-mir" />
-      <Line endX="-13.0" endY="10.5" layoutX="812.0" layoutY="45.0" startX="509.30712890625" startY="9.399948120117188" styleClass="linha-mir" />
-      <Line endX="45.0" endY="10.5" layoutX="754.0" layoutY="87.0" startX="539.2000732421875" startY="10.499996185302734" styleClass="linha-mir" />
-      <Line endX="0.30712890625" endY="490.0" layoutX="1293.0" layoutY="90.0" startX="0.9072265625" startY="8.207107543945312" styleClass="linha-mir" />
-      <Line endX="310.3929443359375" endY="12.5" layoutX="876.0" layoutY="570.0" startX="417.30706787109375" startY="11.5" styleClass="linha-mir" />
-      <Line endX="-0.6070556640625" endY="24.0" layoutX="1187.0" layoutY="558.0" startX="-0.6070556640625" startY="12.0" styleClass="linha-mir" />
-      <Line endX="0.30712890625" endY="547.0" layoutX="1321.0" layoutY="62.0" startX="1.0142822265625" startY="-5.792896270751953" styleClass="linha-mir" />
-      <Line endX="243.8929443359375" endY="13.70709228515625" layoutX="903.0" layoutY="597.0" startX="419.0142822265625" startY="12.70709228515625" styleClass="linha-mir" />
-      <Line endX="-0.6070556640625" endY="41.20709228515625" layoutX="1148.0" layoutY="569.0" startX="-0.6070556640625" startY="1.0" styleClass="linha-mir" />
-      <Line endX="0.30712890625" endY="623.2070922851562" layoutX="1351.0" layoutY="18.0" startX="0.30712890625" startY="-5.792895317077637" styleClass="linha-mir" />
-      <Line endX="191.8929443359375" endY="14.9141845703125" layoutX="913.0" layoutY="627.0" startX="439.0142822265625" startY="14.9141845703125" styleClass="linha-mir" />
-      <Line endX="-0.6070556640625" endY="74.4141845703125" layoutX="1105.0" layoutY="568.0" startX="-0.6070556640625" startY="1.0" styleClass="linha-mir" />
+      <Line endX="-0.39996337890625" endY="36.0" layoutX="786.0" layoutY="488.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="amux" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="402.0" layoutY="487.0" startX="76.0" startY="10.5">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="amux" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="509.0" layoutY="486.0" startX="276.60003662109375" startY="14.39996337890625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="amux" />
+         </styleClass></Line>
+      <Line endX="-0.6070556640625" endY="25.05352783203125" layoutX="833.0" layoutY="558.0" startX="-0.6070556640625" startY="12.0">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="cond" />
+         </styleClass></Line>
+      <Line endX="-11.0" endY="13.55352783203125" layoutX="719.0" layoutY="569.0" startX="112.8929443359375" startY="13.55352783203125">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="cond" />
+         </styleClass></Line>
+      <Line endX="0.70001220703125" endY="76.0" layoutX="871.0" layoutY="557.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="alu" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="811.0" layoutY="1.0" startX="540.0" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="c" />
+         </styleClass></Line>
+      <Line endX="0.30706787109375" endY="157.0" layoutX="903.0" layoutY="558.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="sh" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="486.0" layoutY="704.0" startX="417.30706787109375" startY="11.5">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="sh" />
+         </styleClass></Line>
+      <Line endX="0.3070526123046875" endY="315.0" layoutX="105.0" layoutY="440.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="mbr" />
+         </styleClass></Line>
+      <Line endX="0.3070526123046875" endY="302.199951171875" layoutX="105.0" layoutY="489.0" startX="0.3070526123046875" startY="284.5999755859375">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="mbr" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="119.0" layoutY="782.0" startX="816.8070678710938" startY="10.5">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="mbr" />
+         </styleClass></Line>
+      <Line endX="0.30706787109375" endY="235.0" layoutX="935.0" layoutY="557.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="mbr" />
+         </styleClass></Line>
+      <Line endX="0.3070564270019531" endY="413.39996337890625" layoutX="36.0" layoutY="393.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="mar" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="49.0" layoutY="796.0" startX="923.8070678710938" startY="10.5">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="mar" />
+         </styleClass></Line>
+      <Line endX="0.30706787109375" endY="249.0" layoutX="972.0" layoutY="557.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="mar" />
+         </styleClass></Line>
+      <Line endX="0.3070526123046875" endY="380.0" layoutX="69.0" layoutY="440.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="rd" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="82.0" layoutY="810.0" startX="921.8070678710938" startY="10.5">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="rd" />
+         </styleClass></Line>
+      <Line endX="0.30706787109375" endY="262.0" layoutX="1004.0" layoutY="558.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="rd" />
+         </styleClass></Line>
+      <Line endX="0.3070564270019531" endY="390.79998779296875" layoutX="58.0" layoutY="438.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="wr" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="71.0" layoutY="819.0" startX="960.01416015625" startY="10.70703125">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="wr" />
+         </styleClass></Line>
+      <Line endX="0.3070068359375" endY="271.0" layoutX="1030.0" layoutY="558.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="wr" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="501.0" layoutY="623.0" startX="370.20001220703125" startY="10.5">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="alu" />
+         </styleClass></Line>
+      <Line endX="-13.0" endY="10.5" layoutX="812.0" layoutY="45.0" startX="509.30712890625" startY="9.399948120117188">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="b" />
+         </styleClass></Line>
+      <Line endX="45.0" endY="10.5" layoutX="754.0" layoutY="87.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="a" />
+         </styleClass></Line>
+      <Line endX="0.30712890625" endY="490.0" layoutX="1293.0" layoutY="90.0" startX="0.9072265625" startY="8.207107543945312">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="a" />
+         </styleClass></Line>
+      <Line endX="310.3929443359375" endY="12.5" layoutX="876.0" layoutY="570.0" startX="417.30706787109375" startY="11.5">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="a" />
+         </styleClass></Line>
+      <Line endX="-0.6070556640625" endY="24.0" layoutX="1187.0" layoutY="558.0" startX="-0.6070556640625" startY="12.0">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="a" />
+         </styleClass></Line>
+      <Line endX="0.30712890625" endY="547.0" layoutX="1321.0" layoutY="62.0" startX="1.0142822265625" startY="-5.792896270751953">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="b" />
+         </styleClass></Line>
+      <Line endX="243.8929443359375" endY="13.70709228515625" layoutX="903.0" layoutY="597.0" startX="419.0142822265625" startY="12.70709228515625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="b" />
+         </styleClass></Line>
+      <Line endX="-0.6070556640625" endY="41.20709228515625" layoutX="1148.0" layoutY="569.0" startX="-0.6070556640625" startY="1.0">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="b" />
+         </styleClass></Line>
+      <Line endX="0.30712890625" endY="623.2070922851562" layoutX="1351.0" layoutY="18.0" startX="0.30712890625" startY="-5.792895317077637">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="c" />
+         </styleClass></Line>
+      <Line endX="191.8929443359375" endY="14.9141845703125" layoutX="913.0" layoutY="627.0" startX="439.0142822265625" startY="14.9141845703125">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="c" />
+         </styleClass></Line>
+      <Line endX="-0.6070556640625" endY="74.4141845703125" layoutX="1105.0" layoutY="568.0" startX="-0.6070556640625" startY="1.0">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="c" />
+         </styleClass></Line>
+      <Line endX="98.79998779296875" endY="10.5" layoutX="166.0" layoutY="86.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="a" />
+         </styleClass>
+      </Line>
+      <Line endX="49.99998474121094" endY="10.499996185302734" layoutX="166.0" layoutY="45.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="b" />
+         </styleClass>
+      </Line>
+      <Line endX="-4.0" endY="10.49999713897705" layoutX="167.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="c" />
+         </styleClass>
+      </Line>
+      <Line endX="0.30706787109375" endY="34.80000305175781" layoutX="263.0" layoutY="83.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="a" />
+         </styleClass>
+      </Line>
+      <Line endX="0.3070526123046875" endY="76.20710754394531" layoutX="215.0" layoutY="43.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="b" />
+         </styleClass>
+      </Line>
+      <Line endX="0.3070526123046875" endY="121.20710754394531" layoutX="162.0" layoutY="-2.0" startX="0.30706787109375" startY="13.1070556640625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="c" />
+         </styleClass>
+      </Line>
+      <Line endX="0.30706787109375" endY="43.20710754394531" layoutX="263.0" layoutY="95.0" startX="-8.107070922851562" startY="23.207107543945312">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="a" />
+         </styleClass>
+      </Line>
+      <Line endX="-6.74285888671875" endY="7.2071075439453125" layoutX="280.0" layoutY="111.0" startX="-15.599990844726562" startY="27.600006103515625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="a" />
+         </styleClass>
+      </Line>
+      <Line endX="0.30706787109375" endY="43.20710754394531" layoutX="215.0" layoutY="95.0" startX="-8.107070922851562" startY="23.207107543945312">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="b" />
+         </styleClass>
+      </Line>
+      <Line endX="-6.74285888671875" endY="7.2071075439453125" layoutX="232.0" layoutY="111.0" startX="-15.599990844726562" startY="27.600006103515625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="b" />
+         </styleClass>
+      </Line>
+      <Line endX="0.30706787109375" endY="43.20710754394531" layoutX="162.0" layoutY="95.0" startX="-8.107070922851562" startY="23.207107543945312">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="c" />
+         </styleClass>
+      </Line>
+      <Line endX="-6.74285888671875" endY="7.2071075439453125" layoutX="179.0" layoutY="111.0" startX="-15.599990844726562" startY="27.600006103515625">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="c" />
+         </styleClass>
+      </Line>
+      <Line endX="287.10003662109375" endY="10.707107543945312" layoutX="450.0" layoutY="179.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-1" />
+         </styleClass>
+      </Line>
+      <Line endX="518.0" endY="10.0999755859375" layoutX="219.0" layoutY="537.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-1" />
+         </styleClass>
+      </Line>
+      <Line endX="277.60003662109375" endY="1.2071075439453125" layoutX="459.0" layoutY="189.0" startX="277.60003662109375" startY="357.5999755859375">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-1" />
+         </styleClass>
+      </Line>
+      <Line endX="145.10003662109375" endY="10.707107543945312" layoutX="450.0" layoutY="157.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-2" />
+         </styleClass>
+      </Line>
+      <Line endX="277.60003662109375" endY="1.2071075439453125" layoutX="317.0" layoutY="167.0" startX="277.80712890625" startY="172.79287719726562">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-2" />
+         </styleClass>
+      </Line>
+      <Line endX="124.4000244140625" endY="10.5" layoutX="412.0" layoutY="330.0" startX="182.10003662109375" startY="11.0999755859375">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-2" />
+         </styleClass>
+      </Line>
+      <Line endX="151.10003662109375" endY="10.5" layoutX="270.0" layoutY="281.0" startX="324.10003662109375" startY="10.70709228515625">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-2" />
+         </styleClass>
+      </Line>
+      <Line endX="145.10003662109375" endY="10.707107543945312" layoutX="263.0" layoutY="331.0" startX="158.10003662109375" startY="10.499969482421875">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-2" />
+         </styleClass>
+      </Line>
+      <Line endX="277.60003662109375" endY="81.0" layoutX="143.0" layoutY="211.0" startX="277.60003662109375" startY="129.99996948242188">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-2" />
+         </styleClass>
+      </Line>
+      <Line endX="-158.69287109375" endY="10.300003051757812" layoutX="451.0" layoutY="135.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-3" />
+         </styleClass>
+      </Line>
+      <Line endX="148.99998474121094" endY="10.914215087890625" layoutX="-94.0" layoutY="331.0" startX="385.30712890625" startY="10.499969482421875">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-3" />
+         </styleClass>
+      </Line>
+      <Line endX="277.5" endY="128.41421508789062" layoutX="-223.0" layoutY="214.0" startX="277.5" startY="146.0">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-3" />
+         </styleClass>
+      </Line>
+      <Line endX="277.80712890625" endY="-24.199996948242188" layoutX="14.0" layoutY="170.0" startX="277.80712890625" startY="170.99996948242188">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-3" />
+         </styleClass>
+      </Line>
+      <Line endX="277.80712890625" endY="-33.79289245605469" layoutX="-161.0" layoutY="163.0" startX="277.80712890625" startY="243.79998779296875">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-4" />
+         </styleClass>
+      </Line>
+      <Line endX="249.30711364746094" endY="10.499984741210938" layoutX="-133.0" layoutY="204.0" startX="275.0" startY="10.499984741210938">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-4" />
+         </styleClass>
+      </Line>
+      <Line endX="-332.69287109375" endY="11.707107543945312" layoutX="450.0" layoutY="117.0" startX="539.2000732421875" startY="10.499996185302734">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-4" />
+         </styleClass>
+      </Line>
+      <Line endX="277.80712890625" endY="32.20710372924805" layoutX="661.0" layoutY="-9.0" startX="277.80712890625" startY="135.7928924560547">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-4" />
+         </styleClass>
+      </Line>
+      <Line endX="145.10003662109375" endY="10.707107543945312" layoutX="794.0" layoutY="63.0" startX="376.3072509765625" startY="11.5">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-4" />
+         </styleClass>
+      </Line>
+      <Line endX="287.10003662109375" endY="10.707107543945312" layoutX="790.0" layoutY="359.0" startX="379.8929443359375" startY="10.499969482421875">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-4" />
+         </styleClass>
+      </Line>
+      <Line endX="277.60003662109375" endY="1.2071075439453125" layoutX="893.0" layoutY="74.0" startX="277.60009765625" startY="294.7928771972656">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-4" />
+         </styleClass>
+      </Line>
+      <Line endX="-0.6070556640625" endY="119.20001220703125" layoutX="1064.0" layoutY="569.0" startX="-0.6070556640625" startY="1.0">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="enc" />
+         </styleClass>
+      </Line>
+      <Line endX="191.8929443359375" endY="14.9141845703125" layoutX="872.0" layoutY="673.0" startX="510.8929443359375" startY="14.9141845703125">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="enc" />
+         </styleClass>
+      </Line>
+      <Line endX="-0.6070556640625" endY="154.4141845703125" layoutX="1384.0" layoutY="533.0" startX="-0.6070556640625" startY="-531.1858520507812">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="enc" />
+         </styleClass>
+      </Line>
+      <Line endX="191.8929443359375" endY="14.9141845703125" layoutX="606.0" layoutY="-15.0" startX="777.8929443359375" startY="16.107059478759766">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="enc" />
+         </styleClass>
+      </Line>
+      <Line endX="-33.0" layoutX="604.0" layoutY="587.0" startX="-99.5999755859375">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="nbit" />
+         </styleClass>
+      </Line>
+      <Line endX="-27.0" layoutX="598.0" layoutY="604.0" startX="-100.0">
+         <styleClass>
+            <String fx:value="linha-mir" />
+            <String fx:value="zbit" />
+         </styleClass>
+      </Line>
+      <Label id="latchA" fx:id="nBit" layoutX="541.0" layoutY="567.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label id="latchA" fx:id="zBit" layoutX="541.0" layoutY="606.0" text="0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="177.0" layoutY="208.0" text="0000000000000000">
+         <font>
+            <Font name="Monospaced Regular" size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="177.0" layoutY="223.0" text="0000000000000001">
+         <font>
+            <Font name="Monospaced Regular" size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="177.0" layoutY="237.0" text="1111111111111111">
+         <font>
+            <Font name="Monospaced Regular" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="tir" layoutX="177.0" layoutY="193.0" text="0000000000000000">
+         <font>
+            <Font name="Monospaced Regular" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="regA" layoutX="177.0" layoutY="278.0" text="0000000000000000">
+         <font>
+            <Font name="Monospaced Regular" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="ir" layoutX="177.0" layoutY="179.0" text="0000000000000000">
+         <font>
+            <Font name="Monospaced Regular" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="sp" layoutX="177.0" layoutY="164.0" text="0000000000000000">
+         <font>
+            <Font name="Monospaced Regular" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="pc" layoutX="177.0" layoutY="149.0" text="0000000000000000">
+         <font>
+            <Font name="Monospaced Regular" size="10.0" />
+         </font>
+      </Label>
+      <Button fx:id="botaoSubciclo" layoutX="1295.0" layoutY="748.0" mnemonicParsing="false" onAction="#executarSubciclo" prefHeight="26.0" prefWidth="30.0">
+         <font>
+            <Font size="8.0" />
+         </font>
+      </Button>
+      <Button fx:id="botaoCiclo" layoutX="1295.0" layoutY="786.0" mnemonicParsing="false" onAction="#executarCiclo" prefHeight="24.0" prefWidth="30.0" />
+      <Label layoutX="1329.0" layoutY="753.0" text="Subciclo">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="1338.0" layoutY="791.0" text="Ciclo">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="1306.0" layoutY="716.0" text="EXECUTAR">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Line endX="144.0" endY="11.707103729248047" layoutX="655.0" layoutY="11.0" startX="283.30712890625" startY="11.707103729248047">
+         <styleClass>
+            <String fx:value="subciclo" />
+            <String fx:value="subciclo-4" />
+         </styleClass>
+      </Line>
    </children>
 </AnchorPane>

@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static back.comum.Constantes.*;
 
-public class Main extends Application {
+public class  Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH_TELA1));

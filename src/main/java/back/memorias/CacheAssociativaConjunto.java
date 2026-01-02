@@ -180,4 +180,6 @@ public class CacheAssociativaConjunto implements Cache {
     public LinhaCacheMD[] getLinha(int indice) { return this.cache[indice]; }
 
     public String getTipoCache() { return this.tipoCache; }
+
+    public MemoriaPrincipal getMemP() { return this.memoriaPrincipal; }
 }
