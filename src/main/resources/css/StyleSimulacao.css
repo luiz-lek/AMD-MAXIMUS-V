@@ -124,8 +124,7 @@ AnchorPane {
 }
 
 .barramento {
-    -fx-stroke: #363636;
-    -fx-stroke-width: 2px;
+    -fx-fill: #004d52;
 }
 
 .divisao-mir {
@@ -144,10 +143,20 @@ AnchorPane {
     -fx-stroke-dash-array: 8 8;
 }
 
+.sempre-ativo {
+    -fx-stroke: #004d52;
+}
 
-.ativo, .sempre-ativo {
+.ativo {
     -fx-stroke: #01e2f2;
     -fx-effect: dropshadow(gaussian, #01e2f2, 10, 0.6, 0, 0);
+}
+
+.barramento-ativo {
+    -fx-stroke: #01e2f2;
+    -fx-stroke-width: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(1, 226, 242, 0.8), 20, 0.5, 0, 0);
+    -fx-stroke-line-cap: butt;
 }
 
 #pane {

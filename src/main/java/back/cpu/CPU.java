@@ -1,8 +1,11 @@
 package back.cpu;
 
+import back.comum.Conversao;
 import back.comum.Microinstrucao;
 import back.memorias.Cache;
 import back.memorias.MemoriaPrincipal;
+
+import java.io.IOException;
 
 public class CPU {
     private Cache cache;
@@ -11,7 +14,7 @@ public class CPU {
     private MAR mar = new MAR("MAR");
     private MBR mbr = new MBR("MBR");
     private Registrador mpc = new Registrador("MPC");
-    public Microinstrucao mir = new Microinstrucao("00000000000000000000000000000000");
+    private Microinstrucao mir = new Microinstrucao("00000000000000000000000000000000");
     private Latch latA = new Latch("A");
     private Latch latB = new Latch("B");
     private AMUX amux = new AMUX();
@@ -24,8 +27,8 @@ public class CPU {
     private Decodificador decC = new Decodificador();
     private LogicaMicrosequenciamento logica = new LogicaMicrosequenciamento();
 
-    private boolean rdIniciado = false, wrIniciado = false;
-    private int ultSubcicloExe = 0;
+    private boolean rdIniciado = false, wrIniciado = false, leituraFeita = false;
+    private int ultSubcicloExe = 0, ultRegAlterado = 0;
 
     public void setCache(Cache cache) { this.cache = cache; }
 
@@ -45,7 +48,7 @@ public class CPU {
         };
     }
 
-    public void subciclo1(){
+    private void subciclo1(){
         this.mir.setMic(memC.getPos(this.mpc.getValor()).getMic()); //Passa a instrução em mem[mpc] para o mir
                                                                     //e estabiliza suas saídas.
         this.amux.setControle(this.mir.getAMUX());
@@ -63,7 +66,7 @@ public class CPU {
         this.ultSubcicloExe = 1;
     }
 
-    public void subciclo2() throws Exception { //Manda os sinais de controle do mir para todos os componentes.
+    private void subciclo2() throws Exception { //Manda os sinais de controle do mir para todos os componentes.
         this.latB.setValor(this.registradores.getValor(decB.decodificar()));
         this.incrementador.incrementar(this.mpc.getValor());
         this.latA.setValor(this.registradores.getValor(decA.decodificar()));
@@ -71,13 +74,19 @@ public class CPU {
         this.ultSubcicloExe = 2;
     }
 
-    public void subciclo3() throws Exception {
+    private void subciclo3() throws Exception {
         if(this.rdIniciado) { //Verifica se há uma leitura iniciada no ciclo anterior, caso tenha,
             this.cache.ler(this.getValorMar(), this.mbr);
-            if(this.mbr.isReady()) this.rdIniciado = false;
+            if(this.mbr.isReady()) {
+                this.rdIniciado = false;
+                this.leituraFeita = true;
+            }
         } else if(this.wrIniciado) { //Mesmo que o bloco a cima, mas para escrita.
             this.cache.escrever(this.getValorMar(), this.mbr);
-            if(this.mbr.isReady()) this.wrIniciado = false;
+            if(this.mbr.isReady()) {
+                this.wrIniciado = false;
+                this.leituraFeita = false;
+            }
         }
 
         this.amux.ativar(this.mbr.getValor(), this.latA.getValor());
@@ -88,8 +97,11 @@ public class CPU {
         this.ultSubcicloExe = 3;
     }
 
-    public void subciclo4() throws Exception {
-        if(decC.isENC()) this.registradores.setValor(decC.decodificar(), deslocador.getSaida());
+    private void subciclo4() throws Exception {
+        if(decC.isENC()) {
+            this.registradores.setValor(decC.decodificar(), deslocador.getSaida());
+            this.ultRegAlterado = this.registradores.ultRegMod;
+        }
         if(this.mbr.isAtivado()) mbr.setValor(this.deslocador.getSaida()); //Em caso de MBR acionado, a saída do
                                                                            //deslocador e passada para MBR.
         this.mbr.setRD(this.mir.getRD());  //Os campos rd e wr são como laths, segundo a descriçãoo do livro do Tanenbaum.
@@ -100,6 +112,8 @@ public class CPU {
         this.mmux.setControle(logica.isSaida());
         this.mmux.ativar();
         this.mpc.setValor(this.mmux.getSaida());
+
+        this.mbr.setReady('0');
 
         if(this.mbr.isRD()) {
             this.rdIniciado = true;
@@ -112,13 +126,36 @@ public class CPU {
         this.ultSubcicloExe = 4;
     }
 
+    public String getLatchA() { return this.latA.getValor(); }
+
+    public String getLatchB() { return this.latB.getValor(); }
+
+    public String getSaidaIncrementador() {
+        short saida = this.incrementador.getSaida();
+        try {
+            return Conversao.shortToString(saida, 8);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     public String getValorMbr() { return this.mbr.getValor(); }
 
     public String getValorMar() { return this.mar.getValor(); }
 
     public String getValorMPC() { return this.mpc.getValor(); }
 
-    public String getValorMpc() { return mpc.getValor(); }
+    public String getValorIncrementador() {
+        try {
+            return Conversao.shortToString(this.incrementador.getSaida(), 8);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public String getValorMpc() { return mpc.getValor().substring(8, 16); }
+
+    public String getValorMMux() { return mmux.getSaida().substring(8, 16); }
 
     public String getValorMir() { return this.mir.getMic(); }
 
@@ -128,8 +165,32 @@ public class CPU {
 
     public int getUltSubcicloExe() { return this.ultSubcicloExe; }
 
+    public Microinstrucao getMir() { return this.mir; }
+
+    public MBR getMbr() { return this.mbr; }
+
+    public MAR getMar() { return this.mar; }
+
+    public boolean isEnc() { return this.decC.isENC(); }
+
+    public String getValorDeslocador() { return this.deslocador.getSaida(); }
+
+    public String getValorDecA() { return this.decA.saida; }
+
+    public String getValorDecB() { return this.decB.saida; }
+
+    public String getValorDecC() { return this.decC.saida; }
+
     public String getValorRegistrador(int pos) throws Exception {
         if((pos < 0) || (15 < pos)) throw new Exception("Posição inválida.");
         return this.registradores.registradores[pos].getValor();
     }
+
+    public ULA getUla() { return this.ula; }
+
+    public boolean isLeituraFeita() { return this.leituraFeita; }
+
+    public int getUltRegAlterado() { return this.ultRegAlterado; }
+
+    public boolean isLogicaMic() { return this.logica.isSaida(); }
 }

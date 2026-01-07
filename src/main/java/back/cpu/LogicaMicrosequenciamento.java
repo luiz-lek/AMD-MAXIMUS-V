@@ -2,7 +2,7 @@ package back.cpu;
 
 public class LogicaMicrosequenciamento {
     private boolean saida = false, nBit = false, zBit = false, ready = false;
-    String COND = "00";
+    String COND = "000";
 
     public void setCOND(String COND) { this.COND = COND; }
 

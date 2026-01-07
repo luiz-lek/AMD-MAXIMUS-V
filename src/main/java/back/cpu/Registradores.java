@@ -20,6 +20,8 @@ public class Registradores {
             new Registrador("F")
     };
 
+    public int ultRegMod = 0;
+
     public Registradores(){
         this.registradores[2].setValor("0001000000000000"); //SP
         this.registradores[6].setValor("0000000000000001"); //1
@@ -43,5 +45,6 @@ public class Registradores {
     public void setValor(String sinais, String valor){ //Recebe 16 bits de sinal, apenas 1 deles é true(1).
         int i = determinarReg(sinais);
         registradores[i].setValor(valor);
+        this.ultRegMod = i;
     }
 }
