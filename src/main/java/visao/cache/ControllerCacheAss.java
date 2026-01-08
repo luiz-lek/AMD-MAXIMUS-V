@@ -1,4 +1,4 @@
-package visao;
+package visao.cache;
 
 import back.memorias.*;
 import javafx.fxml.FXML;

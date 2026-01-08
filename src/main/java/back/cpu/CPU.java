@@ -30,7 +30,7 @@ public class CPU {
     private boolean rdIniciado = false, wrIniciado = false, leituraFeita = false;
     private int ultSubcicloExe = 0, ultRegAlterado = 0;
 
-    public void setCache(Cache cache) { this.cache = cache; }
+    public CPU(Cache cache) { this.cache = cache; }
 
     public void executarCiclo() throws Exception {
         this.subciclo1();

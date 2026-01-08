@@ -1,4 +1,4 @@
-package visao;
+package visao.cache;
 
 import back.comum.Constantes;
 import back.memorias.Cache;

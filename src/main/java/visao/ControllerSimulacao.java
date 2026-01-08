@@ -3,47 +3,53 @@ package visao;
 import back.comum.Microinstrucao;
 import back.comum.MicroinstrucaoMap;
 import back.cpu.CPU;
-import back.cpu.ULA;
 import back.memorias.Cache;
+import back.memorias.CacheFactory;
 import back.memorias.MemoriaPrincipal;
+import back.montagem.Assembler;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.Set;
+import java.io.IOException;
 
 public class ControllerSimulacao {
     private Stage stage;
+
     @FXML
     private AnchorPane pane;
-
     @FXML
     private Label amux, cond, alu, deslocador, mbr, mar, read, write, enc, c, b, a, addr, microinstrucao, contadorCiclos;
     @FXML
     private Label saidaMmux, saidaMpc, saidaIncrementador, saidaLogicaMicro, saidaDecoderC, saidaDecoderB, saidaDecoderA,
             saidaLatchA, saidaLatchB, saidaAmux, saidaUla, saidaDeslocador, saidaMbr, saidaMar, pc, ac, sp, ir, tir, regA;
-
+    @FXML
+    public Button botaoCiclo, botaoSubciclo, executarTudo, pausarPrograma;
+    @FXML
     private Label regs[] = new Label[11];
 
+    private Timeline timeline;
+    private boolean rodando = false;
+    private GerenciadorVisual gerenciadorVisual;
     private CPU cpu;
     private Cache cache;
     private MemoriaPrincipal memP;
-
     private int acCiclos = 0;
+    private String macroPrograma;
 
     public void setStage(Stage stage) { this.stage = stage; }
 
-    public void setConteudo(CPU cpu, Cache cache) {
+    public void setConteudo(CPU cpu, Cache cache, String macroPrograma) {
         this.cpu = cpu;
         this.cache = cache;
         this.memP = cache.getMemP();
+        this.macroPrograma = macroPrograma;
 
         this.regs[0] = this.pc;
         this.regs[1] = this.ac;
@@ -51,6 +57,31 @@ public class ControllerSimulacao {
         this.regs[3] = this.ir;
         this.regs[4] = this.tir;
         this.regs[10] = this.regA;
+
+        this.gerenciadorVisual = new GerenciadorVisual(this.cpu, this.pane);
+    }
+
+    @FXML
+    public void executarTudo() {
+        if(rodando) return;
+
+        this.timeline = new Timeline(new KeyFrame(
+                Duration.millis(100),
+                event -> {
+                    try {
+                        executarCicloCpu();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        timeline.stop();
+                    }
+                }
+        ));
+
+       timeline.setCycleCount(Timeline.INDEFINITE);
+       timeline.play();
+
+       rodando = true;
+       destivarBotoesExecucao(true);
     }
 
     @FXML
@@ -60,8 +91,8 @@ public class ControllerSimulacao {
 
     private void executarSubc() {
         try{
-            this.cpu.executarSubciclo();
-            this.atualizarTela();
+            cpu.executarSubciclo();
+            atualizarTela();
         } catch (Exception exe) {
             System.out.println("Erro ao executar subciclo.");;
         }
@@ -72,15 +103,15 @@ public class ControllerSimulacao {
         this.executarCicloCpu();
     }
 
-    private void executarCicloCpu() {
+    public void executarCicloCpu() {
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(100),
+                Duration.millis(20),
                 event -> {
-                    this.executarSubc();
+                    executarSubc();
                 }
         ));
 
-        int qtdCiclos = 4 - this.cpu.getUltSubcicloExe();
+        int qtdCiclos = 4 - cpu.getUltSubcicloExe();
 
         if(qtdCiclos == 0) {
             qtdCiclos = 4;
@@ -91,243 +122,189 @@ public class ControllerSimulacao {
     }
 
     private void atualizarTela() {
-        this.apagarCaminhos("ativo");
-        this.apagarCaminhos("barramento-ativo");
+        gerenciadorVisual.apagarCaminhos("ativo");
+        gerenciadorVisual.apagarCaminhos("barramento-ativo");
 
-        switch(this.cpu.getUltSubcicloExe()) {
-            case(1) -> this.atualizarTelaSubc1();
-            case(2) -> this.atualizarTelaSubc2();
-            case(3) -> this.atualizarTelaSubc3();
-            case(4) -> this.atualizarTelaSubc4();
+        switch(cpu.getUltSubcicloExe()) {
+            case(1) -> atualizarTelaSubc1();
+            case(2) -> atualizarTelaSubc2();
+            case(3) -> atualizarTelaSubc3();
+            case(4) -> atualizarTelaSubc4();
             default -> {
                 return;
             }
         }
     }
 
-    private void apagarCaminhos(String atividade) {
-        Set<Node> fiosDestacados = this.pane.lookupAll("." + atividade);
-        System.out.println("Encontrou os caminhos destacados.\n");
-
-        for(Node fio : fiosDestacados) {
-            fio.getStyleClass().remove(atividade);
-        }
-    }
-
-
     private void atualizarTelaSubc1() {
-        this.destacarSubc1();
-        this.atualizarComponentesSubc1();
+        gerenciadorVisual.destacarSubc1();
+        atualizarComponentesSubc1();
     }
 
     private void atualizarTelaSubc2() {
-        this.destacarSubc2();
-        this.atualizarComponentesSubc2();
+        gerenciadorVisual.destacarSubc2();
+        atualizarComponentesSubc2();
     }
 
     private void atualizarTelaSubc3() {
-        this.destacarSubc3();
-        this.atualizarComponentesSubc3();
+        gerenciadorVisual.destacarSubc3();
+        atualizarComponentesSubc3();
     }
 
     private void atualizarTelaSubc4() {
-        this.destacarSubc4();
-        this.atualizarComponentesSubc4();
-    }
-
-    private void destacarSubc1() {
-        this.apagarCaminhos("sempre-ativo");
-        this.destacarCaminho(".subciclo-1", "ativo");
-        this.destacarCaminho(".barramento-regs", "barramento-ativo");
-        this.destacarCaminho(".addr-mmux", "barramento-ativo");
-        this.destacarCaminho(".busca-micro", "barramento-ativo");
-    }
-
-    private void destacarSubc2() {
-        this.destacarCaminho(".subciclo-2", "ativo");
-        this.destacarCaminho(".barramento-latch", "barramento-ativo");
-        this.destacarCaminho(".barramento-mpc", "barramento-ativo");
-    }
-
-    private void destacarSubc3() {
-        this.destacarCaminho(".subciclo-3", "ativo");
-        if(this.cpu.getMbr().isReady()) {
-            this.destacarCaminho(".mbr-ready", "ativo");
-            if(this.cpu.isLeituraFeita()) this.destacarCaminho(".mbr-leitura", "barramento-ativo");
-            else this.destacarCaminho(".mbr-escrita", "barramento-ativo");
-        }
-        this.destacarCaminho(".mbr-amux", "barramento-ativo");
-        this.destacarCaminho(".amux-ula", "barramento-ativo");
-        this.destacarCaminho(".ula-deslocador", "barramento-ativo");
-        if(this.cpu.getMar().isAtivado()) this.destacarCaminho(".latchb-mar", "barramento-ativo");
-    }
-
-    public void destacarSubc4() {
-        this.destacarCaminho(".subciclo-4", "ativo");
-        this.acCiclos++;
-        this.contadorCiclos.setText(Integer.toString(acCiclos));
-
-        if(this.cpu.isEnc()) {
-            this.destacarCaminho(".c-regs", "ativo");
-            this.destacarCaminho(".deslocador-regs", "barramento-ativo");
-            this.destacarCaminho(".deslocador-regs-mbr", "barramento-ativo");
-        }
-        if(this.cpu.getMbr().isAtivado()) {
-            this.destacarCaminho(".deslocador-mbr", "barramento-ativo");
-            this.destacarCaminho(".deslocador-regs-mbr", "barramento-ativo");
-        }
-
-        ULA ula = this.cpu.getUla();
-        if(ula.isNBit()) this.destacarCaminho(".nbit", "ativo");
-        else if(ula.isZBit()) this.destacarCaminho(".zbit", "ativo");
-
-        if(this.cpu.isLogicaMic()) this.destacarCaminho(".logica-micro", "ativo");
-
-        this.destacarCaminho(".incrementador-mmux", "barramento-ativo");
-        this.destacarCaminho(".mmux-mpc", "barramento-ativo");
+        gerenciadorVisual.destacarSubc4();
+        acCiclos++;
+        contadorCiclos.setText(Integer.toString(acCiclos));
+        atualizarComponentesSubc4();
     }
 
     public void atualizarComponentesSubc1() {
         this.trocarLabelsMir();
 
-        this.destacarAmux();
-        this.destacarCaminho(".cond", "sempre-ativo");
-        this.destacarCaminho(".cond", "ativo");
-        this.destacarCaminho(".alu", "sempre-ativo");
-        this.destacarCaminho(".alu", "ativo");
-        this.destacarDeslocador();
-        this.destacarMbr();
-        this.destacarMar();
-        this.destacarRD();
-        this.destacarWR();
-        this.destacarEnc();
-        this.destacarCaminho(".c", "sempre-ativo");
-        this.destacarCaminho(".b", "sempre-ativo");
-        this.destacarCaminho(".a", "sempre-ativo");
-        this.destacarCaminho(".c", "ativo");
-        this.destacarCaminho(".b", "ativo");
-        this.destacarCaminho(".a", "ativo");
+        gerenciadorVisual.destacarAmux();
+        gerenciadorVisual.destacarCaminho(".cond", "sempre-ativo");
+        gerenciadorVisual.destacarCaminho(".cond", "ativo");
+        gerenciadorVisual.destacarCaminho(".alu", "sempre-ativo");
+        gerenciadorVisual.destacarCaminho(".alu", "ativo");
+        gerenciadorVisual.destacarDeslocador();
+        gerenciadorVisual.destacarMbr();
+        gerenciadorVisual.destacarMar();
+        gerenciadorVisual.destacarRD();
+        gerenciadorVisual.destacarWR();
+        gerenciadorVisual.destacarEnc();
+        gerenciadorVisual.destacarCaminho(".c", "sempre-ativo");
+        gerenciadorVisual.destacarCaminho(".b", "sempre-ativo");
+        gerenciadorVisual.destacarCaminho(".a", "sempre-ativo");
+        gerenciadorVisual.destacarCaminho(".c", "ativo");
+        gerenciadorVisual.destacarCaminho(".b", "ativo");
+        gerenciadorVisual.destacarCaminho(".a", "ativo");
     }
 
     private void atualizarComponentesSubc2() {
-        this.saidaLatchA.setText(this.cpu.getLatchA());
-        this.saidaLatchB.setText(this.cpu.getLatchB());
-        this.saidaIncrementador.setText(this.cpu.getSaidaIncrementador());
-        this.saidaDecoderA.setText(this.cpu.getValorDecA());
-        this.saidaDecoderB.setText(this.cpu.getValorDecB());
+        saidaLatchA.setText(cpu.getLatchA());
+        saidaLatchB.setText(cpu.getLatchB());
+        saidaIncrementador.setText(cpu.getSaidaIncrementador());
+        saidaDecoderA.setText(cpu.getValorDecA());
+        saidaDecoderB.setText(cpu.getValorDecB());
     }
 
     private void atualizarComponentesSubc3() {
-        this.saidaMbr.setText(this.cpu.getValorMbr());
-        this.saidaMar.setText(this.cpu.getValorMar());
-        this.saidaAmux.setText(this.cpu.getValorAmux());
-        this.saidaUla.setText(this.cpu.getValorUla());
-        this.saidaDeslocador.setText(this.cpu.getValorDeslocador());
+        saidaMbr.setText(cpu.getValorMbr());
+        saidaMar.setText(cpu.getValorMar());
+        saidaAmux.setText(cpu.getValorAmux());
+        saidaUla.setText(cpu.getValorUla());
+        saidaDeslocador.setText(cpu.getValorDeslocador());
     }
 
     private void atualizarComponentesSubc4() {
-        int posRegAlterado = this.cpu.getUltRegAlterado();
+        int posRegAlterado = cpu.getUltRegAlterado();
         try{
-            this.regs[posRegAlterado].setText(this.cpu.getValorRegistrador(posRegAlterado));
+            regs[posRegAlterado].setText(cpu.getValorRegistrador(posRegAlterado));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        this.saidaMbr.setText(this.cpu.getValorMbr());
+        saidaMbr.setText(cpu.getValorMbr());
         String saida = "0";
-        if(this.cpu.isLogicaMic()) saida = "1";
-        this.saidaLogicaMicro.setText(saida);
-        this.saidaIncrementador.setText(this.cpu.getValorIncrementador());
-        this.saidaMmux.setText(this.cpu.getValorMMux());
-        this.saidaMpc.setText(this.cpu.getValorMpc());
+        if(cpu.isLogicaMic()) saida = "1";
+        saidaLogicaMicro.setText(saida);
+        saidaIncrementador.setText(cpu.getValorIncrementador());
+        saidaMmux.setText(cpu.getValorMMux());
+        saidaMpc.setText(cpu.getValorMpc());
     }
 
     private void trocarLabelsMir() {
-        Microinstrucao mir = this.cpu.getMir();
-        this.amux.setText(mir.getAMUX());
-        this.cond.setText(mir.getCOND());
-        this.alu.setText(mir.getALU());
-        this.deslocador.setText(mir.getSH());
-        this.mbr.setText(mir.getMBR());
-        this.mar.setText(mir.getMAR());
-        this.read.setText(mir.getRD());
-        this.write.setText(mir.getWR());
-        this.enc.setText(mir.getENC());
-        this.c.setText(mir.getC());
-        this.b.setText(mir.getB());
-        this.a.setText(mir.getA());
-        this.addr.setText(mir.getADDR());
+        Microinstrucao mir = cpu.getMir();
+        amux.setText(mir.getAMUX());
+        cond.setText(mir.getCOND());
+        alu.setText(mir.getALU());
+        deslocador.setText(mir.getSH());
+        mbr.setText(mir.getMBR());
+        mar.setText(mir.getMAR());
+        read.setText(mir.getRD());
+        write.setText(mir.getWR());
+        enc.setText(mir.getENC());
+        c.setText(mir.getC());
+        b.setText(mir.getB());
+        a.setText(mir.getA());
+        addr.setText(mir.getADDR());
 
         String inst;
         try{
-            inst = MicroinstrucaoMap.getDescricao(this.cpu.getValorMPC());
+            inst = MicroinstrucaoMap.getDescricao(cpu.getValorMPC());
         } catch(Exception e) {
             inst = null;
         }
-        this.microinstrucao.setText(inst);
+        microinstrucao.setText(inst);
     }
 
-    private void destacarCaminho(String classe, String atividade) {
-        Set<Node> fiosDestacar = pane.lookupAll(classe);
-
-        for(Node fio : fiosDestacar) {
-            fio.getStyleClass().add(atividade);
-        }
+    public void destivarBotoesExecucao(boolean estado) {
+        botaoCiclo.setDisable(estado);
+        botaoSubciclo.setDisable(estado);
+        executarTudo.setDisable(estado);
     }
 
-    public void destacarAmux() {
-        String amux = this.cpu.getMir().getAMUX();
-        if("1".equals(amux)) {
-            this.destacarCaminho(".amux", "sempre-ativo");
-            this.destacarCaminho(".amux", "ativo");
+    @FXML
+    public void pausarPrograma() {
+        if (timeline != null) {
+            timeline.stop();
         }
+        rodando = false;
+        destivarBotoesExecucao(false);
     }
 
-    public void destacarDeslocador() {
-        String deslocador = this.cpu.getMir().getSH();
-        if("1".equals(deslocador)) {
-            this.destacarCaminho(".sh", "sempre-ativo");
-            this.destacarCaminho(".sh", "ativo");
-        }
-    }
+    @FXML
+    private void reiniciarExecucao(ActionEvent e) throws IOException {
+        memP = new MemoriaPrincipal();
 
-    public void destacarMbr() {
-        String mbr = this.cpu.getMir().getMBR();
-        if("1".equals(mbr)) {
-            this.destacarCaminho(".mbr", "sempre-ativo");
-            this.destacarCaminho(".mbr", "ativo");
-        }
-    }
+        Assembler assembler = new Assembler();
+        assembler.montar(memP, macroPrograma);
 
-    public void destacarMar() {
-        String mar = this.cpu.getMir().getMAR();
-        if("1".equals(mar)) {
-            this.destacarCaminho(".mar", "sempre-ativo");
-            this.destacarCaminho(".mar", "ativo");
-        }
-    }
+        String tipoCache = cache.getTipoCache();
+        cache = CacheFactory.criarCache(tipoCache, memP);
 
-    public void destacarRD() {
-        String rd = this.cpu.getMir().getRD();
-        if("1".equals(rd)) {
-            this.destacarCaminho(".rd", "sempre-ativo");
-            this.destacarCaminho(".rd", "ativo");
-        }
-    }
+        cpu = new CPU(cache);
 
-    public void destacarWR() {
-        String wr = this.cpu.getMir().getWR();
-        if("1".equals(wr)) {
-            this.destacarCaminho(".wr", "sempre-ativo");
-            this.destacarCaminho(".wr", "ativo");
-        }
-    }
+        amux.setText("0");
+        cond.setText("000");
+        alu.setText("00");
+        deslocador.setText("0");
+        mbr.setText("0");
+        mar.setText("0");
+        read.setText("0");
+        write.setText("0");
+        enc.setText("0");
+        c.setText("0000");
+        b.setText("0000");
+        a.setText("0000");
+        addr.setText("00000000");
+//        this.microinstrucao.setText("00000000000000000000000000000000");
+        contadorCiclos.setText("0");
 
-    public void destacarEnc() {
-        String enc = this.cpu.getMir().getENC();
-        if("1".equals(enc)) {
-            this.destacarCaminho(".enc", "sempre-ativo");
-            this.destacarCaminho(".enc", "ativo");
-        }
+        saidaMmux.setText("00000000");
+        saidaMpc.setText("00000000");
+        saidaIncrementador.setText("00000000");
+        saidaLogicaMicro.setText("0");
+        saidaDecoderC.setText("0000000000000000");
+        saidaDecoderB.setText("0000000000000000");
+        saidaDecoderA.setText("0000000000000000");
+        saidaLatchA.setText("0000000000000000");
+        saidaLatchB.setText("0000000000000000");
+        saidaAmux.setText("0000000000000000");
+        saidaUla.setText("0000000000000000");
+        saidaDeslocador.setText("0000000000000000");
+        saidaMbr.setText("0000000000000000");
+        saidaMar.setText("000000000000");
+        pc.setText("0000000000000000");
+        ac.setText("0000000000000000");
+        sp.setText("000000000000000an0");
+        ir.setText("0000000000000000");
+        tir.setText("0000000000000000");
+        regA.setText("0000000000000000");
+
+        gerenciadorVisual.apagarCaminhos("ativo");
+        gerenciadorVisual.apagarCaminhos("barramento-ativo");
+
+        microinstrucao.setText("");
     }
 }

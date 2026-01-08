@@ -60,8 +60,7 @@ public class ControllerTela1 implements Initializable {
 
             cache = CacheFactory.criarCache(tipoCache, memoriaPrincipal);
 
-            this.cpu = new CPU();
-            this.cpu.setCache(cache);
+            this.cpu = new CPU(cache);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH_TELA_SIMULACAO));
             this.rootSimulacao = loader.load();
@@ -69,7 +68,7 @@ public class ControllerTela1 implements Initializable {
 
             this.stageSimulacao = (Stage) ((Node) event.getSource()).getScene().getWindow();
             controllerSimulacao.setStage(this.stageSimulacao);
-            controllerSimulacao.setConteudo(this.cpu, cache);
+            controllerSimulacao.setConteudo(this.cpu, cache, macroPrograma.getText());
 
             this.sceneSimulacao = new Scene(this.rootSimulacao);
             String css = getClass().getResource(PATH_CSS_SIMULACAO).toExternalForm();
@@ -111,7 +110,6 @@ public class ControllerTela1 implements Initializable {
         this.stageFalha.initOwner(((Node) event.getSource()).getScene().getWindow());
         this.stageFalha.initStyle(StageStyle.UNDECORATED);
         this.stageFalha.showAndWait();
-        this.cpu = new CPU();
         this.memoriaPrincipal = new MemoriaPrincipal();
         this.assembler = new Assembler();
     }

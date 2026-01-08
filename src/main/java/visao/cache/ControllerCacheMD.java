@@ -1,4 +1,4 @@
-package visao;
+package visao.cache;
 
 import back.memorias.Cache;
 import back.memorias.CacheMapeamentoDireto;

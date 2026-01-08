@@ -9,4 +9,6 @@ module com.example.amdmaximusv {
     exports visao;
     exports back.memorias;
     opens back.memorias to javafx.fxml;
+    exports visao.cache;
+    opens visao.cache to javafx.fxml;
 }

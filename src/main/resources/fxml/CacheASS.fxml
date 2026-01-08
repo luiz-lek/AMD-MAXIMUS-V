@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="523.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.ControllerCacheAss">
+<AnchorPane prefHeight="523.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visao.cache.ControllerCacheAss">
    <children>
       <TableView id="tabela" fx:id="tabela" layoutX="23.0" layoutY="78.0" prefHeight="402.0" prefWidth="988.0">
          <columns>
