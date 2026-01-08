@@ -152,6 +152,10 @@ AnchorPane {
     -fx-effect: dropshadow(gaussian, #01e2f2, 10, 0.6, 0, 0);
 }
 
+.marcador-qtd-bits {
+    -fx-stroke: #01e2f2;
+}
+
 .barramento-ativo {
     -fx-stroke: #01e2f2;
     -fx-stroke-width: 10px;
@@ -159,9 +163,9 @@ AnchorPane {
     -fx-stroke-line-cap: butt;
 }
 
-#pane {
-    -fx-scale-x: 0.9;
-    -fx-scale-y: 0.9;
+/*#pane {*/
+/*    -fx-scale-x: 0.9;*/
+/*    -fx-scale-y: 0.9;*/
 
-    -fx-alignment: top-left;
-}
+/*    -fx-alignment: top-left;*/
+/*}*/

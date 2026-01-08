@@ -66,7 +66,7 @@ public class ControllerSimulacao {
         if(rodando) return;
 
         this.timeline = new Timeline(new KeyFrame(
-                Duration.millis(100),
+                Duration.millis(30),
                 event -> {
                     try {
                         executarCicloCpu();
